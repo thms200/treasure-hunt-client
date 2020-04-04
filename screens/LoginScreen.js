@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import * as Facebook from 'expo-facebook';
 import * as SecureStore from 'expo-secure-store';
+import { FontAwesome } from '@expo/vector-icons';
 import message from '../constants/message';
 import getEnvVars from '../environment';
 const { FACEBOOK_APP_ID, API_URL } = getEnvVars();
 
 export default function LoginScreen({ navigation }) {
   useEffect(() => {
+    SecureStore.deleteItemAsync('userToken');
     const checkLogin = async () => {
       const currentToken = await SecureStore.getItemAsync('userToken');
       if (currentToken) return navigation.navigate('Main', { screen: 'Home'})
@@ -48,11 +50,15 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text>Treasure Hunt</Text>
-      <Button
-        title="login"
-        onPress={() => logInFacebook()}
-      />
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Treasure Hunt</Text>
+        <Text style={styles.title}>Hunt</Text>
+      </View>
+      <View style={styles.loginConatiner}>
+        <FontAwesome.Button name="facebook" backgroundColor="#3b5998" onPress={() => logInFacebook()}>
+          <Text style={styles.login}>Login with Facebook</Text>
+        </FontAwesome.Button>
+      </View>
     </View>
   );
 }
@@ -60,8 +66,26 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#5F6AF9',
   },
+  titleContainer: {
+    flex: 1,
+    marginTop: 150,
+  },
+  title: {
+    textAlign: 'center',
+    fontFamily: 'righteous-regular',
+    color: '#FFFFFF',
+    fontSize: 50,
+    fontWeight: 'bold',
+  },
+  loginConatiner: {
+    marginBottom: 100
+  },
+  login: {
+    color: '#FFFFFF',
+    fontSize: 20,
+  }
 });
