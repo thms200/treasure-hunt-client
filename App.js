@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState, Fragment } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import * as Facebook from 'expo-facebook';
+import * as SecureStore from 'expo-secure-store';
+import message from './constants/message';
 
 function MainScreen({ navigation }) {
   return (
@@ -102,41 +105,94 @@ function GetTreasureDetail({ route }) {
   );
 }
 
+function LoginScreen() {
+  const logInFacebook = async () => {
+    try {
+      await Facebook.initializeAsync(FACEBOOK_APP_ID);
+      const { type, token } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ['email'],
+      });
+      if (type !== 'success') return alert(message.invalidLogin);
+      const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=email,name,picture`);
+      const userInfo = await response.json();
+      const { email, name } = userInfo;
+      const picture_url = userInfo.picture.data.url;
+      const payload = JSON.stringify({ email, name, picture_url });
+      return await fetch(`${API_URL}/api/users/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+      })
+      .then((res) => res.json())
+      .then(async (json) => {
+        if (json.result === 'ng') return alert(message.invalidLogin); 
+        if (json.result === 'ok') {
+          await SecureStore.setItemAsync('userToken', json.token);
+          //로그인 완료 후 화면 전환을 위한 정보 업데이트 단계 필요
+          //Facebook app id, api url 환경 변수로 저장 필요
+        }
+      });
+    } catch (err) {
+      alert(message.invalidLogin);
+      console.log(err);
+    }
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text>Treasure Hunt</Text>
+      <Button
+        title="login"
+        onPress={() => logInFacebook()}
+      />
+    </View>
+  );
+}
+
 const RootStack = createStackNavigator();
 
 export default function App() {
+  const [userToken, setUserToken] = useState(null);
+
   return (
     <NavigationContainer>
       <RootStack.Navigator>
-        <RootStack.Screen name="Main" component={MainScreen} options={{ headerShown: false }}/>
-        <RootStack.Screen 
-          name="SelectTreasureCategory"
-          component={SelectTreasureCategory}
-          options={({ navigation }) => ({
-            headerTitle: 'Select category',
-            headerRight: () => (
-              <Button
-                title="finding"
-                onPress={() => navigation.navigate('GetTreasureList')}
+        {userToken === null
+          ? <RootStack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}
+            />
+          : (
+            <Fragment>
+              <RootStack.Screen name="Main" component={MainScreen} options={{ headerShown: false }} />
+              <RootStack.Screen 
+                name="SelectTreasureCategory"
+                component={SelectTreasureCategory}
+                options={({ navigation }) => ({
+                  headerTitle: 'Select category',
+                  headerRight: () => (
+                    <Button
+                      title="finding"
+                      onPress={() => navigation.navigate('GetTreasureList')}
+                    />
+                  ),
+                })}
               />
-            ),
-          })}
-        />
-        <RootStack.Screen
-          name="InputTreasureDetail"
-          component={InputTreasureDetail}
-          options={({ navigation }) => ({
-            headerTitle: 'Select category',
-            headerRight: () => (
-              <Button
-                title="finding"
-                onPress={() => navigation.navigate('GetTreasureList')}
+              <RootStack.Screen
+                name="InputTreasureDetail"
+                component={InputTreasureDetail}
+                options={({ navigation }) => ({
+                  headerTitle: 'Select category',
+                  headerRight: () => (
+                    <Button
+                      title="finding"
+                      onPress={() => navigation.navigate('GetTreasureList')}
+                    />
+                  ),
+                })}
               />
-            ),
-          })}
-        />
-        <RootStack.Screen name="GetTreasureList" component={GetTreasureList} options={{ headerShown: false }} />
-        <RootStack.Screen name="GetTreasureDetail" component={GetTreasureDetail} />
+              <RootStack.Screen name="GetTreasureList" component={GetTreasureList} options={{ headerShown: false }} />
+              <RootStack.Screen name="GetTreasureDetail" component={GetTreasureDetail} />
+            </Fragment>
+          )}
       </RootStack.Navigator>
     </NavigationContainer>
   );
