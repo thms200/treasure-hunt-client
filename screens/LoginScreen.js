@@ -4,6 +4,7 @@ import * as Facebook from 'expo-facebook';
 import * as SecureStore from 'expo-secure-store';
 import { FontAwesome } from '@expo/vector-icons';
 import message from '../constants/message';
+import { COLOR, FONT } from '../constants/';
 import getEnvVars from '../environment';
 const { FACEBOOK_APP_ID, API_URL } = getEnvVars();
 
@@ -67,25 +68,25 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#5F6AF9',
+    backgroundColor: COLOR.BLUE,
   },
   titleContainer: {
     flex: 1,
     marginTop: 150,
   },
   title: {
-    textAlign: 'center',
-    color: '#FFFFFF',
-    fontSize: 50,
     marginRight: 15,
-    fontFamily: 'righteousRegular',
+    textAlign: 'center',
+    fontSize: 50,
+    color: COLOR.WHITE,
+    fontFamily: FONT.RIGHT,
   },
   loginConatiner: {
     marginBottom: 100
   },
   login: {
-    color: '#FFFFFF',
     fontSize: 20,
-    fontFamily: 'righteousRegular',
+    color: COLOR.WHITE,
+    fontFamily: FONT.RIGHT,
   }
 });

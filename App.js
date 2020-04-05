@@ -9,8 +9,8 @@ import { AppLoading } from 'expo';
 const getFonts = async () => await Font.loadAsync({
   'righteousRegular': require('./assets/fonts/Righteous-Regular.ttf'),
   'gamja': require('./assets/fonts/GamjaFlower-Regular.ttf'),
-  'pgBold': require('./assets/fonts/PTSansNarrow-Bold.ttf'),
-  'pgRegular': require('./assets/fonts/PTSansNarrow-Regular.ttf'),
+  'ptBold': require('./assets/fonts/PTSansNarrow-Bold.ttf'),
+  'ptRegular': require('./assets/fonts/PTSansNarrow-Regular.ttf'),
 });
 
 const RootStack = createStackNavigator();

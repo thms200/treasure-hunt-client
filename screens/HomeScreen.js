@@ -1,17 +1,22 @@
 import React from 'react';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { COLOR, FONT } from '../constants';
 
 export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Button
-        title="hiding"
+      <TouchableOpacity
+        style={styles.hidingButton}
         onPress={() => navigation.navigate('SelectTreasureCategory')}
-      />
-      <Button
-        title="hunting"
+      >
+        <Text style={styles.text}>Hiding</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.findingContainer}
         onPress={() => navigation.navigate('GetTreasureList')}
-      />
+      >
+        <Text style={styles.text}>Finding</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -19,8 +24,26 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
+  hidingButton: {
+    marginTop: 250,
+    padding: 20,
+    width: 250,
+    borderRadius: 15,
+    backgroundColor: COLOR.BLUE,
+  },
+  findingContainer: {
+    marginTop: 100,
+    padding: 20,
+    width: 250,
+    borderRadius: 15,
+    backgroundColor: COLOR.BLUE,
+  },
+  text: {
+    fontSize: 30,
+    textAlign: 'center',
+    color: COLOR.WHITE,
+    fontFamily: FONT.RIGHT,
+  }
 });
