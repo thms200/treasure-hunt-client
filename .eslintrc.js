@@ -5,7 +5,7 @@ module.exports = {
     },
     "extends": [
 			"eslint:recommended",
-			"plugin:react/recommended"
+			"plugin:react/recommended",
     ],
     "globals": {
 			"Atomics": "readonly",
@@ -20,7 +20,7 @@ module.exports = {
     },
     "plugins": [
 			"react"
-    ],
+		],
     "rules": {
 			"indent": [
 				"error",
@@ -87,5 +87,6 @@ module.exports = {
 					"variables": false
 				}
 			],
+			"react/display-name": "off"
     }
 };
