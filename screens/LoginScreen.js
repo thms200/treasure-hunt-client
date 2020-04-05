@@ -10,14 +10,14 @@ const { FACEBOOK_APP_ID, API_URL } = getEnvVars();
 
 export default function LoginScreen({ navigation }) {
   useEffect(() => {
-    const checkLogin = async () => {
+    const checkLogin = async() => {
       const currentToken = await SecureStore.getItemAsync('userToken');
-      if (currentToken) return navigation.navigate('Main', { screen: 'Home'});
+      if (currentToken) return navigation.navigate('Main', { screen: 'Home' });
     };
     checkLogin();
   }, []);
 
-  const logInFacebook = async () => {
+  const logInFacebook = async() => {
     try {
       await Facebook.initializeAsync(FACEBOOK_APP_ID);
       const { type, token } = await Facebook.logInWithReadPermissionsAsync({
@@ -34,19 +34,19 @@ export default function LoginScreen({ navigation }) {
         headers: { 'Content-Type': 'application/json' },
         body: payload,
       })
-      .then((res) => res.json())
-      .then(async (json) => {
-        if (json.result === 'ng') return alert(message.invalidLogin); 
-        if (json.result === 'ok') {
-          await SecureStore.setItemAsync('userToken', json.token);
-          navigation.navigate('Main', { screen: 'Home'})
-        }
-      });
+        .then((res) => res.json())
+        .then(async(json) => {
+          if (json.result === 'ng') return alert(message.invalidLogin);
+          if (json.result === 'ok') {
+            await SecureStore.setItemAsync('userToken', json.token);
+            navigation.navigate('Main', { screen: 'Home' });
+          }
+        });
     } catch (err) {
       alert(message.invalidLogin);
       console.warn(err);
     }
-  }
+  };
 
   return (
     <View style={styles.container}>

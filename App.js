@@ -6,7 +6,7 @@ import LoginScreen from './screens/LoginScreen';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 
-const getFonts = async () => await Font.loadAsync({
+const getFonts = async() => await Font.loadAsync({
   'righteousRegular': require('./assets/fonts/Righteous-Regular.ttf'),
   'gamja': require('./assets/fonts/GamjaFlower-Regular.ttf'),
   'ptBold': require('./assets/fonts/PTSansNarrow-Bold.ttf'),

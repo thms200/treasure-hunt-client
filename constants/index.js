@@ -7,5 +7,5 @@ export const FONT = {
   RIGHT: 'righteousRegular',
   GAMJA: 'gamja',
   PT_BOLD: 'pgBold',
-  PT_BOLD: 'pgRegular'
+  PT_REGUL: 'pgRegular'
 };
