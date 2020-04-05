@@ -9,11 +9,10 @@ const { FACEBOOK_APP_ID, API_URL } = getEnvVars();
 
 export default function LoginScreen({ navigation }) {
   useEffect(() => {
-    SecureStore.deleteItemAsync('userToken');
     const checkLogin = async () => {
       const currentToken = await SecureStore.getItemAsync('userToken');
-      if (currentToken) return navigation.navigate('Main', { screen: 'Home'})
-    }
+      if (currentToken) return navigation.navigate('Main', { screen: 'Home'});
+    };
     checkLogin();
   }, []);
 
@@ -51,7 +50,7 @@ export default function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>Treasure Hunt</Text>
+        <Text style={styles.title}>Treasure</Text>
         <Text style={styles.title}>Hunt</Text>
       </View>
       <View style={styles.loginConatiner}>
@@ -76,10 +75,10 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
-    fontFamily: 'righteous-regular',
     color: '#FFFFFF',
     fontSize: 50,
-    fontWeight: 'bold',
+    marginRight: 15,
+    fontFamily: 'righteousRegular',
   },
   loginConatiner: {
     marginBottom: 100
@@ -87,5 +86,6 @@ const styles = StyleSheet.create({
   login: {
     color: '#FFFFFF',
     fontSize: 20,
+    fontFamily: 'righteousRegular',
   }
 });
