@@ -18,7 +18,7 @@ export default function GetTreasureList({ navigation }) {
       />
       <Button
         title="Hiding"
-        onPress={() => navigation.navigate('SelectTreasureCategory')}
+        onPress={() => navigation.navigate('Hide', { screen: 'SelectTreasureCategory' })}
       />
     </View>
   );
