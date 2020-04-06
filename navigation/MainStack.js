@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import SelectTreasureCategory from '../screens/SelectTreasureCategory';
@@ -7,6 +7,7 @@ import InputTreasureDetail from '../screens/InputTreasureDetail';
 import GetTreasureList from '../screens/GetTreasureList';
 import GetTreasureDetail from '../screens/GetTreasureDetail';
 import TakeAPicure from '../screens/TakeAPicture';
+import { COLOR } from '../constants';
 
 const MainStack = createStackNavigator();
 
@@ -20,10 +21,11 @@ export default function Main() {
         options={({ navigation }) => ({
           headerTitle: 'Select Category',
           headerRight: () => (
-            <Button
-              title="finding"
+            <TouchableOpacity
               onPress={() => navigation.navigate('GetTreasureList')}
-            />
+            >
+              <Text style={{ marginRight: 10, color: COLOR.BLUE, fontWeight: 'bold' }}>Hunting</Text>
+            </TouchableOpacity>
           ),
         })}
       />
@@ -31,12 +33,13 @@ export default function Main() {
         name="InputTreasureDetail"
         component={InputTreasureDetail}
         options={({ navigation }) => ({
-          headerTitle: 'Happy hidding',
+          headerTitle: 'Happy hiding',
           headerRight: () => (
-            <Button
-              title="finding"
+            <TouchableOpacity
               onPress={() => navigation.navigate('GetTreasureList')}
-            />
+            >
+              <Text style={{ marginRight: 10, color: COLOR.BLUE, fontWeight: 'bold' }}>Hunting</Text>
+            </TouchableOpacity>
           ),
         })}
       />
