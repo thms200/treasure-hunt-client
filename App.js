@@ -1,24 +1,36 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import * as Permissions from 'expo-permissions';
 import MainScreen from './navigation/MainStack';
 import LoginScreen from './screens/LoginScreen';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
+import message from './constants/message';
 
-const getFonts = async() => await Font.loadAsync({
-  'righteousRegular': require('./assets/fonts/Righteous-Regular.ttf'),
-  'gamja': require('./assets/fonts/GamjaFlower-Regular.ttf'),
-  'ptBold': require('./assets/fonts/PTSansNarrow-Bold.ttf'),
-  'ptRegular': require('./assets/fonts/PTSansNarrow-Regular.ttf'),
-});
+const getResorceAndPermission = async() => {
+  await Font.loadAsync({
+    'righteousRegular': require('./assets/fonts/Righteous-Regular.ttf'),
+    'gamja': require('./assets/fonts/GamjaFlower-Regular.ttf'),
+    'ptBold': require('./assets/fonts/PTSansNarrow-Bold.ttf'),
+    'ptRegular': require('./assets/fonts/PTSansNarrow-Regular.ttf'),
+  });
+
+  const { status } = await Permissions.askAsync(
+    Permissions.CAMERA,
+    Permissions.CAMERA_ROLL,
+    Permissions.LOCATION,
+  );
+
+  if (status !== 'granted') return alert(message.deniedPermission);
+};
 
 const RootStack = createStackNavigator();
 
 export default function App() {
-  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  if(fontsLoaded) {
+  if(!isLoading) {
     return (
       <NavigationContainer>
         <RootStack.Navigator>
@@ -30,8 +42,9 @@ export default function App() {
   } else {
     return (
       <AppLoading
-        startAsync={getFonts}
-        onFinish={() => setFontsLoaded(true)}
+        startAsync={getResorceAndPermission}
+        onFinish={() => setIsLoading(false)}
+        onError={console.warn}
       />
     );
   }
