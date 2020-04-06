@@ -6,6 +6,6 @@ export const COLOR = {
 export const FONT = {
   RIGHT: 'righteousRegular',
   GAMJA: 'gamja',
-  PT_BOLD: 'pgBold',
-  PT_REGUL: 'pgRegular'
+  PT_BOLD: 'ptBold',
+  PT_REGUL: 'ptRegular'
 };
