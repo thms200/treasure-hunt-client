@@ -4,6 +4,7 @@ import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import { FontAwesome } from '@expo/vector-icons';
 import message from '../constants/message';
+import { COLOR } from '../constants';
 
 export default function TakeAPicture({ navigation }) {
   const cameraEl = useRef(null);
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   button: {
-    color: '#fff',
+    color: COLOR.WHITE,
     fontSize: 50
   }
 });

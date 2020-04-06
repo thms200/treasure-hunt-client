@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
+import MapView from 'react-native-maps';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import * as SecureStore from 'expo-secure-store';
@@ -9,20 +10,20 @@ import getEnvVars from '../environment';
 const { API_URL } = getEnvVars();
 
 export default function InputTreasureDetail({ navigation, route }) {
-  const [hasPermissionCamera, setHasPermissionCamara] = useState(false);
-  const [hasPermissionGallery, setHasPermissionGallery] = useState(false);
+  const [hasPermissionCameraAndAlbum, setHasPermissionCamaraAndAlbum] = useState(false);
+  const [hasPermissionLocation, setHasPermissionLocation] = useState(false);
   const [uriList, setUriList] = useState([]);
   const { category } = route.params;
 
   useEffect(() => {
     (async() => {
-      const { status } = await Permissions.getAsync(Permissions.CAMERA);
-      setHasPermissionCamara(status === 'granted');
+      const { status } = await Permissions.getAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
+      setHasPermissionCamaraAndAlbum(status === 'granted');
     })();
 
     (async() => {
-      const { status } = await Permissions.getAsync(Permissions.CAMERA_ROLL);
-      setHasPermissionGallery(status === 'granted');
+      const { status } = await Permissions.getAsync(Permissions.LOCATION);
+      setHasPermissionLocation(status === 'granted');
     })();
   }, []);
 
@@ -84,9 +85,7 @@ export default function InputTreasureDetail({ navigation, route }) {
         style={{ margin: 10, padding: 10, backgroundColor: COLOR.BLUE }}
         onPress={() => {
           if (uriList.length >= 3) return alert(message.maxImg);
-          if (hasPermissionCamera && hasPermissionGallery) {
-            return navigation.navigate('Main', { screen: 'TakeAPicture' });
-          }
+          if (hasPermissionCameraAndAlbum) return navigation.navigate('TakeAPicture');
           alert(message.deniedPermission);
         }}
       >
@@ -96,7 +95,7 @@ export default function InputTreasureDetail({ navigation, route }) {
         style={{ margin: 10, padding: 10, backgroundColor: COLOR.BLUE }}
         onPress={() => {
           if (uriList.length >= 3) return alert(message.maxImg);
-          if (hasPermissionCamera && hasPermissionGallery) return onGetPictures();
+          if (hasPermissionCameraAndAlbum) return onGetPictures();
           alert(message.deniedPermission);
         }}
       >
@@ -104,6 +103,10 @@ export default function InputTreasureDetail({ navigation, route }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={{ margin: 10, padding: 10, backgroundColor: COLOR.BLUE }}
+        onPress={() => {
+          if (hasPermissionLocation) return navigation.navigate('ShowMap');
+          alert(message.deniedPermission);
+        }}
       >
         <Text style={{ color: COLOR.WHITE }}>Map</Text>
       </TouchableOpacity>
@@ -123,6 +126,11 @@ export default function InputTreasureDetail({ navigation, route }) {
       >
         <Text style={{ color: COLOR.BLUE }}>Complete</Text>
       </TouchableOpacity>
+      <MapView
+        style={{ width: 100, height: 100 }}
+        initialRegion={{ latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }} >
+        <MapView.Marker coordinate={{ latitude: 37.78825, longitude: -122.4324, }} />
+      </MapView>
     </View>
   );
 }
