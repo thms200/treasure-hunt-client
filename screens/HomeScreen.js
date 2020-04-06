@@ -12,10 +12,10 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.text}>Hiding</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.findingContainer}
+        style={styles.huntingContainer}
         onPress={() => navigation.navigate('GetTreasureList')}
       >
-        <Text style={styles.text}>Finding</Text>
+        <Text style={styles.text}>Hunting</Text>
       </TouchableOpacity>
     </View>
   );
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: COLOR.BLUE,
   },
-  findingContainer: {
+  huntingContainer: {
     marginTop: 100,
     padding: 20,
     width: 250,
