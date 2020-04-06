@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import * as Permissions from 'expo-permissions';
-import * as MediaLibrary from 'expo-media-library';
+import * as ImagePicker from 'expo-image-picker';
 import { COLOR } from '../constants';
 import message from '../constants/message';
 
 export default function InputTreasureDetail({ navigation, route }) {
   const [hasPermissionCamera, setHasPermissionCamara] = useState(false);
   const [hasPermissionGallery, setHasPermissionGallery] = useState(false);
+  const [uriList, setUriList] = useState([]);
 
   useEffect(() => {
     (async() => {
@@ -21,6 +22,22 @@ export default function InputTreasureDetail({ navigation, route }) {
     })();
   }, []);
 
+  useEffect(() => {
+    const { uri } = route.params;
+    if (uri && uriList.length <= 3 && !uriList.includes(uri)) {
+      setUriList((uriList) => uriList.concat(uri));
+    }
+  });
+
+  const onGetPictures = async() => {
+    const pickerResult = await ImagePicker.launchImageLibraryAsync();
+    if (pickerResult.cancelled) return;
+    const { uri } = pickerResult;
+    if (uri && uriList.length <= 3 && !uriList.includes(uri)) {
+      setUriList((uriList) => uriList.concat(uri));
+    }
+  };
+
   const { category } = route.params;
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -28,7 +45,10 @@ export default function InputTreasureDetail({ navigation, route }) {
       <TouchableOpacity
         style={{ margin: 10, padding: 10, backgroundColor: COLOR.BLUE }}
         onPress={() => {
-          if (hasPermissionCamera) return navigation.navigate('Main', { screen: 'TakeAPicture' });
+          if (uriList.length >= 3) return alert(message.maxImg);
+          if (hasPermissionCamera && hasPermissionGallery) {
+            return navigation.navigate('Main', { screen: 'TakeAPicture' });
+          }
           alert(message.deniedPermission);
         }}
       >
@@ -36,6 +56,11 @@ export default function InputTreasureDetail({ navigation, route }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={{ margin: 10, padding: 10, backgroundColor: COLOR.BLUE }}
+        onPress={() => {
+          if (uriList.length >= 3) return alert(message.maxImg);
+          if (hasPermissionCamera && hasPermissionGallery) return onGetPictures();
+          alert(message.deniedPermission);
+        }}
       >
         <Text style={{ color: COLOR.WHITE }}>Gallery</Text>
       </TouchableOpacity>
@@ -44,6 +69,16 @@ export default function InputTreasureDetail({ navigation, route }) {
       >
         <Text style={{ color: COLOR.WHITE }}>Map</Text>
       </TouchableOpacity>
+      {uriList.map((uri, index) => {
+        return (
+          <View key={index}>
+            <Image
+              style={{ width: 100, height: 100 }}
+              source={{ uri }}
+            />
+          </View>
+        );
+      })}
     </View>
   );
 }

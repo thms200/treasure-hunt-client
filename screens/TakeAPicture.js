@@ -5,20 +5,22 @@ import * as MediaLibrary from 'expo-media-library';
 import { FontAwesome } from '@expo/vector-icons';
 import message from '../constants/message';
 
-export default function TakeAPicture() {
+export default function TakeAPicture({ navigation }) {
   const cameraEl = useRef(null);
 
-  const takePictureAndCreateAlbum = async() => {
-    const { uri } = await cameraEl.current.takePictureAsync();
-    const asset = await MediaLibrary.createAssetAsync(uri);
-    return await MediaLibrary.createAlbumAsync('my_treasure', asset)
-      .then(() => {
+  const onTakePictureAndCreateAlbum = async() => {
+    try {
+      const { uri } = await cameraEl.current.takePictureAsync();
+      const asset = await MediaLibrary.createAssetAsync(uri);
+      const album = await MediaLibrary.createAlbumAsync('my_treasure', asset, false);
+      if (album) {
         alert(message.createPicture);
-      })
-      .catch(error => {
-        console.warn(error);
-        alert(message.failPicture);
-      });
+        return navigation.navigate('InputTreasureDetail', { uri });
+      }
+    } catch(error) {
+      console.warn(error);
+      alert(message.failPicture);
+    }
   };
 
   return (
@@ -29,7 +31,7 @@ export default function TakeAPicture() {
         ref={cameraEl}
       />
       <TouchableOpacity
-        onPress={() => takePictureAndCreateAlbum()}
+        onPress={() => onTakePictureAndCreateAlbum()}
         style={styles.buttonContainer}>
         <FontAwesome
           name="camera"
