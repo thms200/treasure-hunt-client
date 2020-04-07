@@ -12,7 +12,21 @@ export default function LoginScreen({ navigation }) {
   useEffect(() => {
     const checkLogin = async() => {
       const currentToken = await SecureStore.getItemAsync('userToken');
-      if (currentToken) return navigation.navigate('Main', { screen: 'Home' });
+      return await fetch(`${API_URL}/api/users/auth`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': `Bearer ${currentToken}`,
+        },
+      })
+        .then((res) => res.json())
+        .then(async(json) => {
+          if (json.result === 'ok') return navigation.navigate('Main', { screen: 'Home' });
+          if (json.result === 'ng') {
+            await SecureStore.deleteItemAsync('userToken');
+            return alert(json.errMessage);
+          }
+        });
     };
     checkLogin();
   }, []);
