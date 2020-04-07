@@ -17,7 +17,7 @@ export default function MarkedMap({ markedLocation }) {
       pinColor={COLOR.BLUE}
       initialRegion={{ latitude, longitude, latitudeDelta, longitudeDelta }}
     >
-      <MapView.Marker coordinate={{ latitude, longitude }} />
+      <MapView.Marker coordinate={{ latitude, longitude }} centerOffset={{ x: 0.5, y: 0.5 }} />
     </MapView>);
   }
 }
