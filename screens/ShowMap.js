@@ -1,40 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import MapView from 'react-native-maps';
-import * as Location from 'expo-location';
-import { StyleSheet, View, Dimensions } from 'react-native';
-import message from '../constants/message';
-import { caculateDelta } from '../utils';
+import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { COLOR } from '../constants';
 
-export default function ShowMap() {
-  const [latitude, setLatitude] = useState(37.5059724);
-  const [longitude, setLongitude] = useState(127.0591333);
-  const { latiDelta, longiDelta } = caculateDelta(Dimensions.get('window'));
+export default function ShowMap({ navigation, route }) {
+  const [markedLocation, setMarkedLocation] = useState(route.params.location);
+  const { latitude, longitude, latitudeDelta, longitudeDelta } = route.params.location;
 
-  useEffect(() => {
-    (async() => {
-      try {
-        const location = await Location.getCurrentPositionAsync({ accuracy: 4 });
-        const { latitude, longitude } = location.coords;
-        setLatitude(latitude);
-        setLongitude(longitude);
-      } catch(err) {
-        alert(message.errorPermission);
-        console.warn(err);
-      }
-    })();
-  });
+  const onGetMarkedLocation = async() => {
+    navigation.navigate('InputTreasureDetail', { markedLocation });
+  };
+
+  const onDragEnd = async(location) => {
+    setMarkedLocation(location);
+  };
 
   return (
     <View style={styles.container}>
       <MapView
         style={styles.mapStyle}
-        initialRegion={{ latitude, longitude, latitudeDelta: latiDelta, longitudeDelta: longiDelta }}
+        initialRegion={{ latitude, longitude, latitudeDelta, longitudeDelta }}
+        showsUserLocation={true}
+        minZoomLevel={4}
       >
-        <MapView.Marker coordinate={{ latitude, longitude }} />
+        <MapView.Marker
+          draggable
+          title={'Your treasure Here!'}
+          pinColor={COLOR.BLUE}
+          coordinate={{ latitude, longitude }}
+          onDragEnd={(e) => onDragEnd(e.nativeEvent.coordinate)}
+        />
       </MapView>
+      <TouchableOpacity
+        onPress={() => onGetMarkedLocation()}
+        style={styles.buttonContainer}>
+        <FontAwesome5
+          name="stamp"
+          style={styles.button}
+        />
+      </TouchableOpacity>
     </View>
   );
-
 }
 
 const styles = StyleSheet.create({
@@ -48,4 +55,15 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
+  buttonContainer: {
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 30,
+    left: 0,
+    right: 0,
+  },
+  button: {
+    color: COLOR.BLUE,
+    fontSize: 50
+  }
 });

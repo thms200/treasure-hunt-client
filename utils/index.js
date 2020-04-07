@@ -1,7 +1,6 @@
-// [location]
-export const caculateDelta = (screen) => {
+export const caculateLocation = (latitude, longitude, screen) => {
   const aspectRatio = screen.width / screen.height;
-  const latiDelta = 0.0922;
-  const longiDelta = latiDelta * aspectRatio;
-  return { latiDelta, longiDelta };
+  const latitudeDelta = 0.0922;
+  const longitudeDelta = latitudeDelta * aspectRatio;
+  return { latitude, longitude, latitudeDelta, longitudeDelta };
 };
