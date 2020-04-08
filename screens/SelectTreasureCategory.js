@@ -9,7 +9,7 @@ export default function SelectTreasureCategory({ navigation }) {
       <TouchableOpacity
         style={styles.buttonWrapper}
         onPress={() => navigation.navigate('InputTreasureDetail', {
-          category: '유심',
+          category: 'usim',
         })}
       >
         <View style={styles.iconWrapper}>
@@ -20,7 +20,7 @@ export default function SelectTreasureCategory({ navigation }) {
       <TouchableOpacity
         style={styles.buttonWrapper}
         onPress={() => navigation.navigate('InputTreasureDetail', {
-          category: '교통',
+          category: 'transportaion',
         })}
       >
         <View style={styles.iconWrapper}>
@@ -31,7 +31,7 @@ export default function SelectTreasureCategory({ navigation }) {
       <TouchableOpacity
         style={styles.buttonWrapper}
         onPress={() => navigation.navigate('InputTreasureDetail', {
-          category: '영화/공연',
+          category: 'show',
         })}
       >
         <View style={styles.iconWrapper}>
@@ -42,7 +42,7 @@ export default function SelectTreasureCategory({ navigation }) {
       <TouchableOpacity
         style={styles.buttonWrapper}
         onPress={() => navigation.navigate('InputTreasureDetail', {
-          category: '입장권',
+          category: 'ticket',
         })}
       >
         <View style={styles.iconWrapper}>
@@ -53,7 +53,7 @@ export default function SelectTreasureCategory({ navigation }) {
       <TouchableOpacity
         style={styles.buttonWrapper}
         onPress={() => navigation.navigate('InputTreasureDetail', {
-          category: '쿠폰',
+          category: 'coupon',
         })}
       >
         <View style={styles.iconWrapper}>
@@ -64,7 +64,7 @@ export default function SelectTreasureCategory({ navigation }) {
       <TouchableOpacity
         style={styles.buttonWrapper}
         onPress={() => navigation.navigate('InputTreasureDetail', {
-          category: '기타',
+          category: 'etc',
         })}
       >
         <View style={styles.iconWrapper}>

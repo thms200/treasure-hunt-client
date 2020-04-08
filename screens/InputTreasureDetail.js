@@ -25,6 +25,7 @@ export default function InputTreasureDetail({ navigation, route }) {
   const [description, setDescription] = useState('');
   const [uriList, setUriList] = useState([]);
   const [location, setLocation] = useState({ latitude: null, longitude: null, latitudeDelta: null, longitudeDelta: null });
+  const [showModal, setShowModal] = useState(false);
   const { category, markedLocation } = route.params;
 
   useEffect(() => {
@@ -116,12 +117,15 @@ export default function InputTreasureDetail({ navigation, route }) {
       <View style={styles.wrapper}>
         <View style={styles.categoryWrapper}>
           <View style={styles.category}>
+            <Text onPress={() => setShowModal(true)} style={styles.categoryText}>Country</Text>
             <CountryPicker
               withEmoji={true}
               withFilter={true}
               withAlphaFilter={true}
               theme={DARK_THEME}
+              visible={showModal}
               onSelect={country => setCountry(country.name)}
+              containerButtonStyle={{ width: 0, height: 0 }}
             />
           </View>
           <View style={styles.inputWrapper}>
