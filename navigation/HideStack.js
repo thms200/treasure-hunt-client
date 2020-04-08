@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SelectTreasureCategory from '../screens/SelectTreasureCategory';
 import InputTreasureDetail from '../screens/InputTreasureDetail';
 import TakeAPicure from '../screens/TakeAPicture';
 import ShowMap from '../screens/ShowMap';
-import { COLOR } from '../constants';
+import { COLOR, FONT } from '../constants';
 
 const HideStack = createStackNavigator();
 
@@ -21,23 +21,27 @@ export default function Hide() {
             <TouchableOpacity
               onPress={() => navigation.navigate('Hunt', { screen: 'GetTreasureList' })}
             >
-              <Text style={{ marginRight: 10, color: COLOR.BLUE, fontWeight: 'bold' }}>Hunting</Text>
+              <Text style={styles.headerRight}>Hunting</Text>
             </TouchableOpacity>
           ),
+          headerTitleStyle: styles.headerTitle,
+          headerTitleAlign: 'center',
         })}
       />
       <HideStack.Screen
         name="InputTreasureDetail"
         component={InputTreasureDetail}
         options={({ navigation }) => ({
-          headerTitle: 'Happy hiding',
+          headerTitle: 'Happy Hiding 🎁',
           headerRight: () => (
             <TouchableOpacity
               onPress={() => navigation.navigate('Hunt', { screen: 'GetTreasureList' })}
             >
-              <Text style={{ marginRight: 10, color: COLOR.BLUE, fontWeight: 'bold' }}>Hunting</Text>
+              <Text style={styles.headerRight}>Hunting</Text>
             </TouchableOpacity>
           ),
+          headerTitleStyle: styles.headerTitle,
+          headerTitleAlign: 'center',
         })}
       />
       <HideStack.Screen name="TakeAPicture" component={TakeAPicure} options={{ headerShown: false }} />
@@ -45,3 +49,16 @@ export default function Hide() {
     </HideStack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  headerRight: {
+    marginRight: 10,
+    color: COLOR.GREY,
+    fontFamily: FONT.PT_REGUL,
+  },
+  headerTitle: {
+    fontFamily: FONT.PT_BOLD,
+    fontSize: 30,
+    color: COLOR.BLUE,
+  }
+});

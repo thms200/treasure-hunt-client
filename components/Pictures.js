@@ -37,10 +37,10 @@ const styles = StyleSheet.create({
   dummyWrapper: {
     flex: 1,
     justifyContent: 'center',
+    margin: 4,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: COLOR.BLUE,
-    margin: 4,
   },
   dummy: {
     textAlign: 'center',

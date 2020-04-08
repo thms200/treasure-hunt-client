@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import * as SecureStore from 'expo-secure-store';
@@ -9,7 +9,7 @@ import { AntDesign } from '@expo/vector-icons';
 import MarkedMap from '../components/MarkedMap';
 import Calendar from '../components/Calendar';
 import Pictures from '../components/Pictures';
-import { caculateLocation } from '../utils';
+import { caculateLocation, checkValidation } from '../utils';
 import { COLOR, FONT } from '../constants';
 import message from '../constants/message';
 import getEnvVars from '../environment';
@@ -57,7 +57,6 @@ export default function InputTreasureDetail({ navigation, route }) {
   const { uri } = route.params;
   useEffect(() => {
     if (uri && uriList.length <= 3 && !uriList.includes(uri)) {
-      console.log(uri);
       setUriList((uriList) => uriList.concat(uri));
     }
   }, uri);
@@ -73,6 +72,8 @@ export default function InputTreasureDetail({ navigation, route }) {
 
   const onSaveTreasure = async() => {
     try {
+      if (!checkValidation(country, name, description, uriList, markedLocation)) return;
+      console.log('validation after');
       const formdata = new FormData();
       uriList.forEach(uri => {
         const name = uri.split('Camera/')[1] || uri.split('ImagePicker/')[1];
@@ -291,9 +292,10 @@ const styles = StyleSheet.create({
     height: 100,
   },
   mapWrapper: {
-    flex: 1,
+    flex: 2,
     margin: 4,
     width: '96%',
+    height: 230,
   },
   completeWrapper: {
     flex: 1,

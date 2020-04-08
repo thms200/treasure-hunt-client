@@ -32,7 +32,8 @@ export default function MarkedMap({ markedLocation }) {
 
 const styles = StyleSheet.create({
   dummyWrapper: {
-    padding: 30,
+    flex: 1,
+    justifyContent: 'center',
     borderRadius: 5,
     borderWidth: 1,
     borderColor: COLOR.BLUE,
@@ -40,13 +41,14 @@ const styles = StyleSheet.create({
   dummy: {
     flex: 1,
     textAlign: 'center',
+    margin: '16%',
     fontSize: 60,
     color: COLOR.BLUE,
   },
   map: {
     width: '100%',
+    height: '100%',
     borderRadius: 8,
-    height: 150
   },
 });
 

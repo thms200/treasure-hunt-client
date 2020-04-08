@@ -7,7 +7,12 @@ const message = {
   maxImg: 'Up to three images can be registered.',
   failSave: 'Sorry. We can\'t save your treasure information! Try again.',
   successSave: 'Success save your treasure. Thank you. Happy Hunting. 👍',
-  invalidExpiration: 'Try again. You write down invalid expiration.'
+  noneCountry: 'You should selected a country about your treasure.',
+  noneName: 'You should inputed a your treasure name.',
+  invalidExpiration: 'Try again. Expiration must be later than now',
+  noneDescription: 'Let me know about your treasure. Anything!.',
+  nonePictures: 'You should take pictures about location of treasure. Click "Camera" Or "Gallery".',
+  noneMap: 'You should inputed a your treasure location. Click "Map" button, and confirm location.',
 };
 
 export default message;
