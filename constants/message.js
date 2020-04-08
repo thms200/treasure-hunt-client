@@ -7,6 +7,7 @@ const message = {
   maxImg: 'Up to three images can be registered.',
   failSave: 'Sorry. We can\'t save your treasure information! Try again.',
   successSave: 'Success save your treasure. Thank you. Happy Hunting. 👍',
+  invalidExpiration: 'Try again. You write down invalid expiration.'
 };
 
 export default message;

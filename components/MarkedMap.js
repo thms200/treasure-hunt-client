@@ -1,19 +1,21 @@
 import React from 'react';
-import { View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import MapView from 'react-native-maps';
+import PropTypes from 'prop-types';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { caculateLocation } from '../utils';
 import { COLOR } from '../constants';
 
 export default function MarkedMap({ markedLocation }) {
   if (!markedLocation) {
-    return <View />;
+    return <View style={styles.dummyWrapper}><MaterialCommunityIcons name="map-search-outline" style={styles.dummy}/></View>;
   } else {
     const {
       latitude, longitude, latitudeDelta, longitudeDelta
     } = caculateLocation(markedLocation.latitude, markedLocation.longitude, Dimensions.get('window'));
 
     return (<MapView
-      style={{ width: 300, height: 150 }}
+      style={styles.map}
       pinColor={COLOR.BLUE}
       initialRegion={{ latitude, longitude, latitudeDelta, longitudeDelta }}
     >
@@ -21,3 +23,27 @@ export default function MarkedMap({ markedLocation }) {
     </MapView>);
   }
 }
+
+const styles = StyleSheet.create({
+  dummyWrapper: {
+    padding: 30,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: COLOR.BLUE,
+  },
+  dummy: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 60,
+    color: COLOR.BLUE,
+  },
+  map: {
+    width: '100%',
+    borderRadius: 8,
+    height: 150
+  },
+});
+
+MarkedMap.propTypes = {
+  markedLocation: PropTypes.object,
+};

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Dimensions, ScrollView } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import * as SecureStore from 'expo-secure-store';
 import * as Location from 'expo-location';
 import CountryPicker, { DARK_THEME } from 'react-native-country-picker-modal';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import { AntDesign } from '@expo/vector-icons';
 import MarkedMap from '../components/MarkedMap';
+import Calendar from '../components/Calendar';
+import Pictures from '../components/Pictures';
 import { caculateLocation } from '../utils';
-import { COLOR } from '../constants';
+import { COLOR, FONT } from '../constants';
 import message from '../constants/message';
 import getEnvVars from '../environment';
 const { API_URL } = getEnvVars();
@@ -110,98 +112,197 @@ export default function InputTreasureDetail({ navigation, route }) {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{ flex: 1, flexDirection: 'row', backgroundColor: COLOR.BLUE }}>
-        <CountryPicker
-          withEmoji={true}
-          theme={DARK_THEME}
-          onSelect={country => setCountry(country.name)}
-        />
-        <Text>{country}</Text>
-      </View>
-      <View style={{ flex: 1 }}>
-        <Text>Name</Text>
-        <TextInput
-          style={{ width: 250, height: 60, borderColor: COLOR.BLUE, borderWidth: 1 }}
-          onChangeText={text => setName(text)}
-          value={name}
-          placeholder='What is your treasure?'
-        />
-      </View>
-      <View style={{ flex: 1 }}>
-        <Text>Expiration</Text>
-        {showDate && <RNDateTimePicker
-          display='calendar'
-          value={new Date()}
-          onChange={(ev) => {
-            const newExpiration = ev.nativeEvent.timestamp || expiration;
-            console.log('new', newExpiration);
-            setShowDate(false);
-            setExpiration(newExpiration);
-          }}
-        />}
-        <Text onPress={() => setShowDate(true)}>{new Date(expiration).toString()}</Text>
-      </View>
-      <View style={{ flex: 1 }}>
-        <TextInput
-          style={{ width: 250, height: 60, borderColor: COLOR.BLUE, borderWidth: 1 }}
-          onChangeText={description => setDescription(description)}
-          value={description}
-          placeholder='상세 위치, 상태 등을 적어주세요!'
-        />
-      </View>
-      <View style={{ flex: 1, flexDirection: 'row' }}>
-        <TouchableOpacity
-          style={{ margin: 10, padding: 10, backgroundColor: COLOR.BLUE }}
-          onPress={() => {
-            if (uriList.length >= 3) return alert(message.maxImg);
-            if (hasPermissionCameraAndAlbum) return navigation.navigate('TakeAPicture');
-            alert(message.deniedPermission);
-          }}
-        >
-          <Text style={{ color: COLOR.WHITE }}>Camera</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{ margin: 10, padding: 10, backgroundColor: COLOR.BLUE }}
-          onPress={() => {
-            if (uriList.length >= 3) return alert(message.maxImg);
-            if (hasPermissionCameraAndAlbum) return onGetPictures();
-            alert(message.deniedPermission);
-          }}
-        >
-          <Text style={{ color: COLOR.WHITE }}>Gallery</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{ margin: 10, padding: 10, backgroundColor: COLOR.BLUE }}
-          onPress={() => {
-            if (location.latitude) {
-              if (hasPermissionLocation) return navigation.navigate('ShowMap', { location });
+    <ScrollView>
+      <View style={styles.wrapper}>
+        <View style={styles.categoryWrapper}>
+          <View style={styles.category}>
+            <CountryPicker
+              withEmoji={true}
+              withFilter={true}
+              withAlphaFilter={true}
+              theme={DARK_THEME}
+              onSelect={country => setCountry(country.name)}
+            />
+          </View>
+          <View style={styles.inputWrapper}>
+            <Text style={styles.inputText}>{country}</Text>
+          </View>
+        </View>
+        <View style={styles.categoryWrapper}>
+          <View style={styles.category}>
+            <Text style={styles.categoryText}>Name</Text>
+          </View>
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={styles.inputText}
+              onChangeText={text => setName(text)}
+              value={name}
+              placeholder='What is your treasure?'
+            />
+          </View>
+        </View>
+        <View style={styles.categoryWrapper}>
+          <View style={styles.category}>
+            <Text style={styles.categoryText}>Expiration</Text>
+          </View>
+          {showDate && <Calendar expiration={expiration} setShowDate={setShowDate} setExpiration={setExpiration} />}
+          <View style={styles.expirationInput}>
+            <Text style={styles.inputText}>{new Date(expiration).toString().slice(0, 15)}</Text>
+            <AntDesign
+              name="calendar"
+              style={{ fontSize: 30, color: COLOR.BLUE }}
+              onPress={() => setShowDate(true)}
+            />
+          </View>
+        </View>
+        <View style={styles.descriptionWrapper}>
+          <TextInput
+            style={styles.inputText}
+            onChangeText={description => setDescription(description)}
+            value={description}
+            placeholder='Please write down the detailed location, specific issue, etc. of the hidden treasure!'
+            multiline
+            numberOfLines={4}
+          />
+        </View>
+        <View style={styles.categoryWrapper}>
+          <TouchableOpacity
+            style={styles.cameraAmdMapWrapper}
+            onPress={() => {
+              if (uriList.length >= 3) return alert(message.maxImg);
+              if (hasPermissionCameraAndAlbum) return navigation.navigate('TakeAPicture');
               alert(message.deniedPermission);
-            }
-          }}
-        >
-          <Text style={{ color: COLOR.WHITE }}>Map</Text>
-        </TouchableOpacity>
+            }}
+          >
+            <Text style={styles.categoryText}>Camera</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.cameraAmdMapWrapper}
+            onPress={() => {
+              if (uriList.length >= 3) return alert(message.maxImg);
+              if (hasPermissionCameraAndAlbum) return onGetPictures();
+              alert(message.deniedPermission);
+            }}
+          >
+            <Text style={styles.categoryText}>Gallery</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.cameraAmdMapWrapper}
+            onPress={() => {
+              if (location.latitude) {
+                if (hasPermissionLocation) return navigation.navigate('ShowMap', { location });
+                alert(message.deniedPermission);
+              }
+            }}
+          >
+            <Text style={styles.categoryText}>Map</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.pictureWrapper}>
+          <Pictures uriList={uriList} />
+        </View>
+        <View style={styles.mapWrapper}>
+          <MarkedMap markedLocation={markedLocation} />
+        </View>
+        <View style={styles.completeWrapper}>
+          <TouchableOpacity onPress={() => onSaveTreasure()}>
+            <Text style={styles.completeText}>Complete</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={{ flex: 1, flexDirection: 'row' }}>
-        {uriList.map((uri, index) => {
-          return (
-            <View key={index}>
-              <Image
-                style={{ width: 100, height: 100 }}
-                source={{ uri }}
-              />
-            </View>
-          );
-        })}
-      </View>
-      <MarkedMap markedLocation={markedLocation} />
-      <TouchableOpacity
-        style={{ margin: 10, padding: 10 }}
-        onPress={() => onSaveTreasure()}
-      >
-        <Text style={{ color: COLOR.BLUE }}>Complete</Text>
-      </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1, alignItems: 'center', justifyContent: 'center'
+  },
+  categoryWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    margin: 2,
+  },
+  category: {
+    flex: 1.2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5,
+    borderRadius: 5,
+    backgroundColor: COLOR.BLUE,
+  },
+  categoryText: {
+    fontFamily: FONT.PT_BOLD,
+    fontSize: 28,
+    color: COLOR.WHITE,
+    textAlign: 'center',
+  },
+  inputWrapper: {
+    flex: 2.8,
+    justifyContent: 'center',
+    margin: 5,
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: COLOR.BLUE,
+  },
+  inputText: {
+    fontFamily: FONT.GAMJA,
+    fontSize: 22,
+  },
+  expirationInput: {
+    flex: 2.8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    margin: 5,
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: COLOR.BLUE,
+  },
+  expirationWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    margin: 10,
+  },
+  descriptionWrapper: {
+    flex: 1,
+    margin: 7,
+    padding: 5,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: COLOR.BLUE,
+  },
+  cameraAmdMapWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    margin: 4,
+    padding: 8,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: COLOR.BLUE,
+    backgroundColor: COLOR.BLUE
+  },
+  pictureWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    margin: 4,
+    height: 100,
+  },
+  mapWrapper: {
+    flex: 1,
+    margin: 4,
+    width: '96%',
+  },
+  completeWrapper: {
+    flex: 1,
+    margin: 5,
+  },
+  completeText: {
+    fontFamily: FONT.PT_BOLD,
+    fontSize: 40,
+    color: COLOR.BLUE,
+    textAlign: 'center',
+  },
+});
