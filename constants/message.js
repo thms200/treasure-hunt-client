@@ -7,6 +7,7 @@ const message = {
   maxImg: 'Up to three images can be registered.',
   failSave: 'Sorry. We can\'t save your treasure information! Try again.',
   successSave: 'Success save your treasure. Thank you. Happy Hunting. 👍',
+  noneCategory: 'Sorry. We can\'t get your treasure category! Try again.',
   noneCountry: 'You should selected a country about your treasure.',
   noneName: 'You should inputed a your treasure name.',
   invalidExpiration: 'Try again. Expiration must be later than now',

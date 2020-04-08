@@ -7,8 +7,11 @@ export const caculateLocation = (latitude, longitude, screen) => {
   return { latitude, longitude, latitudeDelta, longitudeDelta };
 };
 
-export const checkValidation = (country, name, description, uriList, markedLocation) => {
-  if (!country) {
+export const checkValidation = (category, country, name, description, uriList, markedLocation) => {
+  if (!category) {
+    alert(message.noneCategory);
+    return false;
+  } else if (!country) {
     alert(message.noneCountry);
     return false;
   } else if (!name) {

@@ -72,8 +72,7 @@ export default function InputTreasureDetail({ navigation, route }) {
 
   const onSaveTreasure = async() => {
     try {
-      if (!checkValidation(country, name, description, uriList, markedLocation)) return;
-      console.log('validation after');
+      if (!checkValidation(category, country, name, description, uriList, markedLocation)) return;
       const formdata = new FormData();
       uriList.forEach(uri => {
         const name = uri.split('Camera/')[1] || uri.split('ImagePicker/')[1];
