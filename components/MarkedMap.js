@@ -8,19 +8,25 @@ import { COLOR } from '../constants';
 
 export default function MarkedMap({ markedLocation }) {
   if (!markedLocation) {
-    return <View style={styles.dummyWrapper}><MaterialCommunityIcons name="map-search-outline" style={styles.dummy}/></View>;
+    return (
+      <View style={styles.dummyWrapper}>
+        <MaterialCommunityIcons name="map-search-outline" style={styles.dummy} s/>
+      </View>
+    );
   } else {
     const {
       latitude, longitude, latitudeDelta, longitudeDelta
     } = caculateLocation(markedLocation.latitude, markedLocation.longitude, Dimensions.get('window'));
 
-    return (<MapView
-      style={styles.map}
-      pinColor={COLOR.BLUE}
-      initialRegion={{ latitude, longitude, latitudeDelta, longitudeDelta }}
-    >
-      <MapView.Marker coordinate={{ latitude, longitude }} centerOffset={{ x: 0.5, y: 0.5 }} />
-    </MapView>);
+    return (
+      <MapView
+        style={styles.map}
+        pinColor={COLOR.BLUE}
+        initialRegion={{ latitude, longitude, latitudeDelta, longitudeDelta }}
+      >
+        <MapView.Marker coordinate={{ latitude, longitude }} centerOffset={{ x: 0.5, y: 0.5 }} />
+      </MapView>
+    );
   }
 }
 
