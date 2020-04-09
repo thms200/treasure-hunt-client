@@ -28,6 +28,7 @@ export default function Huntcontainer({ navigation }) {
                 country={item.country}
                 expiration={item.expiration}
                 id={item.id}
+                navigation={navigation}
               />
             );
           }}
