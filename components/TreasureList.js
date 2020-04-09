@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
+import { makeExpirationToString } from '../utils';
 import { COLOR, FONT } from '../constants';
 
 const { width } = Dimensions.get('window');
@@ -8,10 +9,11 @@ const margin = width * 0.01;
 const padding = width * 0.01;
 
 export default function TreasureList({ name, country, expiration, id, navigation, onClickCountry, onClickTreasure }) {
-  const year = new Date(expiration).getFullYear();
-  const month = new Date(expiration).getMonth() + 1;
-  const date = new Date(expiration).getDate();
-  const expirationDate = `${year}/${month}/${date}`;
+  const expirationDate = makeExpirationToString(expiration);
+  // const year = new Date(expiration).getFullYear();
+  // const month = new Date(expiration).getMonth() + 1;
+  // const date = new Date(expiration).getDate();
+  // const expirationDate = `${year}/${month}/${date}`;
 
   return (
     <View style={styles.topWrapper}>
@@ -23,13 +25,13 @@ export default function TreasureList({ name, country, expiration, id, navigation
           />
         </View>
         <View style={styles.contryWrapper}>
-          <TouchableOpacity onPress={() => onClickCountry(country)}>
+          <TouchableOpacity onPress={async() => await onClickCountry(country)}>
             <Text style={styles.text}>{country}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.nameWrapper}>
-          <TouchableOpacity onPress={() => {
-            onClickTreasure(id);
+          <TouchableOpacity onPress={async() => {
+            await onClickTreasure(id);
             navigation.navigate('GetTreasureDetail');
           }}>
             <Text style={styles.text}>{name}</Text>

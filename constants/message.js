@@ -14,8 +14,7 @@ const message = {
   noneDescription: 'Let me know about your treasure. Anything!.',
   nonePictures: 'You should take pictures about location of treasure. Click "Camera" Or "Gallery".',
   noneMap: 'You should inputed a your treasure location. Click "Map" button, and confirm location.',
-  failGetInfos: 'Sorry, We can\'t get treasures information for unkown reasons. Try again.',
-  failGetInfo: 'Sorry, We can\'t get selected treasures information for unkown reasons. Try again.',
+  successTaken: 'Thank you for your hunging👍',
 };
 
 export default message;

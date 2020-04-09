@@ -14,7 +14,7 @@ export const fetchTreasures = async(country, category, dispatch, action) => {
   })
     .then((res) => res.json())
     .then((json) => {
-      if (json.result === 'ng') return alert(message.failGetInfos);
+      if (json.result === 'ng') return alert(json.errMessage);
       dispatch(action(json));
     });
 };
@@ -30,7 +30,24 @@ export const fetchSelectedTreasure = async(id, dispatch, action) => {
   })
     .then((res) => res.json())
     .then((json) => {
-      if (json.result === 'ng') return alert(message.failGetInfo);
+      if (json.result === 'ng') return alert(json.errMessage);
       dispatch(action(json));
+    });
+};
+
+export const updateSelectedTreasure = async(id, navigation) => {
+  const currentToken = await SecureStore.getItemAsync('userToken');
+  return await fetch(`${API_URL}/api/treasures/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': `Bearer ${currentToken}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      if (json.result === 'ng') return alert(json.errMessage);
+      alert(message.successTaken);
+      navigation.navigate('GetTreasureList');
     });
 };

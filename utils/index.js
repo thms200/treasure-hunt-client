@@ -29,3 +29,10 @@ export const checkValidation = (category, country, name, description, uriList, m
   }
   return true;
 };
+
+export const makeExpirationToString = (timestamp) => {
+  const year = new Date(timestamp).getFullYear();
+  const month = new Date(timestamp).getMonth() + 1;
+  const date = new Date(timestamp).getDate();
+  return `${year}/${month}/${date}`;
+};

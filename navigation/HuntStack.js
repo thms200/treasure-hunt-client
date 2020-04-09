@@ -26,7 +26,22 @@ export default function Hunt() {
           headerTitleAlign: 'center',
         })}
       />
-      <HuntStack.Screen name="GetTreasureDetail" component={TreasureDetailContainer} />
+      <HuntStack.Screen
+        name="GetTreasureDetail"
+        component={TreasureDetailContainer}
+        options={({ navigation }) => ({
+          headerTitle: 'Your Treasure 💰',
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Hide', { screen: 'SelectTreasureCategory' })}
+            >
+              <Text style={styles.headerRight}>Hiding</Text>
+            </TouchableOpacity>
+          ),
+          headerTitleStyle: styles.headerTitle,
+          headerTitleAlign: 'center',
+        })}
+      />
     </HuntStack.Navigator>
   );
 }
