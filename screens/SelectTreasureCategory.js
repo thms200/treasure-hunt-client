@@ -20,7 +20,7 @@ export default function SelectTreasureCategory({ navigation }) {
       <TouchableOpacity
         style={styles.buttonWrapper}
         onPress={() => navigation.navigate('InputTreasureDetail', {
-          category: 'transportaion',
+          category: 'transportation',
         })}
       >
         <View style={styles.iconWrapper}>
