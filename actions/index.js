@@ -6,3 +6,10 @@ export function getTreasures(treasures){
     treasures,
   };
 }
+
+export function getSelectedTreasure(selectedTreasure){
+  return {
+    type: types.GET_SELECTEDTREASURE,
+    selectedTreasure,
+  };
+}

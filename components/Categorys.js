@@ -8,47 +8,47 @@ const { width } = Dimensions.get('window');
 const screenWidth = width / 7;
 const margin = screenWidth * 0.02;
 
-export default function Categorys({ fetchTreasures, dispatch, action }) {
+export default function Categorys({ onClickCategory }) {
   return (
     <View style={styles.topWrapper}>
       <View style={styles.categoryWrapper}>
-        <TouchableOpacity onPress={() => fetchTreasures('all', 'usim', dispatch, action)}>
+        <TouchableOpacity onPress={() => onClickCategory('usim')}>
           <Entypo name="creative-commons-share" style={styles.icons} />
           <Text style={styles.text}>유심</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.categoryWrapper}>
-        <TouchableOpacity onPress={() => fetchTreasures('all', 'transportation', dispatch, action)}>
+        <TouchableOpacity onPress={() => onClickCategory('transportation')}>
           <Ionicons name="md-train" style={styles.icons} />
           <Text style={styles.text}>교통</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.categoryWrapper}>
-        <TouchableOpacity onPress={() => fetchTreasures('all', 'show', dispatch, action)}>
+        <TouchableOpacity onPress={() => onClickCategory('show')}>
           <MaterialCommunityIcons name="music-circle-outline" style={styles.icons} />
           <Text style={styles.text}>영화|공연</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.categoryWrapper}>
-        <TouchableOpacity onPress={() => fetchTreasures('all', 'ticket', dispatch, action)}>
+        <TouchableOpacity onPress={() => onClickCategory('ticket')}>
           <Foundation name="ticket" style={styles.icons} />
           <Text style={styles.text}>입장권</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.categoryWrapper}>
-        <TouchableOpacity onPress={() => fetchTreasures('all', 'coupon', dispatch, action)}>
+        <TouchableOpacity onPress={() => onClickCategory('coupon')}>
           <FontAwesome5 name="money-check-alt" style={styles.icons} />
           <Text style={styles.text}>쿠폰</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.categoryWrapper}>
-        <TouchableOpacity onPress={() => fetchTreasures('all', 'etc', dispatch, action)}>
+        <TouchableOpacity onPress={() => onClickCategory('etc')}>
           <MaterialCommunityIcons name="dots-horizontal-circle" style={styles.icons} />
           <Text style={styles.text}>기타</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.categoryWrapper}>
-        <TouchableOpacity onPress={() => fetchTreasures('all', 'all', dispatch, action)}>
+        <TouchableOpacity onPress={() => onClickCategory('all')}>
           <FontAwesome5 name="home" style={styles.icons} />
           <Text style={styles.text}>All</Text>
         </TouchableOpacity>
@@ -84,7 +84,5 @@ const styles = StyleSheet.create({
 });
 
 Categorys.propTypes = {
-  fetchTreasures: PropTypes.func.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  action: PropTypes.func.isRequired,
+  onClickCategory: PropTypes.func.isRequired,
 };
