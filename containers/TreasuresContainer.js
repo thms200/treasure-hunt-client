@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
 import TreasureList from '../components/TreasureList';
 import Categorys from '../components/Categorys';
 import { getTreasures } from '../actions';
-import { fetchTreasures } from '../utils';
+import { fetchTreasures } from '../utils/api';
 import { COLOR, FONT } from '../constants';
 
-export default function Huntcontainer({ navigation }) {
+export default function TreasuresContainer({ navigation }) {
   const treasures = useSelector(state => state.treasures.treasures);
   const dispatch = useDispatch();
 
@@ -29,19 +29,14 @@ export default function Huntcontainer({ navigation }) {
                 expiration={item.expiration}
                 id={item.id}
                 navigation={navigation}
+                fetchTreasures={fetchTreasures}
+                dispatch={dispatch}
+                action={getTreasures}
               />
             );
           }}
           keyExtractor={item => item.id}
         />
-      </View>
-      <View style={styles.bottomWrapper}>
-        <Text
-          style={styles.bottomText}
-          onPress={() => navigation.navigate('Hide', { screen: 'SelectTreasureCategory' })}
-        >
-          Hiding
-        </Text>
       </View>
     </View>
   );
@@ -49,18 +44,7 @@ export default function Huntcontainer({ navigation }) {
 
 const styles = StyleSheet.create({
   treasuresWrapper: {
-    flex: 8.2,
+    flex: 9,
     backgroundColor: COLOR.WHITE
   },
-  bottomWrapper: {
-    flex: 0.8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: COLOR.BLUE,
-  },
-  bottomText: {
-    fontSize: 40,
-    color: COLOR.WHITE,
-    fontFamily: FONT.PT_BOLD,
-  }
 });

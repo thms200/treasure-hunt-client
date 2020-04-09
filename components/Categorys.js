@@ -4,11 +4,9 @@ import PropTypes from 'prop-types';
 import { Entypo, Ionicons, MaterialCommunityIcons, Foundation, FontAwesome5 } from '@expo/vector-icons';
 import { COLOR, FONT } from '../constants';
 
-const { width, height } = Dimensions.get('window');
-const screenHight = height * 0.2;
-const screenWidth = width / 6;
-const margin = screenWidth * 0.04;
-const top = screenHight * 0.15;
+const { width } = Dimensions.get('window');
+const screenWidth = width / 7;
+const margin = screenWidth * 0.02;
 
 export default function Categorys({ fetchTreasures, dispatch, action }) {
   return (
@@ -49,6 +47,12 @@ export default function Categorys({ fetchTreasures, dispatch, action }) {
           <Text style={styles.text}>기타</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.categoryWrapper}>
+        <TouchableOpacity onPress={() => fetchTreasures('all', 'all', dispatch, action)}>
+          <FontAwesome5 name="home" style={styles.icons} />
+          <Text style={styles.text}>All</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -58,7 +62,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: top,
   },
   categoryWrapper: {
     flex: 1,
@@ -73,7 +76,7 @@ const styles = StyleSheet.create({
     color: COLOR.WHITE,
   },
   text: {
-    fontSize: 18,
+    fontSize: 16,
     textAlign: 'center',
     color: COLOR.WHITE,
     fontFamily: FONT.GAMJA,

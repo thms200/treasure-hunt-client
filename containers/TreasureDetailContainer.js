@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function GetTreasureDetail({ route }) {
+export default function TreasureDetailContainer({ route }) {
   const { id } = route.params;
+
   return (
     <View style={styles.container}>
       <Text>{id}</Text>

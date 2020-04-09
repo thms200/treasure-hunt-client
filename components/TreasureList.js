@@ -7,7 +7,7 @@ const { width } = Dimensions.get('window');
 const margin = width * 0.01;
 const padding = width * 0.01;
 
-export default function TreasureList({ name, country, expiration, id, navigation }) {
+export default function TreasureList({ name, country, expiration, id, navigation, fetchTreasures, dispatch, action }) {
   const year = new Date(expiration).getFullYear();
   const month = new Date(expiration).getMonth() + 1;
   const date = new Date(expiration).getDate();
@@ -23,7 +23,7 @@ export default function TreasureList({ name, country, expiration, id, navigation
           />
         </View>
         <View style={styles.contryWrapper}>
-          <Text style={styles.text}>{country}</Text>
+          <Text onPress={() => fetchTreasures(country, 'all', dispatch, action)}>{country}</Text>
         </View>
         <View style={styles.nameWrapper}>
           <TouchableOpacity onPress={() => navigation.navigate('GetTreasureDetail', { id })}>
@@ -78,4 +78,7 @@ TreasureList.propTypes = {
   country: PropTypes.string.isRequired,
   expiration: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
+  fetchTreasures: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  action: PropTypes.func.isRequired,
 };
