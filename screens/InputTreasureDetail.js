@@ -44,7 +44,7 @@ export default function InputTreasureDetail({ navigation, route }) {
         const { status } = await Permissions.getAsync(Permissions.LOCATION);
         if (status === 'granted') {
           setHasPermissionLocation(true);
-          const location = await Location.getCurrentPositionAsync({ accuracy: 4 });
+          const location = await Location.getCurrentPositionAsync({ accuracy: 3 });
           const { latitude, longitude } = location.coords;
           setLocation(caculateLocation(latitude, longitude, Dimensions.get('window')));
         }
