@@ -1,0 +1,1 @@
+export const GET_TREASURES = 'GET_TREASURES';
