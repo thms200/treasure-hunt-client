@@ -2,7 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { StyleSheet, View, Text, Image, ScrollView, Dimensions } from 'react-native';
 import MapView from 'react-native-maps';
-import { makeExpirationToString, caculateLocation, updateSelectedTreasure } from '../utils';
+import { makeExpirationToString, caculateLocation } from '../utils';
+import { updateSelectedTreasure } from '../utils/api';
 import { FONT, COLOR } from '../constants';
 
 const screen = Dimensions.get('window');
