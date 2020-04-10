@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
 import { checkLogin, logInFacebook } from '../utils/api';
-import { COLOR, FONT } from '../constants/';
+import { getLoginUser } from '../actions';
+import { COLOR, FONT } from '../constants';
 
-export default function LoginScreen({ navigation }) {
+export default function LoginContainer({ navigation }) {
+  const dispatch = useDispatch();
   useEffect(() => {
-    checkLogin(navigation);
+    checkLogin(navigation, dispatch, getLoginUser);
   }, []);
 
   return (
@@ -19,7 +22,7 @@ export default function LoginScreen({ navigation }) {
         <FontAwesome.Button
           name="facebook"
           backgroundColor="#3b5998"
-          onPress={() => logInFacebook(navigation)}
+          onPress={() => logInFacebook(navigation, dispatch, getLoginUser)}
         >
           <Text style={styles.login}>Login with Facebook</Text>
         </FontAwesome.Button>

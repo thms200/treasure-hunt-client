@@ -5,7 +5,7 @@ import getEnvVars from '../environment';
 const { FACEBOOK_APP_ID, API_URL } = getEnvVars();
 import message from '../constants/message';
 
-export const logInFacebook = async(navigation) => {
+export const logInFacebook = async(navigation, dispatch, action) => {
   try {
     await Facebook.initializeAsync(FACEBOOK_APP_ID);
     const { type, token } = await Facebook.logInWithReadPermissionsAsync({
@@ -27,7 +27,8 @@ export const logInFacebook = async(navigation) => {
         if (json.result === 'ng') return alert(json.errMessage);
         if (json.result === 'ok') {
           await SecureStore.setItemAsync('userToken', json.token);
-          navigation.navigate('Main', { screen: 'Home' });
+          dispatch(action());
+          navigation.navigate('Main', { screen: 'Hunt' });
         }
       });
   } catch (err) {
@@ -36,7 +37,7 @@ export const logInFacebook = async(navigation) => {
   }
 };
 
-export const checkLogin = async(navigation) => {
+export const checkLogin = async(navigation, dispatch, action) => {
   try {
     const currentToken = await SecureStore.getItemAsync('userToken');
     return await fetch(`${API_URL}/api/users/auth`, {
@@ -48,17 +49,16 @@ export const checkLogin = async(navigation) => {
     })
       .then((res) => res.json())
       .then(async(json) => {
-        if (json.result === 'ok') return navigation.navigate('Main', { screen: 'Home' });
-        if (json.result === 'ng') {
-          await SecureStore.deleteItemAsync('userToken');
-          return alert(json.errMessage);
+        if (json.result === 'ng') await SecureStore.deleteItemAsync('userToken');
+        if (json.result === 'ok') {
+          dispatch(action());
+          return navigation.navigate('Main', { screen: 'Hunt' });
         }
       });
   } catch (err) {
     alert(message.invalidLogin);
     console.warn(err);
   }
-
 };
 
 export const fetchTreasures = async(country, category, dispatch, action) => {

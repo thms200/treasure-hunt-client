@@ -33,7 +33,7 @@ export default function Hunt() {
           headerTitle: 'Your Treasure 💰',
           headerRight: () => (
             <TouchableOpacity
-              onPress={() => navigation.navigate('Hide', { screen: 'SelectCategory' })}
+              onPress={() => navigation.navigate('Hide', { screen: 'Treasures' })}
             >
               <Text style={styles.headerRight}>Hiding</Text>
             </TouchableOpacity>

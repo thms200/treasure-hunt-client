@@ -13,3 +13,15 @@ export function getSelectedTreasure(selectedTreasure){
     selectedTreasure,
   };
 }
+
+export function getLoginUser(){
+  return {
+    type: types.GET_LOGINUSER,
+  };
+}
+
+export function getLogoutUser(){
+  return {
+    type: types.GET_LOGOUTUSER,
+  };
+}
