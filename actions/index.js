@@ -14,9 +14,10 @@ export function getSelectedTreasure(selectedTreasure){
   };
 }
 
-export function getLoginUser(){
+export function getLoginUser(userInfo){
   return {
     type: types.GET_LOGINUSER,
+    userInfo,
   };
 }
 

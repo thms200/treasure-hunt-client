@@ -27,7 +27,7 @@ export const logInFacebook = async(navigation, dispatch, action) => {
         if (json.result === 'ng') return alert(json.errMessage);
         if (json.result === 'ok') {
           await SecureStore.setItemAsync('userToken', json.token);
-          dispatch(action());
+          dispatch(action(json.userInfo));
           navigation.navigate('Main', { screen: 'Hunt' });
         }
       });
@@ -51,7 +51,7 @@ export const checkLogin = async(navigation, dispatch, action) => {
       .then(async(json) => {
         if (json.result === 'ng') await SecureStore.deleteItemAsync('userToken');
         if (json.result === 'ok') {
-          dispatch(action());
+          dispatch(action(json.userInfo));
           return navigation.navigate('Main', { screen: 'Hunt' });
         }
       });
