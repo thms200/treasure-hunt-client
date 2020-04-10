@@ -15,6 +15,7 @@ const message = {
   nonePictures: 'You should take pictures about location of treasure. Click "Camera" Or "Gallery".',
   noneMap: 'You should inputed a your treasure location. Click "Map" button, and confirm location.',
   successTaken: 'Thank you for your hunging👍',
+  generalError: 'There was an error on the server. Please try again in a moment.'
 };
 
 export default message;

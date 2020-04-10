@@ -2,18 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
-import * as SecureStore from 'expo-secure-store';
 import * as Location from 'expo-location';
 import CountryPicker, { DARK_THEME } from 'react-native-country-picker-modal';
 import { AntDesign } from '@expo/vector-icons';
 import MarkedMap from '../components/MarkedMap';
 import Calendar from '../components/Calendar';
 import Pictures from '../components/Pictures';
-import { caculateLocation, checkValidation } from '../utils';
+import { caculateLocation } from '../utils';
+import { onSaveTreasure } from '../utils/api';
 import { COLOR, FONT } from '../constants';
 import message from '../constants/message';
-import getEnvVars from '../environment';
-const { API_URL } = getEnvVars();
 
 export default function InputTreasureDetail({ navigation, route }) {
   const [hasPermissionCameraAndAlbum, setHasPermissionCamaraAndAlbum] = useState(false);
@@ -68,47 +66,6 @@ export default function InputTreasureDetail({ navigation, route }) {
     const { uri } = pickerResult;
     if (uri && uriList.length <= 3 && !uriList.includes(uri)) {
       setUriList((uriList) => uriList.concat(uri));
-    }
-  };
-
-  const onSaveTreasure = async() => {
-    try {
-      if (!checkValidation(category, country, name, description, uriList, markedLocation)) return;
-      const formdata = new FormData();
-      uriList.forEach(uri => {
-        const name = uri.split('Camera/')[1] || uri.split('ImagePicker/')[1];
-        const locationPicture = { uri, name, type: 'multipart/form-data', };
-        formdata.append('img', locationPicture);
-      });
-      formdata.append('country', country);
-      formdata.append('category', category);
-      formdata.append('name', name);
-      formdata.append('expiration', expiration);
-      formdata.append('latitude', markedLocation.latitude);
-      formdata.append('longitude', markedLocation.longitude);
-      formdata.append('description', description);
-      formdata.append('is_hunting', false);
-
-      const userToken = await SecureStore.getItemAsync('userToken');
-      return await fetch(`${API_URL}/api/treasures`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'x-access-token': `Bearer ${userToken}`,
-        },
-        body: formdata,
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          if (json.result === 'ok') {
-            alert(message.successSave);
-            return navigation.navigate('Hunt', { screen: 'GetTreasureList' });
-          }
-          if (json.result === 'ng') return alert(message.failSave);
-        });
-    } catch(err) {
-      alert(message.failSave);
-      console.warn(err);
     }
   };
 
@@ -209,7 +166,9 @@ export default function InputTreasureDetail({ navigation, route }) {
           <MarkedMap markedLocation={markedLocation} />
         </View>
         <View style={styles.completeWrapper}>
-          <TouchableOpacity onPress={() => onSaveTreasure()}>
+          <TouchableOpacity
+            onPress={() => onSaveTreasure(category, country, name, description, uriList, markedLocation, expiration, navigation)}
+          >
             <Text style={styles.completeText}>Complete</Text>
           </TouchableOpacity>
         </View>
