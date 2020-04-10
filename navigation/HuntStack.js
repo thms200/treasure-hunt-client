@@ -11,13 +11,13 @@ export default function Hunt() {
   return (
     <HuntStack.Navigator>
       <HuntStack.Screen
-        name="GetTreasureList"
+        name="Treasures"
         component={TreasuresContainer}
         options={({ navigation }) => ({
           headerTitle: 'Happy Hunting 👀',
           headerRight: () => (
             <TouchableOpacity
-              onPress={() => navigation.navigate('Hide', { screen: 'SelectTreasureCategory' })}
+              onPress={() => navigation.navigate('Hide', { screen: 'SelectCategory' })}
             >
               <Text style={styles.headerRight}>Hiding</Text>
             </TouchableOpacity>
@@ -27,13 +27,13 @@ export default function Hunt() {
         })}
       />
       <HuntStack.Screen
-        name="GetTreasureDetail"
+        name="TreasureDetail"
         component={TreasureDetailContainer}
         options={({ navigation }) => ({
           headerTitle: 'Your Treasure 💰',
           headerRight: () => (
             <TouchableOpacity
-              onPress={() => navigation.navigate('Hide', { screen: 'SelectTreasureCategory' })}
+              onPress={() => navigation.navigate('Hide', { screen: 'SelectCategory' })}
             >
               <Text style={styles.headerRight}>Hiding</Text>
             </TouchableOpacity>

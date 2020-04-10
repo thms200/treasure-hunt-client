@@ -10,10 +10,6 @@ const padding = width * 0.01;
 
 export default function TreasureList({ name, country, expiration, id, navigation, onClickCountry, onClickTreasure }) {
   const expirationDate = makeExpirationToString(expiration);
-  // const year = new Date(expiration).getFullYear();
-  // const month = new Date(expiration).getMonth() + 1;
-  // const date = new Date(expiration).getDate();
-  // const expirationDate = `${year}/${month}/${date}`;
 
   return (
     <View style={styles.topWrapper}>
@@ -32,7 +28,7 @@ export default function TreasureList({ name, country, expiration, id, navigation
         <View style={styles.nameWrapper}>
           <TouchableOpacity onPress={async() => {
             await onClickTreasure(id);
-            navigation.navigate('GetTreasureDetail');
+            navigation.navigate('TreasureDetail');
           }}>
             <Text style={styles.text}>{name}</Text>
           </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView, Dimensions, } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
@@ -13,7 +13,7 @@ import { onSaveTreasure } from '../utils/api';
 import { COLOR, FONT } from '../constants';
 import message from '../constants/message';
 
-export default function InputTreasureDetail({ navigation, route }) {
+export default function InputDetailScreen({ navigation, route }) {
   const [hasPermissionCameraAndAlbum, setHasPermissionCamaraAndAlbum] = useState(false);
   const [hasPermissionLocation, setHasPermissionLocation] = useState(false);
   const [country, setCountry] = useState('');
@@ -131,7 +131,7 @@ export default function InputTreasureDetail({ navigation, route }) {
             style={styles.cameraAmdMapWrapper}
             onPress={() => {
               if (uriList.length >= 3) return alert(message.maxImg);
-              if (hasPermissionCameraAndAlbum) return navigation.navigate('TakeAPicture');
+              if (hasPermissionCameraAndAlbum) return navigation.navigate('TakePicture');
               alert(message.deniedPermission);
             }}
           >

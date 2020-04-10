@@ -3,12 +3,12 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Entypo, Ionicons, MaterialCommunityIcons, Foundation, FontAwesome5 } from '@expo/vector-icons';
 import { COLOR, FONT } from '../constants';
 
-export default function SelectTreasureCategory({ navigation }) {
+export default function SelectCategoryScreen({ navigation }) {
   return (
     <View style={styles.wrapper}>
       <TouchableOpacity
         style={styles.buttonWrapper}
-        onPress={() => navigation.navigate('InputTreasureDetail', {
+        onPress={() => navigation.navigate('InputDetail', {
           category: 'usim',
         })}
       >
@@ -19,7 +19,7 @@ export default function SelectTreasureCategory({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonWrapper}
-        onPress={() => navigation.navigate('InputTreasureDetail', {
+        onPress={() => navigation.navigate('InputDetail', {
           category: 'transportation',
         })}
       >
@@ -30,7 +30,7 @@ export default function SelectTreasureCategory({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonWrapper}
-        onPress={() => navigation.navigate('InputTreasureDetail', {
+        onPress={() => navigation.navigate('InputDetail', {
           category: 'show',
         })}
       >
@@ -41,7 +41,7 @@ export default function SelectTreasureCategory({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonWrapper}
-        onPress={() => navigation.navigate('InputTreasureDetail', {
+        onPress={() => navigation.navigate('InputDetail', {
           category: 'ticket',
         })}
       >
@@ -52,7 +52,7 @@ export default function SelectTreasureCategory({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonWrapper}
-        onPress={() => navigation.navigate('InputTreasureDetail', {
+        onPress={() => navigation.navigate('InputDetail', {
           category: 'coupon',
         })}
       >
@@ -63,7 +63,7 @@ export default function SelectTreasureCategory({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonWrapper}
-        onPress={() => navigation.navigate('InputTreasureDetail', {
+        onPress={() => navigation.navigate('InputDetail', {
           category: 'etc',
         })}
       >

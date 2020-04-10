@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import SelectTreasureCategory from '../screens/SelectTreasureCategory';
-import InputTreasureDetail from '../screens/InputTreasureDetail';
-import TakeAPicure from '../screens/TakeAPicture';
-import ShowMap from '../screens/ShowMap';
+import SelectCategoryScreen from '../screens/SelectCategoryScreen';
+import InputDetailScreen from '../screens/InputDetailScreen';
+import TakePictureScreen from '../screens/TakePictureScreen';
+import ShowMapScreen from '../screens/ShowMapScreen';
 import { COLOR, FONT } from '../constants';
 
 const HideStack = createStackNavigator();
@@ -13,13 +13,13 @@ export default function Hide() {
   return (
     <HideStack.Navigator>
       <HideStack.Screen
-        name="SelectTreasureCategory"
-        component={SelectTreasureCategory}
+        name="SelectCategory"
+        component={SelectCategoryScreen}
         options={({ navigation }) => ({
           headerTitle: 'Select Category',
           headerRight: () => (
             <TouchableOpacity
-              onPress={() => navigation.navigate('Hunt', { screen: 'GetTreasureList' })}
+              onPress={() => navigation.navigate('Hunt', { screen: 'Treasures' })}
             >
               <Text style={styles.headerRight}>Hunting</Text>
             </TouchableOpacity>
@@ -29,13 +29,13 @@ export default function Hide() {
         })}
       />
       <HideStack.Screen
-        name="InputTreasureDetail"
-        component={InputTreasureDetail}
+        name="InputDetail"
+        component={InputDetailScreen}
         options={({ navigation }) => ({
           headerTitle: 'Happy Hiding 🎁',
           headerRight: () => (
             <TouchableOpacity
-              onPress={() => navigation.navigate('Hunt', { screen: 'GetTreasureList' })}
+              onPress={() => navigation.navigate('Hunt', { screen: 'Treasures' })}
             >
               <Text style={styles.headerRight}>Hunting</Text>
             </TouchableOpacity>
@@ -44,8 +44,16 @@ export default function Hide() {
           headerTitleAlign: 'center',
         })}
       />
-      <HideStack.Screen name="TakeAPicture" component={TakeAPicure} options={{ headerShown: false }} />
-      <HideStack.Screen name="ShowMap" component={ShowMap} options={{ headerShown: false }} />
+      <HideStack.Screen
+        name="TakePicture"
+        component={TakePictureScreen}
+        options={{ headerShown: false }}
+      />
+      <HideStack.Screen
+        name="ShowMap"
+        component={ShowMapScreen}
+        options={{ headerShown: false }}
+      />
     </HideStack.Navigator>
   );
 }

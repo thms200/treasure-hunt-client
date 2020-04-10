@@ -117,7 +117,7 @@ export const updateSelectedTreasure = async(id, navigation) => {
       .then((json) => {
         if (json.result === 'ng') return alert(json.errMessage);
         alert(message.successTaken);
-        navigation.navigate('GetTreasureList');
+        navigation.navigate('Treasures');
       });
   } catch (err) {
     alert(message.generalError);
@@ -156,7 +156,7 @@ export const onSaveTreasure = async(category, country, name, description, uriLis
       .then((json) => {
         if (json.result === 'ok') {
           alert(message.successSave);
-          return navigation.navigate('Hunt', { screen: 'GetTreasureList' });
+          return navigation.navigate('Hunt', { screen: 'Treasures' });
         }
         if (json.result === 'ng') return alert(message.failSave);
       });

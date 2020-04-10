@@ -7,13 +7,13 @@ export default function HomeScreen({ navigation }) {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.hidingButton}
-        onPress={() => navigation.navigate('Hide', { screen: 'SelectTreasureCategory' })}
+        onPress={() => navigation.navigate('Hide', { screen: 'SelectCategory' })}
       >
         <Text style={styles.text}>Hiding</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.huntingContainer}
-        onPress={() => navigation.navigate('Hunt', { screen: 'GetTreasureList' })}
+        onPress={() => navigation.navigate('Hunt', { screen: 'Treasures' })}
       >
         <Text style={styles.text}>Hunting</Text>
       </TouchableOpacity>

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import * as Permissions from 'expo-permissions';
-import MainStack from './navigation/MainStack';
-import LoginScreen from './screens/LoginScreen';
+import RootStack from './navigation/RootStack';
+import MyTreasuresStack from './navigation/MyTreasuresStack';
+import MyHuntingsStack from './navigation/MyHuntingsStack';
 import treasures from './reducers/treasures';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
@@ -29,7 +30,7 @@ const getResorceAndPermission = async() => {
 };
 
 const store = createStore(combineReducers({ treasures }));
-const RootStack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -38,10 +39,11 @@ export default function App() {
     return (
       <Provider store={store}>
         <NavigationContainer>
-          <RootStack.Navigator>
-            <RootStack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-            <RootStack.Screen name="Main" component={MainStack} options={{ headerShown: false }} />
-          </RootStack.Navigator>
+          <Drawer.Navigator initialRouteName="RootStack">
+            <Drawer.Screen name="Home" component={RootStack} />
+            <Drawer.Screen name="My Treasures" component={MyTreasuresStack} />
+            <Drawer.Screen name="My Hunting" component={MyHuntingsStack} />
+          </Drawer.Navigator>
         </NavigationContainer>
       </Provider>
     );

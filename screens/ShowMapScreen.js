@@ -4,12 +4,12 @@ import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { COLOR } from '../constants';
 
-export default function ShowMap({ navigation, route }) {
+export default function ShowMapScreen({ navigation, route }) {
   const [markedLocation, setMarkedLocation] = useState(route.params.location);
   const { latitude, longitude, latitudeDelta, longitudeDelta } = route.params.location;
 
   const onGetMarkedLocation = async() => {
-    navigation.navigate('InputTreasureDetail', { markedLocation });
+    navigation.navigate('InputDetail', { markedLocation });
   };
 
   const onDragEnd = async(location) => {
@@ -48,8 +48,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   mapStyle: {
     width: Dimensions.get('window').width,
