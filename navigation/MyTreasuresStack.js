@@ -2,25 +2,32 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import MyTreasuresContainer from '../containers/MyPageContainer';
-import MyTreasureDetailScreen from '../screens/MyTreasureDetailScreen';
+import MyTreasureDetailContainer from '../containers/MyPageDetailContainer';
 import { COLOR, FONT } from '../constants';
 
 const MyTreasuresStack  = createStackNavigator();
 
 export default function MyTreasures() {
+  const headerOption = {
+    headerTitle: 'My Treasures',
+    headerTitleStyle: styles.headerTitle,
+    headerTitleAlign: 'center',
+  };
+
   return (
     <MyTreasuresStack.Navigator>
       <MyTreasuresStack.Screen
-        name="myTreasures"
-        options={{
-          headerTitle: 'My Treasures',
-          headerTitleStyle: styles.headerTitle,
-          headerTitleAlign: 'center',
-        }}
+        name="MyTreasures"
+        options={headerOption}
       >
-        {props => <MyTreasuresContainer {...props} myPage={'treasure'} />}
+        {props => <MyTreasuresContainer {...props} type={'treasure'} />}
       </MyTreasuresStack.Screen>
-      <MyTreasuresStack.Screen name="My TreasureDetail" component={MyTreasureDetailScreen} />
+      <MyTreasuresStack.Screen
+        name="MyTreasureDetail"
+        options={headerOption}
+      >
+        {props => <MyTreasureDetailContainer {...props} type={'treasure'} />}
+      </MyTreasuresStack.Screen>
     </MyTreasuresStack.Navigator>
   );
 }

@@ -2,25 +2,32 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import MyHuntingsContainer from '../containers/MyPageContainer';
-import MyHuntingDetailScreen from '../screens/MyHuntingDetailScreen';
+import MyHuntingDetailContainer from '../containers/MyPageDetailContainer';
 import { COLOR, FONT } from '../constants';
 
 const MyHuntingsStack  = createStackNavigator();
 
 export default function MyTreasures() {
+  const headerOption = {
+    headerTitle: 'My Huntings',
+    headerTitleStyle: styles.headerTitle,
+    headerTitleAlign: 'center',
+  };
+
   return (
     <MyHuntingsStack.Navigator>
       <MyHuntingsStack.Screen
-        name="myHuntings"
-        options={{
-          headerTitle: 'My Huntings',
-          headerTitleStyle: styles.headerTitle,
-          headerTitleAlign: 'center',
-        }}
+        name="MyHuntings"
+        options={headerOption}
       >
-        {props => <MyHuntingsContainer {...props} myPage={'hunting'} />}
+        {props => <MyHuntingsContainer {...props} type={'hunting'} />}
       </MyHuntingsStack.Screen>
-      <MyHuntingsStack.Screen name="My HuntingDetail" component={MyHuntingDetailScreen} />
+      <MyHuntingsStack.Screen
+        name="MyHuntingDetail"
+        options={headerOption}
+      >
+        {props => <MyHuntingDetailContainer {...props} type={'hunting'} />}
+      </MyHuntingsStack.Screen>
     </MyHuntingsStack.Navigator>
   );
 }

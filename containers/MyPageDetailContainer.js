@@ -2,24 +2,28 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { StyleSheet, View, Text, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import MapView from 'react-native-maps';
+import PropTypes from 'prop-types';
 import { makeExpirationToString, caculateLocation } from '../utils';
-import { updateSelectedTreasure } from '../utils/api';
+import { deleteSelectedTreasure } from '../utils/api';
 import { FONT, COLOR } from '../constants';
 
 const screen = Dimensions.get('window');
 const margin = screen.width * 0.02;
 const imageWidth = screen.width * 0.98;
 
-export default function TreasureDetailContainer({ navigation }) {
+export default function MyPageDetailContainer({ navigation, type }) {
   const selectedTreasure = useSelector(state => state.treasures.selectedTreasure);
-  const { name, registered_by, expiration, location_pictures_url, location, description, _id }
+  const { name, registered_by, expiration, location_pictures_url, location, description, _id, is_hunting }
    = selectedTreasure;
+  const taken = is_hunting ? `${selectedTreasure.taken_by.name} 🥳` : '.... 🥺';
+  const isMyTreasures = type === 'treasure';
   const expirationDate = makeExpirationToString(expiration);
   const latitude = Number(location[0]);
   const longitude = Number(location[1]);
   const { latitudeDelta, longitudeDelta } = caculateLocation(latitude, longitude, screen);
-  const onHunting = () => updateSelectedTreasure(_id, navigation);
+  const onDelete = () => deleteSelectedTreasure(_id, navigation);
 
+  console.log(selectedTreasure);
   return (
     <View style={styles.wrapper}>
       <View style={styles.nameWrapper}>
@@ -57,12 +61,20 @@ export default function TreasureDetailContainer({ navigation }) {
       <View style={styles.descriptionWrapper}>
         <Text style={styles.descriptionText}>{description}</Text>
       </View>
-      <View style={styles.completeWrapper}>
-        <TouchableOpacity onPress={onHunting}>
-          <Text style={styles.completeText} >
-            Hunting
+      <View style={styles.footWrapper}>
+        {isMyTreasures && <View style={styles.deleteWrapper}>
+          <TouchableOpacity
+            style={styles.delete}
+            onPress={onDelete}
+          >
+            <Text style={styles.deleteText}>Delete</Text>
+          </TouchableOpacity>
+        </View>}
+        <View style={styles.takenWrapper}>
+          <Text style={styles.takenText}>
+            Taken: {taken}
           </Text>
-        </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -130,16 +142,36 @@ const styles = StyleSheet.create({
     fontFamily: FONT.GAMJA,
     fontSize: 25,
   },
-  completeWrapper: {
+  footWrapper: {
     flex: 1,
-    backgroundColor: COLOR.BLUE,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
+    margin: margin,
   },
-  completeText: {
+  deleteWrapper: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: margin,
+    borderRadius: 10,
+    backgroundColor: COLOR.BLUE,
+  },
+  takenWrapper: {
+    flex: 2.2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  deleteText: {
     fontFamily: FONT.PT_BOLD,
-    fontSize: 45,
+    fontSize: 40,
     color: COLOR.WHITE,
+  },
+  takenText: {
+    fontFamily: FONT.PT_BOLD,
+    fontSize: 40,
+    color: COLOR.BLUE,
   }
 });
+
+MyPageDetailContainer.propTypes = {
+  type: PropTypes.string.isRequired,
+};

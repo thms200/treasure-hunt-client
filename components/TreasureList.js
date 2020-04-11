@@ -11,7 +11,15 @@ const padding = width * 0.01;
 
 export default function TreasureList({ name, country, expiration, id, is_hunting, page, navigation, onCountry, onTreasure }) {
   const expirationDate = makeExpirationToString(expiration);
-  const isMyPage = page === 'myPage';
+  const isMyPage = page !== 'generalPage';
+  const isHuntPage = page === 'hunting';
+  const onCountryPress = async() => await onCountry(country);
+  const onNamePress = async() => {
+    await onTreasure(id);
+    if(!isMyPage) return navigation.navigate('TreasureDetail');
+    if(isHuntPage) return navigation.navigate('MyHuntingDetail');
+    return navigation.navigate('MyTreasureDetail');
+  };
 
   return (
     <View style={styles.topWrapper}>
@@ -28,21 +36,20 @@ export default function TreasureList({ name, country, expiration, id, is_hunting
               <Text style={styles.text}>{country}</Text>
             </View>
           ) : (
-            <TouchableOpacity onPress={async() => await onCountry(country)}>
+            <TouchableOpacity onPress={onCountryPress}>
               <Text style={styles.text}>{country}</Text>
             </TouchableOpacity>
           )}
         </View>
         <View style={styles.nameWrapper}>
-          <TouchableOpacity onPress={async() => {
-            await onTreasure(id);
-            navigation.navigate('TreasureDetail');
-          }}>
+          <TouchableOpacity onPress={onNamePress}>
             <Text style={styles.text}>{name}</Text>
           </TouchableOpacity>
         </View>
         {isMyPage && <View style={styles.pageWrapper}>
-          {is_hunting ? <MaterialCommunityIcons size={30} name={'treasure-chest'} /> : <AntDesign size={30} name={'shoppingcart'} />}
+          {is_hunting
+            ? <MaterialCommunityIcons size={30} name={'treasure-chest'} />
+            : <AntDesign size={30} name={'shoppingcart'} />}
         </View>}
         <View style={styles.expirationWrapper}>
           <Text style={styles.text}>{expirationDate}</Text>
