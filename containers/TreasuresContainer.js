@@ -11,16 +11,20 @@ export default function TreasuresContainer({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
   const treasures = useSelector(state => state.treasures.treasures);
   const dispatch = useDispatch();
+  const onLoad  = async() => {
+    await fetchTreasures('all', 'all', dispatch, getTreasures);
+    setIsLoading(false);
+  };
   const onClickCategory = async(category) => await fetchTreasures('all', category, dispatch, getTreasures);
   const onClickCountry = async(country) => await fetchTreasures(country, 'all', dispatch, getTreasures);
   const onClickTreasure = async(id) => await fetchSelectedTreasure(id, dispatch, getSelectedTreasure);
 
   useEffect(() => {
-    (async() => {
-      await fetchTreasures('all', 'all', dispatch, getTreasures);
-      setIsLoading(false);
-    })();
-  }, []);
+    onLoad();
+    navigation.addListener('focus', onLoad);
+    const unsubscribe = navigation.addListener('blur', () => setIsLoading(true));
+    return unsubscribe;
+  }, [navigation]);
 
   if(isLoading) {
     return <View />;
@@ -38,6 +42,7 @@ export default function TreasuresContainer({ navigation }) {
                   country={item.country}
                   expiration={item.expiration}
                   id={item.id}
+                  page={'generalPage'}
                   navigation={navigation}
                   onClickCountry={onClickCountry}
                   onClickTreasure={onClickTreasure}
