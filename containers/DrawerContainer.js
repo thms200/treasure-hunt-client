@@ -37,7 +37,7 @@ export default function Drawer(props) {
             <DrawerItem
               label="Home"
               icon={() => <AntDesign size={30} name={'home'} />}
-              onPress={() => navigation.navigate('Main', { screen: 'Treasures' })}
+              onPress={() => navigation.navigate('Hunt', { screen: 'Treasures' })}
               labelStyle={styles.drawerText}
             />
             <DrawerItem
