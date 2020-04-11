@@ -15,9 +15,9 @@ export default function TreasuresContainer({ navigation }) {
     await fetchTreasures('all', 'all', dispatch, getTreasures);
     setIsLoading(false);
   };
-  const onClickCategory = async(category) => await fetchTreasures('all', category, dispatch, getTreasures);
-  const onClickCountry = async(country) => await fetchTreasures(country, 'all', dispatch, getTreasures);
-  const onClickTreasure = async(id) => await fetchSelectedTreasure(id, dispatch, getSelectedTreasure);
+  const onCategory = async(category) => await fetchTreasures('all', category, dispatch, getTreasures);
+  const onCountry = async(country) => await fetchTreasures(country, 'all', dispatch, getTreasures);
+  const onTreasure = async(id) => await fetchSelectedTreasure(id, dispatch, getSelectedTreasure);
 
   useEffect(() => {
     onLoad();
@@ -31,7 +31,7 @@ export default function TreasuresContainer({ navigation }) {
   } else {
     return (
       <View style={{ flex: 1 }}>
-        <Categorys onClickCategory={onClickCategory} />
+        <Categorys onCategory={onCategory} />
         <View style={styles.treasuresWrapper}>
           <FlatList
             data={treasures}
@@ -44,8 +44,8 @@ export default function TreasuresContainer({ navigation }) {
                   id={item.id}
                   page={'generalPage'}
                   navigation={navigation}
-                  onClickCountry={onClickCountry}
-                  onClickTreasure={onClickTreasure}
+                  onCountry={onCountry}
+                  onTreasure={onTreasure}
                 />
               );
             }}

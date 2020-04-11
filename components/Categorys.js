@@ -8,47 +8,47 @@ const { width } = Dimensions.get('window');
 const screenWidth = width / 7;
 const margin = screenWidth * 0.02;
 
-export default function Categorys({ onClickCategory }) {
+export default function Categorys({ onCategory }) {
   return (
     <View style={styles.topWrapper}>
       <View style={styles.categoryWrapper}>
-        <TouchableOpacity onPress={async() => await onClickCategory('usim')}>
+        <TouchableOpacity onPress={async() => await onCategory('usim')}>
           <Entypo name="creative-commons-share" style={styles.icons} />
           <Text style={styles.text}>유심</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.categoryWrapper}>
-        <TouchableOpacity onPress={async() => await onClickCategory('transportation')}>
+        <TouchableOpacity onPress={async() => await onCategory('transportation')}>
           <Ionicons name="md-train" style={styles.icons} />
           <Text style={styles.text}>교통</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.categoryWrapper}>
-        <TouchableOpacity onPress={async() => await onClickCategory('show')}>
+        <TouchableOpacity onPress={async() => await onCategory('show')}>
           <MaterialCommunityIcons name="music-circle-outline" style={styles.icons} />
           <Text style={styles.text}>영화|공연</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.categoryWrapper}>
-        <TouchableOpacity onPress={async() => await onClickCategory('ticket')}>
+        <TouchableOpacity onPress={async() => await onCategory('ticket')}>
           <Foundation name="ticket" style={styles.icons} />
           <Text style={styles.text}>입장권</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.categoryWrapper}>
-        <TouchableOpacity onPress={async() => await onClickCategory('coupon')}>
+        <TouchableOpacity onPress={async() => await onCategory('coupon')}>
           <FontAwesome5 name="money-check-alt" style={styles.icons} />
           <Text style={styles.text}>쿠폰</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.categoryWrapper}>
-        <TouchableOpacity onPress={async() => await onClickCategory('etc')}>
+        <TouchableOpacity onPress={async() => await onCategory('etc')}>
           <MaterialCommunityIcons name="dots-horizontal-circle" style={styles.icons} />
           <Text style={styles.text}>기타</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.categoryWrapper}>
-        <TouchableOpacity onPress={async() => await onClickCategory('all')}>
+        <TouchableOpacity onPress={async() => await onCategory('all')}>
           <FontAwesome5 name="home" style={styles.icons} />
           <Text style={styles.text}>All</Text>
         </TouchableOpacity>
@@ -84,5 +84,5 @@ const styles = StyleSheet.create({
 });
 
 Categorys.propTypes = {
-  onClickCategory: PropTypes.func.isRequired,
+  onCategory: PropTypes.func.isRequired,
 };

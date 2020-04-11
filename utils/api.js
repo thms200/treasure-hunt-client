@@ -5,7 +5,7 @@ import getEnvVars from '../environment';
 const { FACEBOOK_APP_ID, API_URL } = getEnvVars();
 import message from '../constants/message';
 
-export const logInFacebook = async(navigation, dispatch, action) => {
+export const logInFacebook = async(dispatch, action) => {
   try {
     await Facebook.initializeAsync(FACEBOOK_APP_ID);
     const { type, token } = await Facebook.logInWithReadPermissionsAsync({
@@ -36,7 +36,7 @@ export const logInFacebook = async(navigation, dispatch, action) => {
   }
 };
 
-export const checkLogin = async(navigation, dispatch, action) => {
+export const checkLogin = async(dispatch, action) => {
   try {
     const currentToken = await SecureStore.getItemAsync('userToken');
     return await fetch(`${API_URL}/api/users/auth`, {
@@ -141,12 +141,12 @@ export const onSaveTreasure = async(category, country, name, description, uriLis
     formdata.append('description', description);
     formdata.append('is_hunting', false);
 
-    const userToken = await SecureStore.getItemAsync('userToken');
+    const currentToken = await SecureStore.getItemAsync('userToken');
     return await fetch(`${API_URL}/api/treasures`, {
       method: 'POST',
       headers: {
         'Content-Type': 'multipart/form-data',
-        'x-access-token': `Bearer ${userToken}`,
+        'x-access-token': `Bearer ${currentToken}`,
       },
       body: formdata,
     })
@@ -160,6 +160,48 @@ export const onSaveTreasure = async(category, country, name, description, uriLis
       });
   } catch(err) {
     alert(message.failSave);
+    console.warn(err);
+  }
+};
+
+export const fetchMyTreasures = async(userId, dispatch, action) => {
+  try {
+    const currentToken = await SecureStore.getItemAsync('userToken');
+    return await fetch(`${API_URL}/api/users/${userId}/treasures`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': `Bearer ${currentToken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.result === 'ng') return alert(json.errMessage);
+        dispatch(action(json));
+      });
+  } catch (err) {
+    alert(message.generalError);
+    console.warn(err);
+  }
+};
+
+export const fetchMyHungings = async(userId, dispatch, action) => {
+  try {
+    const currentToken = await SecureStore.getItemAsync('userToken');
+    return await fetch(`${API_URL}/api/users/${userId}/huntings`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': `Bearer ${currentToken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.result === 'ng') return alert(json.errMessage);
+        dispatch(action(json));
+      });
+  } catch (err) {
+    alert(message.generalError);
     console.warn(err);
   }
 };

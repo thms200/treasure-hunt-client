@@ -16,8 +16,8 @@ export default function AppContainer() {
         drawerContent={(props) => <DrawerContainer {...props} />}
       >
         <Drawer.Screen name="Home" component={RootStack} />
-        <Drawer.Screen name="My Treasures" component={MyTreasuresStack} />
-        <Drawer.Screen name="My Huntings" component={MyHuntingsStack} />
+        <Drawer.Screen name="MyTreasures" component={MyTreasuresStack} />
+        <Drawer.Screen name="MyHuntings" component={MyHuntingsStack} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

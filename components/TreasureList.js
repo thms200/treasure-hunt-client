@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { makeExpirationToString } from '../utils';
 import { COLOR, FONT } from '../constants';
 
@@ -8,8 +9,9 @@ const { width } = Dimensions.get('window');
 const margin = width * 0.01;
 const padding = width * 0.01;
 
-export default function TreasureList({ name, country, expiration, id, navigation, onClickCountry, onClickTreasure }) {
+export default function TreasureList({ name, country, expiration, id, is_hunting, page, navigation, onCountry, onTreasure }) {
   const expirationDate = makeExpirationToString(expiration);
+  const isMyPage = page === 'myPage';
 
   return (
     <View style={styles.topWrapper}>
@@ -21,18 +23,27 @@ export default function TreasureList({ name, country, expiration, id, navigation
           />
         </View>
         <View style={styles.contryWrapper}>
-          <TouchableOpacity onPress={async() => await onClickCountry(country)}>
-            <Text style={styles.text}>{country}</Text>
-          </TouchableOpacity>
+          {isMyPage ? (
+            <View>
+              <Text style={styles.text}>{country}</Text>
+            </View>
+          ) : (
+            <TouchableOpacity onPress={async() => await onCountry(country)}>
+              <Text style={styles.text}>{country}</Text>
+            </TouchableOpacity>
+          )}
         </View>
         <View style={styles.nameWrapper}>
           <TouchableOpacity onPress={async() => {
-            await onClickTreasure(id);
+            await onTreasure(id);
             navigation.navigate('TreasureDetail');
           }}>
             <Text style={styles.text}>{name}</Text>
           </TouchableOpacity>
         </View>
+        {isMyPage && <View style={styles.pageWrapper}>
+          {is_hunting ? <MaterialCommunityIcons size={30} name={'treasure-chest'} /> : <AntDesign size={30} name={'shoppingcart'} />}
+        </View>}
         <View style={styles.expirationWrapper}>
           <Text style={styles.text}>{expirationDate}</Text>
         </View>
@@ -61,14 +72,17 @@ const styles = StyleSheet.create({
     flex: 0.6,
   },
   contryWrapper: {
-    flex: 0.9,
+    flex: 1,
     textAlign: 'center',
   },
   nameWrapper: {
     flex: 2,
   },
   expirationWrapper: {
-    flex: 1,
+    flex: 1.1,
+  },
+  pageWrapper: {
+    flex: 0.5,
   },
   text: {
     fontSize: 20,
@@ -81,6 +95,8 @@ TreasureList.propTypes = {
   country: PropTypes.string.isRequired,
   expiration: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
-  onClickCountry: PropTypes.func.isRequired,
-  onClickTreasure: PropTypes.func.isRequired,
+  is_hunting: PropTypes.bool,
+  page: PropTypes.string.isRequired,
+  onCountry: PropTypes.func,
+  onTreasure: PropTypes.func,
 };

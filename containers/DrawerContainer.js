@@ -7,7 +7,6 @@ import * as SecureStore from 'expo-secure-store';
 import { getLogoutUser } from '../actions';
 import { COLOR, FONT } from '../constants';
 
-
 export default function Drawer(props) {
   const { navigation } = props;
   const dispatch = useDispatch();
@@ -37,19 +36,19 @@ export default function Drawer(props) {
             <DrawerItem
               label="Home"
               icon={() => <AntDesign size={30} name={'home'} />}
-              onPress={() => navigation.navigate('Hunt', { screen: 'Treasures' })}
+              onPress={() => navigation.navigate('Hunt')}
               labelStyle={styles.drawerText}
             />
             <DrawerItem
               label="My Huntings"
               icon={() => <AntDesign size={30} name={'shoppingcart'} />}
-              onPress={() => navigation.navigate('My Huntings', { screen: 'MyHuntings' })}
+              onPress={() => navigation.navigate('MyHuntings')}
               labelStyle={styles.drawerText}
             />
             <DrawerItem
               label="My Treasures"
               icon={() => <MaterialCommunityIcons size={30} name={'treasure-chest'} />}
-              onPress={() => navigation.navigate('My Treasures', { screen: 'MyTreasures' })}
+              onPress={() => navigation.navigate('MyTreasures')}
               labelStyle={styles.drawerText}
             />
             <DrawerItem
@@ -59,7 +58,6 @@ export default function Drawer(props) {
                 alert('Bye 👋');
                 dispatch(getLogoutUser());
                 await SecureStore.deleteItemAsync('userToken');
-                navigation.navigate('Home', { screen: 'Login' });
               }}
               labelStyle={styles.drawerText}
             />
