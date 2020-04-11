@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image, StatusBar } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { AntDesign, Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
@@ -32,36 +32,34 @@ export default function Drawer(props) {
           <Image source={{ uri: userInfo.picture }} style={styles.userPicture}/>
         </View>
         <View style={styles.drawerWrapper}>
-          <DrawerContentScrollView {...props}>
-            <DrawerItem
-              label="Home"
-              icon={() => <AntDesign size={30} name={'home'} />}
-              onPress={() => navigation.navigate('Hunt')}
-              labelStyle={styles.drawerText}
-            />
-            <DrawerItem
-              label="My Huntings"
-              icon={() => <AntDesign size={30} name={'shoppingcart'} />}
-              onPress={() => navigation.navigate('MyHuntings')}
-              labelStyle={styles.drawerText}
-            />
-            <DrawerItem
-              label="My Treasures"
-              icon={() => <MaterialCommunityIcons size={30} name={'treasure-chest'} />}
-              onPress={() => navigation.navigate('MyTreasures')}
-              labelStyle={styles.drawerText}
-            />
-            <DrawerItem
-              label="Logout"
-              icon={() => <AntDesign size={30} name={'logout'} />}
-              onPress={async() => {
-                alert('Bye 👋');
-                dispatch(getLogoutUser());
-                await SecureStore.deleteItemAsync('userToken');
-              }}
-              labelStyle={styles.drawerText}
-            />
-          </DrawerContentScrollView>
+          <DrawerItem
+            label="Home"
+            icon={() => <AntDesign size={30} name={'home'} />}
+            onPress={() => navigation.navigate('Hunt', { screen: 'Treasures' })}
+            labelStyle={styles.drawerText}
+          />
+          <DrawerItem
+            label="My Treasures"
+            icon={() => <MaterialCommunityIcons size={30} name={'treasure-chest'} />}
+            onPress={() => navigation.navigate('MyTreasures', { screen: 'myTreasures' })}
+            labelStyle={styles.drawerText}
+          />
+          <DrawerItem
+            label="My Huntings"
+            icon={() => <AntDesign size={30} name={'shoppingcart'} />}
+            onPress={() => navigation.navigate('MyHuntings', { screen: 'myHuntings' })}
+            labelStyle={styles.drawerText}
+          />
+          <DrawerItem
+            label="Logout"
+            icon={() => <AntDesign size={30} name={'logout'} />}
+            onPress={async() => {
+              alert('Bye 👋');
+              dispatch(getLogoutUser());
+              await SecureStore.deleteItemAsync('userToken');
+            }}
+            labelStyle={styles.drawerText}
+          />
         </View>
       </View>
     );
@@ -81,6 +79,7 @@ const styles = StyleSheet.create({
     flex: 1.5,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: StatusBar.currentHeight,
     backgroundColor: COLOR.BLUE
   },
   userPicture: {

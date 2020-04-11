@@ -25,10 +25,8 @@ export const logInFacebook = async(dispatch, action) => {
       .then((res) => res.json())
       .then(async(json) => {
         if (json.result === 'ng') return alert(json.errMessage);
-        if (json.result === 'ok') {
-          await SecureStore.setItemAsync('userToken', json.token);
-          dispatch(action(json.userInfo));
-        }
+        await SecureStore.setItemAsync('userToken', json.token);
+        dispatch(action(json.userInfo));
       });
   } catch (err) {
     alert(message.invalidLogin);
@@ -49,9 +47,7 @@ export const checkLogin = async(dispatch, action) => {
       .then((res) => res.json())
       .then(async(json) => {
         if (json.result === 'ng') await SecureStore.deleteItemAsync('userToken');
-        if (json.result === 'ok') {
-          dispatch(action(json.userInfo));
-        }
+        dispatch(action(json.userInfo));
       });
   } catch (err) {
     alert(message.invalidLogin);
@@ -115,7 +111,7 @@ export const updateSelectedTreasure = async(id, navigation) => {
       .then((json) => {
         if (json.result === 'ng') return alert(json.errMessage);
         alert(message.successTaken);
-        navigation.navigate('Treasures');
+        navigation.navigate('Hunt', { screen: 'Treasures' });
       });
   } catch (err) {
     alert(message.generalError);
@@ -152,11 +148,9 @@ export const onSaveTreasure = async(category, country, name, description, uriLis
     })
       .then((res) => res.json())
       .then((json) => {
-        if (json.result === 'ok') {
-          alert(message.successSave);
-          return navigation.navigate('Hunt', { screen: 'Treasures' });
-        }
         if (json.result === 'ng') return alert(message.failSave);
+        alert(message.successSave);
+        navigation.navigate('Hunt', { screen: 'Treasures' });
       });
   } catch(err) {
     alert(message.failSave);
