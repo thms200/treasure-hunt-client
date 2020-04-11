@@ -6,10 +6,10 @@ import { checkLogin, logInFacebook } from '../utils/api';
 import { getLoginUser } from '../actions';
 import { COLOR, FONT } from '../constants';
 
-export default function LoginContainer({ navigation }) {
+export default function LoginContainer() {
   const dispatch = useDispatch();
   useEffect(() => {
-    checkLogin(navigation, dispatch, getLoginUser);
+    checkLogin(dispatch, getLoginUser);
   }, []);
 
   return (
@@ -22,7 +22,7 @@ export default function LoginContainer({ navigation }) {
         <FontAwesome.Button
           name="facebook"
           backgroundColor="#3b5998"
-          onPress={() => logInFacebook(navigation, dispatch, getLoginUser)}
+          onPress={() => logInFacebook(dispatch, getLoginUser)}
         >
           <Text style={styles.login}>Login with Facebook</Text>
         </FontAwesome.Button>
