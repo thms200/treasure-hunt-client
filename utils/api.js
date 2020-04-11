@@ -110,7 +110,7 @@ export const updateSelectedTreasure = async(id, navigation) => {
       .then((res) => res.json())
       .then((json) => {
         if (json.result === 'ng') return alert(json.errMessage);
-        alert(message.successTaken);
+        alert(message.success);
         navigation.navigate('Hunt', { screen: 'Treasures' });
       });
   } catch (err) {
@@ -213,7 +213,7 @@ export const deleteSelectedTreasure = async(id, navigation) => {
       .then((res) => res.json())
       .then((json) => {
         if (json.result === 'ng') return alert(json.errMessage);
-        alert(message.successTaken);
+        alert(message.success);
         navigation.navigate('Hunt', { screen: 'Treasures' });
       });
   } catch (err) {
