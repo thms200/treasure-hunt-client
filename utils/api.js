@@ -199,3 +199,25 @@ export const fetchMyHungings = async(userId, dispatch, action) => {
     console.warn(err);
   }
 };
+
+export const deleteSelectedTreasure = async(id, navigation) => {
+  try {
+    const currentToken = await SecureStore.getItemAsync('userToken');
+    return await fetch(`${API_URL}/api/treasures/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': `Bearer ${currentToken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.result === 'ng') return alert(json.errMessage);
+        alert(message.successTaken);
+        navigation.navigate('Hunt', { screen: 'Treasures' });
+      });
+  } catch (err) {
+    alert(message.generalError);
+    console.warn(err);
+  }
+};
