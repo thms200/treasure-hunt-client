@@ -41,13 +41,13 @@ export default function Drawer(props) {
           <DrawerItem
             label="My Treasures"
             icon={() => <MaterialCommunityIcons size={30} name={'treasure-chest'} />}
-            onPress={() => navigation.navigate('MyTreasures', { screen: 'myTreasures' })}
+            onPress={() => navigation.navigate('MyTreasures', { screen: 'MyTreasures' })}
             labelStyle={styles.drawerText}
           />
           <DrawerItem
             label="My Huntings"
             icon={() => <AntDesign size={30} name={'shoppingcart'} />}
-            onPress={() => navigation.navigate('MyHuntings', { screen: 'myHuntings' })}
+            onPress={() => navigation.navigate('MyHuntings', { screen: 'MyHuntings' })}
             labelStyle={styles.drawerText}
           />
           <DrawerItem
