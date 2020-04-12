@@ -87,6 +87,7 @@ module.exports = {
 					"variables": false
 				}
 			],
-			"react/display-name": "off"
+			"react/display-name": "off",
+			"no-case-declarations": "off",
     }
 };
