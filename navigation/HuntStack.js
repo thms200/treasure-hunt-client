@@ -8,39 +8,32 @@ import { COLOR, FONT } from '../constants';
 const HuntStack = createStackNavigator();
 
 export default function Hunt() {
+  const makeOption = (title, navigation) => {
+    return {
+      headerTitle: title,
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Hide', { screen: 'SelectCategory' })}
+        >
+          <Text style={styles.headerRight}>Hiding</Text>
+        </TouchableOpacity>
+      ),
+      headerTitleStyle: styles.headerTitle,
+      headerTitleAlign: 'center',
+    };
+  };
+
   return (
     <HuntStack.Navigator>
       <HuntStack.Screen
         name="Treasures"
         component={TreasuresContainer}
-        options={({ navigation }) => ({
-          headerTitle: 'Happy Hunting 👀',
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Hide', { screen: 'SelectCategory' })}
-            >
-              <Text style={styles.headerRight}>Hiding</Text>
-            </TouchableOpacity>
-          ),
-          headerTitleStyle: styles.headerTitle,
-          headerTitleAlign: 'center',
-        })}
+        options={({ navigation }) => (makeOption('Happy Hunting 👀', navigation))}
       />
       <HuntStack.Screen
         name="TreasureDetail"
         component={TreasureDetailContainer}
-        options={({ navigation }) => ({
-          headerTitle: 'Your Treasure 💰',
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Hide', { screen: 'SelectCategory' })}
-            >
-              <Text style={styles.headerRight}>Hiding</Text>
-            </TouchableOpacity>
-          ),
-          headerTitleStyle: styles.headerTitle,
-          headerTitleAlign: 'center',
-        })}
+        options={({ navigation }) => (makeOption('Your Treasure 💰', navigation))}
       />
     </HuntStack.Navigator>
   );
