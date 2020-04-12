@@ -1,5 +1,4 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { Fragment } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import PropTypes from 'prop-types';
 import CameraMapBox from './CameraMapBox';
@@ -44,7 +43,7 @@ export default function CameraMapRow({
   ];
 
   return (
-    <View style={styles.categoryWrapper}>
+    <Fragment>
       {types.map((type, index) => {
         return (<CameraMapBox
           key={index}
@@ -52,17 +51,9 @@ export default function CameraMapRow({
           onPress={type.onPress}
         />);
       })}
-    </View>
+    </Fragment>
   );
 }
-
-const styles = StyleSheet.create({
-  categoryWrapper: {
-    flex: 1,
-    flexDirection: 'row',
-    margin: 2,
-  },
-});
 
 CameraMapRow.propTypes = {
   uriList: PropTypes.array.isRequired,

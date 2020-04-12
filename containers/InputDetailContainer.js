@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView, Dimensions, } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import CountryPicker, { DARK_THEME } from 'react-native-country-picker-modal';
@@ -16,6 +16,9 @@ import { COLOR, FONT } from '../constants';
 import message from '../constants/message';
 
 const screen = Dimensions.get('window');
+const wrapperMargin = screen.width * 0.005;
+const categoryMargin = screen.width * 0.003;
+const categoryH = screen.height / 11;
 
 export default function InputDetailScreen({ navigation, route }) {
   const [hasPermissionCamera, setHasPermissionCamara] = useState(false);
@@ -111,25 +114,32 @@ export default function InputDetailScreen({ navigation, route }) {
             />
           </View>
         </View>
-        <View style={styles.descriptionWrapper}>
-          <TextInput
-            style={styles.inputText}
-            onChangeText={description => setDescription(description)}
-            value={description}
-            placeholder='Please write down the detailed location, specific issue, etc. of the hidden treasure!'
-            multiline
-            numberOfLines={4}
+        <View style={styles.categoryWrapper}>
+          <View style={styles.category}>
+            <Text style={styles.categoryText}>Description</Text>
+          </View>
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={styles.inputText}
+              onChangeText={description => setDescription(description)}
+              value={description}
+              placeholder='Please write down the detailed location, specific issue, etc. of the hidden treasure!'
+              multiline
+              numberOfLines={4}
+            />
+          </View>
+        </View>
+        <View style={styles.cameraMapWrapper}>
+          <CameraMapRow
+            uriList={uriList}
+            dispatch={dispatch}
+            action={takePictures}
+            location={location}
+            hasPermissionCamera={hasPermissionCamera}
+            hasPermissionLocation={hasPermissionLocation}
+            navigation={navigation}
           />
         </View>
-        <CameraMapRow
-          uriList={uriList}
-          dispatch={dispatch}
-          action={takePictures}
-          location={location}
-          hasPermissionCamera={hasPermissionCamera}
-          hasPermissionLocation={hasPermissionLocation}
-          navigation={navigation}
-        />
         <View style={styles.pictureWrapper}>
           <Pictures uriList={uriList} style={styles.pictures} isInput={true} />
         </View>
@@ -150,85 +160,81 @@ export default function InputDetailScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   wrapper: {
-    flex: 1, alignItems: 'center', justifyContent: 'center'
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: wrapperMargin,
   },
   categoryWrapper: {
     flex: 1,
     flexDirection: 'row',
-    margin: 2,
+    minHeight: categoryH,
+    margin: categoryMargin,
+  },
+  cameraMapWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    minHeight: categoryH * 0.8,
+    margin: categoryMargin,
+  },
+  pictureWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    minHeight: categoryH * 1.5,
+    margin: categoryMargin,
+  },
+  mapWrapper: {
+    flex: 3,
+    width: screen.width * 0.97,
+    minHeight: categoryH * 2.5,
+    margin: categoryMargin,
+  },
+  completeWrapper: {
+    flex: 1,
+    margin: categoryMargin,
   },
   category: {
     flex: 1.2,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 5,
+    margin: categoryMargin,
     borderRadius: 5,
     backgroundColor: COLOR.BLUE,
-  },
-  categoryText: {
-    fontFamily: FONT.PT_BOLD,
-    fontSize: 28,
-    color: COLOR.WHITE,
-    textAlign: 'center',
   },
   inputWrapper: {
     flex: 2.8,
     justifyContent: 'center',
-    margin: 5,
+    margin: categoryMargin,
     padding: 10,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: COLOR.BLUE,
-  },
-  inputText: {
-    fontFamily: FONT.GAMJA,
-    fontSize: 22,
   },
   expirationInput: {
     flex: 2.8,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    margin: 5,
     padding: 10,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: COLOR.BLUE,
   },
-  expirationWrapper: {
-    flex: 1,
-    flexDirection: 'row',
-    margin: 10,
-  },
-  descriptionWrapper: {
-    flex: 1,
-    margin: 7,
-    padding: 5,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: COLOR.BLUE,
-  },
-  pictureWrapper: {
-    flex: 1,
-    flexDirection: 'row',
-    margin: 4,
-    height: 100,
-  },
   pictures: {
     flex: 1,
+    width: 100,
     margin: 4,
     borderRadius: 5,
-    width: 100
   },
-  mapWrapper: {
-    flex: 2,
-    margin: 4,
-    width: '96%',
-    height: 230,
+  categoryText: {
+    fontFamily: FONT.PT_BOLD,
+    fontSize: 26,
+    color: COLOR.WHITE,
+    textAlign: 'center',
   },
-  completeWrapper: {
-    flex: 1,
-    margin: 5,
+  inputText: {
+    fontFamily: FONT.GAMJA,
+    fontSize: 22,
   },
   completeText: {
     fontFamily: FONT.PT_BOLD,

@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   cameraAndMapWrapper: {
     flex: 1,
     justifyContent: 'center',
-    margin: 4,
+    margin: 3,
     padding: 8,
     borderRadius: 5,
     borderWidth: 1,
