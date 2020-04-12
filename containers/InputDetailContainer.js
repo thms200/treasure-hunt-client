@@ -21,6 +21,9 @@ const categoryMargin = screen.width * 0.003;
 const categoryH = screen.height / 11;
 
 export default function InputDetailScreen({ navigation, route }) {
+  const uriList = useSelector(state => state.treasures.uriList);
+  const dispatch = useDispatch();
+  const { markedLocation } = route.params;
   const [hasPermissionCamera, setHasPermissionCamara] = useState(false);
   const [hasPermissionLocation, setHasPermissionLocation] = useState(false);
   const [location, setLocation] = useState({ latitude: null, longitude: null, latitudeDelta: null, longitudeDelta: null });
@@ -31,9 +34,6 @@ export default function InputDetailScreen({ navigation, route }) {
   const [expiration, setExpiration] = useState(new Date().getTime());
   const [description, setDescription] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const uriList = useSelector(state => state.treasures.uriList);
-  const dispatch = useDispatch();
-  const { markedLocation } = route.params;
 
   useEffect(() => {
     dispatch(initialPictures());

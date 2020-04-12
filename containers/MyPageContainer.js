@@ -8,10 +8,10 @@ import { fetchMyTreasures, fetchMyHungings, fetchSelectedTreasure } from '../uti
 import { COLOR } from '../constants';
 
 export default function MyPageContainer({ navigation, type }) {
-  const [isLoading, setIsLoading] = useState(true);
   const treasures = useSelector(state => state.treasures.treasures);
   const userInfo = useSelector(state => state.user.userInfo);
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
 
   const onLoad  = async() => {
     if(type === 'treasure') {

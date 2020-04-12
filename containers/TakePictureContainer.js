@@ -9,9 +9,9 @@ import message from '../constants/message';
 import { COLOR } from '../constants';
 
 export default function TakePictureScreen({ navigation }) {
-  const [isActive, setIsActive] = useState(false);
-  const cameraEl = useRef(null);
   const dispatch = useDispatch();
+  const cameraEl = useRef(null);
+  const [isActive, setIsActive] = useState(false);
 
   const onTakePictureAndCreateAlbum = async() => {
     try {

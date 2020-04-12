@@ -5,7 +5,6 @@ import TreasureDetail from '../components/TreasureDetail';
 import { updateSelectedTreasure } from '../utils/api';
 import { FONT, COLOR } from '../constants';
 
-
 export default function TreasureDetailContainer({ navigation }) {
   const selectedTreasure = useSelector(state => state.treasures.selectedTreasure);
   const { _id } = selectedTreasure;

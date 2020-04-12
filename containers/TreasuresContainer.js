@@ -8,9 +8,9 @@ import { fetchTreasures, fetchSelectedTreasure } from '../utils/api';
 import { COLOR } from '../constants';
 
 export default function TreasuresContainer({ navigation }) {
-  const [isLoading, setIsLoading] = useState(true);
   const treasures = useSelector(state => state.treasures.treasures);
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
   const onLoad  = async() => {
     await fetchTreasures('all', 'all', dispatch, getTreasures);
     setIsLoading(false);
