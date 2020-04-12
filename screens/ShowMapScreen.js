@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MapView from 'react-native-maps';
-import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Dimensions, StatusBar } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { COLOR } from '../constants';
 
@@ -33,7 +33,7 @@ export default function ShowMapScreen({ navigation, route }) {
         />
       </MapView>
       <TouchableOpacity
-        onPress={() => onGetMarkedLocation()}
+        onPress={onGetMarkedLocation}
         style={styles.buttonContainer}>
         <FontAwesome5
           name="stamp"
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    marginTop: StatusBar.currentHeight,
   },
   mapStyle: {
     width: Dimensions.get('window').width,
