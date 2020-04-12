@@ -23,7 +23,6 @@ export default function MyPageDetailContainer({ navigation, type }) {
   const { latitudeDelta, longitudeDelta } = caculateLocation(latitude, longitude, screen);
   const onDelete = () => deleteSelectedTreasure(_id, navigation);
 
-  console.log(selectedTreasure);
   return (
     <View style={styles.wrapper}>
       <View style={styles.nameWrapper}>

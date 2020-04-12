@@ -46,7 +46,7 @@ export const checkLogin = async(dispatch, action) => {
     })
       .then((res) => res.json())
       .then(async(json) => {
-        if (json.result === 'ng') await SecureStore.deleteItemAsync('userToken');
+        if (json.result === 'ng') return await SecureStore.deleteItemAsync('userToken');
         dispatch(action(json.userInfo));
       });
   } catch (err) {
