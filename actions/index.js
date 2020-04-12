@@ -26,3 +26,16 @@ export function getLogoutUser(){
     type: types.GET_LOGOUTUSER,
   };
 }
+
+export function takePictures(url){
+  return {
+    type: types.TAKE_PICTURES,
+    url,
+  };
+}
+
+export function initialPictures() {
+  return {
+    type: types.INITIAL_PICTURES,
+  };
+}

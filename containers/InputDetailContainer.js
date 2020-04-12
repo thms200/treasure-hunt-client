@@ -1,36 +1,45 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView, Dimensions, } from 'react-native';
 import * as Permissions from 'expo-permissions';
-import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import CountryPicker, { DARK_THEME } from 'react-native-country-picker-modal';
 import { AntDesign } from '@expo/vector-icons';
+import CameraMapRow from '../components/CameraMapRow';
 import MarkedMap from '../components/MarkedMap';
 import Calendar from '../components/Calendar';
 import Pictures from '../components/Pictures';
+import { takePictures, initialPictures } from '../actions';
 import { caculateLocation } from '../utils';
 import { onSaveTreasure } from '../utils/api';
 import { COLOR, FONT } from '../constants';
 import message from '../constants/message';
 
+const screen = Dimensions.get('window');
+
 export default function InputDetailScreen({ navigation, route }) {
-  const [hasPermissionCameraAndAlbum, setHasPermissionCamaraAndAlbum] = useState(false);
+  const [hasPermissionCamera, setHasPermissionCamara] = useState(false);
   const [hasPermissionLocation, setHasPermissionLocation] = useState(false);
+  const [location, setLocation] = useState({ latitude: null, longitude: null, latitudeDelta: null, longitudeDelta: null });
+  const [category, setCategory] = useState('');
   const [country, setCountry] = useState('');
   const [name, setName] = useState('');
   const [showDate, setShowDate] = useState(false);
   const [expiration, setExpiration] = useState(new Date().getTime());
   const [description, setDescription] = useState('');
-  const [uriList, setUriList] = useState([]);
-  const [location, setLocation] = useState({ latitude: null, longitude: null, latitudeDelta: null, longitudeDelta: null });
   const [showModal, setShowModal] = useState(false);
-  const { category, markedLocation } = route.params;
+  const uriList = useSelector(state => state.treasures.uriList);
+  const dispatch = useDispatch();
+  const { markedLocation } = route.params;
 
   useEffect(() => {
+    dispatch(initialPictures());
+    setCategory(route.params.category);
+
     (async() => {
       try {
         const { status } = await Permissions.getAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
-        setHasPermissionCamaraAndAlbum(status === 'granted');
+        setHasPermissionCamara(status === 'granted');
       } catch(err) {
         alert(message.errorPermission);
         console.warn(err);
@@ -44,30 +53,16 @@ export default function InputDetailScreen({ navigation, route }) {
           setHasPermissionLocation(true);
           const location = await Location.getCurrentPositionAsync({ accuracy: 3 });
           const { latitude, longitude } = location.coords;
-          setLocation(caculateLocation(latitude, longitude, Dimensions.get('window')));
+          setLocation(caculateLocation(latitude, longitude, screen));
         }
       } catch(err) {
         alert(message.errorPermission);
         console.warn(err);
       }
     })();
+
+
   }, []);
-
-  const { uri } = route.params;
-  useEffect(() => {
-    if (uri && uriList.length <= 3 && !uriList.includes(uri)) {
-      setUriList((uriList) => uriList.concat(uri));
-    }
-  }, uri);
-
-  const onGetPictures = async() => {
-    const pickerResult = await ImagePicker.launchImageLibraryAsync();
-    if (pickerResult.cancelled) return;
-    const { uri } = pickerResult;
-    if (uri && uriList.length <= 3 && !uriList.includes(uri)) {
-      setUriList((uriList) => uriList.concat(uri));
-    }
-  };
 
   return (
     <ScrollView>
@@ -126,39 +121,15 @@ export default function InputDetailScreen({ navigation, route }) {
             numberOfLines={4}
           />
         </View>
-        <View style={styles.categoryWrapper}>
-          <TouchableOpacity
-            style={styles.cameraAmdMapWrapper}
-            onPress={() => {
-              if (uriList.length >= 3) return alert(message.maxImg);
-              if (hasPermissionCameraAndAlbum) return navigation.navigate('TakePicture');
-              alert(message.deniedPermission);
-            }}
-          >
-            <Text style={styles.categoryText}>Camera</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.cameraAmdMapWrapper}
-            onPress={() => {
-              if (uriList.length >= 3) return alert(message.maxImg);
-              if (hasPermissionCameraAndAlbum) return onGetPictures();
-              alert(message.deniedPermission);
-            }}
-          >
-            <Text style={styles.categoryText}>Gallery</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.cameraAmdMapWrapper}
-            onPress={() => {
-              if (location.latitude) {
-                if (hasPermissionLocation) return navigation.navigate('ShowMap', { location });
-                alert(message.deniedPermission);
-              }
-            }}
-          >
-            <Text style={styles.categoryText}>Map</Text>
-          </TouchableOpacity>
-        </View>
+        <CameraMapRow
+          uriList={uriList}
+          dispatch={dispatch}
+          action={takePictures}
+          location={location}
+          hasPermissionCamera={hasPermissionCamera}
+          hasPermissionLocation={hasPermissionLocation}
+          navigation={navigation}
+        />
         <View style={styles.pictureWrapper}>
           <Pictures uriList={uriList} />
         </View>
@@ -236,16 +207,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: COLOR.BLUE,
-  },
-  cameraAmdMapWrapper: {
-    flex: 1,
-    justifyContent: 'center',
-    margin: 4,
-    padding: 8,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: COLOR.BLUE,
-    backgroundColor: COLOR.BLUE
   },
   pictureWrapper: {
     flex: 1,

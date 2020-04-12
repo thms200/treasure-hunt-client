@@ -1,22 +1,31 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import { FontAwesome } from '@expo/vector-icons';
+import { takePictures } from '../actions';
 import message from '../constants/message';
 import { COLOR } from '../constants';
 
 export default function TakePictureScreen({ navigation }) {
+  const [isActive, setIsActive] = useState(false);
   const cameraEl = useRef(null);
+  const dispatch = useDispatch();
 
   const onTakePictureAndCreateAlbum = async() => {
     try {
-      const { uri } = await cameraEl.current.takePictureAsync();
-      const asset = await MediaLibrary.createAssetAsync(uri);
-      const album = await MediaLibrary.createAlbumAsync('my_treasure', asset, false);
-      if (album) {
-        alert(message.createPicture);
-        return navigation.navigate('InputDetail', { uri });
+      if(!isActive) {
+        setIsActive(true);
+        const { uri } = await cameraEl.current.takePictureAsync();
+        const asset = await MediaLibrary.createAssetAsync(uri);
+        const album = await MediaLibrary.createAlbumAsync('my_treasure', asset, false);
+        if (album) {
+          alert(message.createPicture);
+          dispatch(takePictures(uri));
+          setIsActive(false);
+          return navigation.navigate('Hide', { screen: 'InputDetail' });
+        }
       }
     } catch(error) {
       console.warn(error);
@@ -32,7 +41,7 @@ export default function TakePictureScreen({ navigation }) {
         ref={cameraEl}
       />
       <TouchableOpacity
-        onPress={() => onTakePictureAndCreateAlbum()}
+        onPress={onTakePictureAndCreateAlbum}
         style={styles.buttonContainer}>
         <FontAwesome
           name="camera"

@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SelectCategoryScreen from '../screens/SelectCategoryScreen';
-import InputDetailScreen from '../screens/InputDetailScreen';
-import TakePictureScreen from '../screens/TakePictureScreen';
+import InputDetailContainer from '../containers/InputDetailContainer';
+import TakePictureContainer from '../containers/TakePictureContainer';
 import ShowMapScreen from '../screens/ShowMapScreen';
 import { COLOR, FONT } from '../constants';
 
@@ -30,7 +30,7 @@ export default function Hide() {
       />
       <HideStack.Screen
         name="InputDetail"
-        component={InputDetailScreen}
+        component={InputDetailContainer}
         options={({ navigation }) => ({
           headerTitle: 'Happy Hiding 🎁',
           headerRight: () => (
@@ -46,7 +46,7 @@ export default function Hide() {
       />
       <HideStack.Screen
         name="TakePicture"
-        component={TakePictureScreen}
+        component={TakePictureContainer}
         options={{ headerShown: false }}
       />
       <HideStack.Screen
