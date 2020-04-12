@@ -10,39 +10,32 @@ import { COLOR, FONT } from '../constants';
 const HideStack = createStackNavigator();
 
 export default function Hide() {
+  const makeOption = (title, navigation) => {
+    return {
+      headerTitle: title,
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Hunt', { screen: 'Treasures' })}
+        >
+          <Text style={styles.headerRight}>Hunting</Text>
+        </TouchableOpacity>
+      ),
+      headerTitleStyle: styles.headerTitle,
+      headerTitleAlign: 'center',
+    };
+  };
+
   return (
     <HideStack.Navigator>
       <HideStack.Screen
         name="SelectCategory"
         component={SelectCategoryScreen}
-        options={({ navigation }) => ({
-          headerTitle: 'Select Category',
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Hunt', { screen: 'Treasures' })}
-            >
-              <Text style={styles.headerRight}>Hunting</Text>
-            </TouchableOpacity>
-          ),
-          headerTitleStyle: styles.headerTitle,
-          headerTitleAlign: 'center',
-        })}
+        options={({ navigation }) => makeOption('Select Category', navigation)}
       />
       <HideStack.Screen
         name="InputDetail"
         component={InputDetailContainer}
-        options={({ navigation }) => ({
-          headerTitle: 'Happy Hiding 🎁',
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Hunt', { screen: 'Treasures' })}
-            >
-              <Text style={styles.headerRight}>Hunting</Text>
-            </TouchableOpacity>
-          ),
-          headerTitleStyle: styles.headerTitle,
-          headerTitleAlign: 'center',
-        })}
+        options={({ navigation }) => makeOption('Happy Hiding 🎁', navigation)}
       />
       <HideStack.Screen
         name="TakePicture"

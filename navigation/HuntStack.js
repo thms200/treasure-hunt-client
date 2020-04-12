@@ -28,12 +28,12 @@ export default function Hunt() {
       <HuntStack.Screen
         name="Treasures"
         component={TreasuresContainer}
-        options={({ navigation }) => (makeOption('Happy Hunting 👀', navigation))}
+        options={({ navigation }) => makeOption('Happy Hunting 👀', navigation)}
       />
       <HuntStack.Screen
         name="TreasureDetail"
         component={TreasureDetailContainer}
-        options={({ navigation }) => (makeOption('Your Treasure 💰', navigation))}
+        options={({ navigation }) => makeOption('Your Treasure 💰', navigation)}
       />
     </HuntStack.Navigator>
   );
