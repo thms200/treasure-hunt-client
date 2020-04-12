@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { StyleSheet, View, Text, ScrollView, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
+import { Foundation } from '@expo/vector-icons';
 import Pictures from '../components/Pictures';
 import Marekedmap from '../components/MarkedMap';
 import { makeExpirationToString } from '../utils';
@@ -10,7 +11,7 @@ const screen = Dimensions.get('window');
 const margin = screen.width * 0.02;
 const imageWidth = screen.width * 0.98;
 
-export default function TreasureDetail({ selectedTreasure }) {
+export default function TreasureDetail({ selectedTreasure, navigation }) {
   const { name, registered_by, expiration, location_pictures_url, location, description }
    = selectedTreasure;
   const expirationDate = makeExpirationToString(expiration);
@@ -19,14 +20,19 @@ export default function TreasureDetail({ selectedTreasure }) {
     longitude: Number(location[1]),
   };
 
+  const onShowPictures = () => {
+    navigation.navigate('ShowPictures', { urlList: location_pictures_url });
+  };
+
   return (
     <Fragment>
       <View style={styles.nameWrapper}>
         <Text style={styles.nameText}>{name}</Text>
       </View>
       <View style={styles.registredWrapper}>
-        <Text style={styles.registedText}>By {registered_by.name}</Text>
         <Text style={styles.registedText}>Expiration {expirationDate}</Text>
+        <Text style={styles.registedText}>By {registered_by.name}</Text>
+        <Foundation name="magnifying-glass" size={20} style={styles.registedText} onPress={onShowPictures} />
       </View>
       <View style={styles.pictureWrapper}>
         <ScrollView

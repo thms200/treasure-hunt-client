@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import MyHuntingsContainer from '../containers/MyPageContainer';
 import MyHuntingDetailContainer from '../containers/MyPageDetailContainer';
+import ShowPicturesScreen from '../screens/ShowPicturesScreen';
 import { COLOR, FONT } from '../constants';
 
 const MyHuntingsStack  = createStackNavigator();
@@ -28,6 +29,11 @@ export default function MyTreasures() {
       >
         {props => <MyHuntingDetailContainer {...props} type={'hunting'} />}
       </MyHuntingsStack.Screen>
+      <MyHuntingsStack.Screen
+        name="ShowPictures"
+        options={{ headerShown: false }}
+        component={ShowPicturesScreen}
+      />
     </MyHuntingsStack.Navigator>
   );
 }

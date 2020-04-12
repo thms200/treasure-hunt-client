@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import MyTreasuresContainer from '../containers/MyPageContainer';
 import MyTreasureDetailContainer from '../containers/MyPageDetailContainer';
+import ShowPicturesScreen from '../screens/ShowPicturesScreen';
 import { COLOR, FONT } from '../constants';
 
 const MyTreasuresStack  = createStackNavigator();
@@ -28,6 +29,11 @@ export default function MyTreasures() {
       >
         {props => <MyTreasureDetailContainer {...props} type={'treasure'} />}
       </MyTreasuresStack.Screen>
+      <MyTreasuresStack.Screen
+        name="ShowPictures"
+        options={{ headerShown: false }}
+        component={ShowPicturesScreen}
+      />
     </MyTreasuresStack.Navigator>
   );
 }

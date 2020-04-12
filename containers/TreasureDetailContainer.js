@@ -12,7 +12,7 @@ export default function TreasureDetailContainer({ navigation }) {
 
   return (
     <View style={styles.wrapper}>
-      <TreasureDetail selectedTreasure={selectedTreasure} />
+      <TreasureDetail selectedTreasure={selectedTreasure} navigation={navigation} />
       <View style={styles.completeWrapper}>
         <TouchableOpacity onPress={onHunting}>
           <Text style={styles.completeText} >

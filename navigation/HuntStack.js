@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import TreasuresContainer from '../containers/TreasuresContainer';
 import TreasureDetailContainer from '../containers/TreasureDetailContainer';
+import ShowPicturesScreen from '../screens/ShowPicturesScreen';
 import { COLOR, FONT } from '../constants';
 
 const HuntStack = createStackNavigator();
@@ -34,6 +35,11 @@ export default function Hunt() {
         name="TreasureDetail"
         component={TreasureDetailContainer}
         options={({ navigation }) => makeOption('Your Treasure 💰', navigation)}
+      />
+      <HuntStack.Screen
+        name="ShowPictures"
+        component={ShowPicturesScreen}
+        options={{ headerShown: false }}
       />
     </HuntStack.Navigator>
   );

@@ -18,7 +18,7 @@ export default function MyPageDetailContainer({ navigation, type }) {
 
   return (
     <View style={styles.wrapper}>
-      <TreasureDetail selectedTreasure={selectedTreasure} />
+      <TreasureDetail selectedTreasure={selectedTreasure} navigation={navigation}/>
       <View style={styles.footWrapper}>
         {isMyTreasures && <View style={styles.deleteWrapper}>
           <TouchableOpacity
