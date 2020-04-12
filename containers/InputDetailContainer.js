@@ -131,7 +131,7 @@ export default function InputDetailScreen({ navigation, route }) {
           navigation={navigation}
         />
         <View style={styles.pictureWrapper}>
-          <Pictures uriList={uriList} />
+          <Pictures uriList={uriList} style={styles.pictures} isInput={true} />
         </View>
         <View style={styles.mapWrapper}>
           <MarkedMap markedLocation={markedLocation} />
@@ -213,6 +213,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     margin: 4,
     height: 100,
+  },
+  pictures: {
+    flex: 1,
+    margin: 4,
+    borderRadius: 5,
+    width: 100
   },
   mapWrapper: {
     flex: 2,

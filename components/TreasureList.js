@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
-import { makeExpirationToString } from '../utils';
+import { makeExpirationToString, makeCountryFlag } from '../utils';
 import { COLOR, FONT } from '../constants';
 
 const { width } = Dimensions.get('window');
@@ -27,7 +27,7 @@ export default function TreasureList({ name, country, expiration, id, is_hunting
         <View style={styles.flagWrapper}>
           <Image
             style={{ width: 45, height: 45 }}
-            source={{ uri: `https://img.icons8.com/color/48/000000/${country.toLowerCase()}-circular.png` }}
+            source={{ uri: makeCountryFlag(country) }}
           />
         </View>
         <View style={styles.contryWrapper}>

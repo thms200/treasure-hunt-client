@@ -36,3 +36,7 @@ export const makeExpirationToString = (timestamp) => {
   const date = new Date(timestamp).getDate();
   return `${year}/${month}/${date}`;
 };
+
+export const makeCountryFlag = (country) => {
+  return `https://img.icons8.com/color/48/000000/${country.toLowerCase()}-circular.png`;
+};
