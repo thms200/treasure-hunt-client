@@ -46,6 +46,7 @@ export default function CameraMapRow({
     <Fragment>
       {types.map((type, index) => {
         return (<CameraMapBox
+          testID={type.title}
           key={index}
           type={type.title}
           onPress={type.onPress}

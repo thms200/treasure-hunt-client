@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, ScrollView, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
 import { Foundation } from '@expo/vector-icons';
 import Pictures from '../components/Pictures';
-import Marekedmap from '../components/MarkedMap';
+import MarkedMap from '../components/MarkedMap';
 import { makeExpirationToString } from '../utils';
 import { FONT, COLOR } from '../constants';
 
@@ -32,7 +32,12 @@ export default function TreasureDetail({ selectedTreasure, navigation }) {
       <View style={styles.registredWrapper}>
         <Text style={styles.registedText}>Expiration {expirationDate}</Text>
         <Text style={styles.registedText}>By {registered_by.name}</Text>
-        <Foundation name="magnifying-glass" size={20} style={styles.registedText} onPress={onShowPictures} />
+        <Foundation
+          name="magnifying-glass"
+          size={20}
+          style={styles.registedText}
+          onPress={onShowPictures}
+        />
       </View>
       <View style={styles.pictureWrapper}>
         <ScrollView
@@ -47,7 +52,7 @@ export default function TreasureDetail({ selectedTreasure, navigation }) {
         </ScrollView>
       </View>
       <View style={styles.mapWrapper}>
-        <Marekedmap markedLocation={markedLocation} />
+        <MarkedMap markedLocation={markedLocation} />
       </View>
       <View style={styles.descriptionWrapper}>
         <Text style={styles.descriptionText}>{description}</Text>
