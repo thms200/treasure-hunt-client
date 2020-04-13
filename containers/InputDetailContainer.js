@@ -10,9 +10,9 @@ import MarkedMap from '../components/MarkedMap';
 import Calendar from '../components/Calendar';
 import Pictures from '../components/Pictures';
 import { takePictures, initialPictures } from '../actions';
-import { caculateLocation } from '../utils';
+import { caculateLocation, makeExpirationToString } from '../utils';
 import { onSaveTreasure } from '../utils/api';
-import { COLOR, FONT } from '../constants';
+import { COLOR, FONT, PLACEHOLDER } from '../constants';
 import message from '../constants/message';
 
 const screen = Dimensions.get('window');
@@ -35,36 +35,33 @@ export default function InputDetailScreen({ navigation, route }) {
   const [description, setDescription] = useState('');
   const [showModal, setShowModal] = useState(false);
 
+  const onLoad = async() => {
+    try {
+      const cameraPermission = await Permissions.getAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
+      setHasPermissionCamara(cameraPermission.status === 'granted');
+
+      const locationPermission = await Permissions.getAsync(Permissions.LOCATION);
+      if (locationPermission.status === 'granted') {
+        setHasPermissionLocation(true);
+        const location = await Location.getCurrentPositionAsync({ accuracy: 3 });
+        const { latitude, longitude } = location.coords;
+        setLocation(caculateLocation(latitude, longitude, screen));
+      }
+    } catch(err) {
+      alert(message.errorPermission);
+      console.warn(err);
+    }
+  };
+  const onPressCountry = () => setShowModal(true);
+  const onChangeName = text => setName(text);
+  const onPressDate = () => setShowDate(true);
+  const onChagneDescription = description => setDescription(description);
+  const onPressSave = () => onSaveTreasure(category, country, name, description, uriList, markedLocation, expiration, navigation);
+
   useEffect(() => {
     dispatch(initialPictures());
     setCategory(route.params.category);
-
-    (async() => {
-      try {
-        const { status } = await Permissions.getAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
-        setHasPermissionCamara(status === 'granted');
-      } catch(err) {
-        alert(message.errorPermission);
-        console.warn(err);
-      }
-    })();
-
-    (async() => {
-      try {
-        const { status } = await Permissions.getAsync(Permissions.LOCATION);
-        if (status === 'granted') {
-          setHasPermissionLocation(true);
-          const location = await Location.getCurrentPositionAsync({ accuracy: 3 });
-          const { latitude, longitude } = location.coords;
-          setLocation(caculateLocation(latitude, longitude, screen));
-        }
-      } catch(err) {
-        alert(message.errorPermission);
-        console.warn(err);
-      }
-    })();
-
-
+    onLoad();
   }, []);
 
   return (
@@ -72,7 +69,7 @@ export default function InputDetailScreen({ navigation, route }) {
       <View style={styles.wrapper}>
         <View style={styles.categoryWrapper}>
           <View style={styles.category}>
-            <Text onPress={() => setShowModal(true)} style={styles.categoryText}>Country</Text>
+            <Text onPress={onPressCountry} style={styles.categoryText}>Country</Text>
             <CountryPicker
               withEmoji={true}
               withFilter={true}
@@ -94,9 +91,9 @@ export default function InputDetailScreen({ navigation, route }) {
           <View style={styles.inputWrapper}>
             <TextInput
               style={styles.inputText}
-              onChangeText={text => setName(text)}
+              onChangeText={onChangeName}
               value={name}
-              placeholder='What is your treasure?'
+              placeholder={PLACEHOLDER.NAME}
             />
           </View>
         </View>
@@ -104,13 +101,17 @@ export default function InputDetailScreen({ navigation, route }) {
           <View style={styles.category}>
             <Text style={styles.categoryText}>Expiration</Text>
           </View>
-          {showDate && <Calendar expiration={expiration} setShowDate={setShowDate} setExpiration={setExpiration} />}
+          {showDate && <Calendar
+            expiration={expiration}
+            setShowDate={setShowDate}
+            setExpiration={setExpiration}
+          />}
           <View style={styles.expirationInput}>
-            <Text style={styles.inputText}>{new Date(expiration).toString().slice(0, 15)}</Text>
+            <Text style={styles.inputText}>{makeExpirationToString(expiration)}</Text>
             <AntDesign
               name="calendar"
               style={{ fontSize: 30, color: COLOR.BLUE }}
-              onPress={() => setShowDate(true)}
+              onPress={onPressDate}
             />
           </View>
         </View>
@@ -121,9 +122,9 @@ export default function InputDetailScreen({ navigation, route }) {
           <View style={styles.inputWrapper}>
             <TextInput
               style={styles.inputText}
-              onChangeText={description => setDescription(description)}
+              onChangeText={onChagneDescription}
               value={description}
-              placeholder='Please write down the detailed location, specific issue, etc. of the hidden treasure!'
+              placeholder={PLACEHOLDER.DESCRIPTION}
               multiline
               numberOfLines={4}
             />
@@ -147,9 +148,7 @@ export default function InputDetailScreen({ navigation, route }) {
           <MarkedMap markedLocation={markedLocation} />
         </View>
         <View style={styles.completeWrapper}>
-          <TouchableOpacity
-            onPress={() => onSaveTreasure(category, country, name, description, uriList, markedLocation, expiration, navigation)}
-          >
+          <TouchableOpacity onPress={onPressSave}>
             <Text style={styles.completeText}>Complete</Text>
           </TouchableOpacity>
         </View>

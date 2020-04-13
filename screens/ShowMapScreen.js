@@ -12,8 +12,8 @@ export default function ShowMapScreen({ navigation, route }) {
     navigation.navigate('InputDetail', { markedLocation });
   };
 
-  const onDragEnd = async(location) => {
-    setMarkedLocation(location);
+  const onDragEnd = async(ev) => {
+    setMarkedLocation(ev.nativeEvent.coordinate);
   };
 
   return (
@@ -29,7 +29,7 @@ export default function ShowMapScreen({ navigation, route }) {
           title={'Your treasure Here!'}
           pinColor={COLOR.BLUE}
           coordinate={{ latitude, longitude }}
-          onDragEnd={(e) => onDragEnd(e.nativeEvent.coordinate)}
+          onDragEnd={onDragEnd}
         />
       </MapView>
       <TouchableOpacity

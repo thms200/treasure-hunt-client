@@ -10,3 +10,8 @@ export const FONT = {
   PT_BOLD: 'ptBold',
   PT_REGUL: 'ptRegular'
 };
+
+export const PLACEHOLDER = {
+  NAME: 'What is your treasure?',
+  DESCRIPTION: 'Please write down the detailed location, specific issue, etc. of the hidden treasure!',
+};
