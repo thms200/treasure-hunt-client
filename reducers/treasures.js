@@ -19,7 +19,7 @@ export default function treasures(state = initialState, action) {
       return { ...state, selectedTreasure: action.selectedTreasure };
     case TAKE_PICTURES:
       let newUriList = [...state.uriList];
-      newUriList = newUriList.concat(action.url);
+      newUriList = newUriList.concat(action.uri);
       return { ...state, uriList: newUriList };
     case INITIAL_PICTURES:
       return { ...state, uriList: [] };

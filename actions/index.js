@@ -27,10 +27,10 @@ export function getLogoutUser(){
   };
 }
 
-export function takePictures(url){
+export function takePictures(uri){
   return {
     type: types.TAKE_PICTURES,
-    url,
+    uri,
   };
 }
 
