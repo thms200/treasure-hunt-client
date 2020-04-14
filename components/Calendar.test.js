@@ -22,7 +22,7 @@ describe('Calendar', () => {
       />
     );
 
-    calendar.simulate('change', { nativeEvent: { timestamp } });
+    calendar.find('Picker').simulate('change', { nativeEvent: { timestamp } });
     expect(onSetExpiration).toBeCalledWith(timestamp);
   });
 });

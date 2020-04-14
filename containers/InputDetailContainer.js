@@ -53,6 +53,8 @@ export default function InputDetailScreen({ navigation, route }) {
     }
   };
   const onPressCountry = () => setShowModal(true);
+  const onSelectCountry = (country) => setCountry(country.name);
+  const onCloseModal = () =>  setShowModal(false);
   const onChangeName = text => setName(text);
   const onPressDate = () => setShowDate(true);
   const onChagneDescription = description => setDescription(description);
@@ -67,7 +69,7 @@ export default function InputDetailScreen({ navigation, route }) {
   return (
     <ScrollView>
       <View style={styles.wrapper}>
-        <View style={styles.categoryWrapper}>
+        {!showDate && <View style={styles.categoryWrapper}>
           <View style={styles.category}>
             <Text onPress={onPressCountry} style={styles.categoryText}>Country</Text>
             <CountryPicker
@@ -76,15 +78,16 @@ export default function InputDetailScreen({ navigation, route }) {
               withAlphaFilter={true}
               theme={DARK_THEME}
               visible={showModal}
-              onSelect={country => setCountry(country.name)}
+              onSelect={onSelectCountry}
+              onClose={onCloseModal}
               containerButtonStyle={{ width: 0, height: 0 }}
             />
           </View>
           <View style={styles.inputWrapper}>
             <Text style={styles.inputText}>{country}</Text>
           </View>
-        </View>
-        <View style={styles.categoryWrapper}>
+        </View>}
+        {!showDate && <View style={styles.categoryWrapper}>
           <View style={styles.category}>
             <Text style={styles.categoryText}>Name</Text>
           </View>
@@ -96,26 +99,25 @@ export default function InputDetailScreen({ navigation, route }) {
               placeholder={PLACEHOLDER.NAME}
             />
           </View>
-        </View>
+        </View>}
         <View style={styles.categoryWrapper}>
-          <View style={styles.category}>
+          {!showDate && <View style={styles.category}>
             <Text style={styles.categoryText}>Expiration</Text>
-          </View>
+          </View>}
           {showDate && <Calendar
-            expiration={expiration}
             setShowDate={setShowDate}
             setExpiration={setExpiration}
           />}
-          <View style={styles.expirationInput}>
+          {!showDate && <View style={styles.expirationInput}>
             <Text style={styles.inputText}>{makeExpirationToString(expiration)}</Text>
             <AntDesign
               name="calendar"
               style={{ fontSize: 30, color: COLOR.BLUE }}
               onPress={onPressDate}
             />
-          </View>
+          </View>}
         </View>
-        <View style={styles.categoryWrapper}>
+        {!showDate && <View style={styles.categoryWrapper}>
           <View style={styles.category}>
             <Text style={styles.categoryText}>Description</Text>
           </View>
@@ -129,8 +131,8 @@ export default function InputDetailScreen({ navigation, route }) {
               numberOfLines={4}
             />
           </View>
-        </View>
-        <View style={styles.cameraMapWrapper}>
+        </View>}
+        {!showDate && <View style={styles.cameraMapWrapper}>
           <CameraMapRow
             uriList={uriList}
             dispatch={dispatch}
@@ -140,18 +142,18 @@ export default function InputDetailScreen({ navigation, route }) {
             hasPermissionLocation={hasPermissionLocation}
             navigation={navigation}
           />
-        </View>
-        <View style={styles.pictureWrapper}>
+        </View>}
+        {!showDate && <View style={styles.pictureWrapper}>
           <Pictures uriList={uriList} style={styles.pictures} isInput={true} />
-        </View>
-        <View style={styles.mapWrapper}>
+        </View>}
+        {!showDate && <View style={styles.mapWrapper}>
           <MarkedMap markedLocation={markedLocation} />
-        </View>
-        <View style={styles.completeWrapper}>
+        </View>}
+        {!showDate && <View style={styles.completeWrapper}>
           <TouchableOpacity onPress={onPressSave}>
             <Text style={styles.completeText}>Complete</Text>
           </TouchableOpacity>
-        </View>
+        </View>}
       </View>
     </ScrollView>
   );
@@ -173,19 +175,19 @@ const styles = StyleSheet.create({
   cameraMapWrapper: {
     flex: 1,
     flexDirection: 'row',
-    minHeight: categoryH * 0.8,
+    minHeight: categoryH * 0.7,
     margin: categoryMargin,
   },
   pictureWrapper: {
     flex: 1,
     flexDirection: 'row',
-    minHeight: categoryH * 1.5,
+    minHeight: categoryH * 1.4,
     margin: categoryMargin,
   },
   mapWrapper: {
     flex: 3,
     width: screen.width * 0.97,
-    minHeight: categoryH * 2.5,
+    minHeight: categoryH * 2.4,
     margin: categoryMargin,
   },
   completeWrapper: {

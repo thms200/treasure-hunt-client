@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
   },
   picture: {
     width: imageWidth,
-    resizeMode: 'contain',
   },
   mapWrapper: {
     flex: 2.5,
