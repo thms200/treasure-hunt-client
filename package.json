@@ -2,6 +2,9 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest"
   },
@@ -55,10 +58,7 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-native": "^3.8.1",
     "jest-expo": "^37.0.0",
-    "react-devtools": "^3.6.3",
-    "react-native-testing-library": "^1.13.0",
-    "react-test-renderer": "^16.13.1",
-    "redux-devtools-extension": "^2.13.8"
+    "react-devtools": "^3.6.3"
   },
   "private": true
 }

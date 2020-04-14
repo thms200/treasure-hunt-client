@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render, fireEvent } from 'react-native-testing-library';
 import CameraMapRow from './CameraMapRow';
 import message from '../constants/message';
 
@@ -15,7 +14,7 @@ describe('CameraMapRow', () => {
   });
 
   it('should alert message if uriList.length is three', () => {
-    const { getByTestId } = render(
+    const cameraMapRow = shallow(
       <CameraMapRow
         uriList={[1, 2, 3]}
         dispatch={() => {}}
@@ -26,12 +25,12 @@ describe('CameraMapRow', () => {
       />
     );
 
-    fireEvent.press(getByTestId('Camera'));
+    cameraMapRow.find('[testID="Camera"]').simulate('press');
     expect(window.alert).toBeCalledWith(message.maxImg);
   });
 
   it('should alert message if hasPermissionCamera is false', () => {
-    const { getByTestId } = render(
+    const cameraMapRow = shallow(
       <CameraMapRow
         uriList={[1, 2]}
         dispatch={() => {}}
@@ -42,7 +41,7 @@ describe('CameraMapRow', () => {
       />
     );
 
-    fireEvent.press(getByTestId('Gallery'));
+    cameraMapRow.find('[testID="Gallery"]').simulate('press');
     expect(window.alert).toBeCalledWith(message.deniedPermission);
   });
 
