@@ -47,8 +47,8 @@ export default function ShowMapScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     marginTop: StatusBar.currentHeight,
+    backgroundColor: '#fff',
   },
   mapStyle: {
     width: Dimensions.get('window').width,

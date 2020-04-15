@@ -76,11 +76,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
     width: imageWidth,
     height: imageHight,
     margin,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   iconWrapper: {
     alignItems: 'center',
@@ -90,11 +90,11 @@ const styles = StyleSheet.create({
     fontSize: 50,
   },
   text: {
-    padding: 10,
     width: 120,
+    padding: 10,
     borderRadius: 15,
-    fontSize: 27,
     textAlign: 'center',
+    fontSize: 27,
     color: COLOR.WHITE,
     fontFamily: FONT.GAMJA,
     backgroundColor: COLOR.BLUE
