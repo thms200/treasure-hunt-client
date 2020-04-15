@@ -14,11 +14,9 @@ export default function MyPageContainer({ navigation, type }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const onLoad  = async() => {
-    if(type === 'treasure') {
-      await fetchMyTreasures(userInfo.id, dispatch, getTreasures);
-    } else {
-      await fetchMyHungings(userInfo.id, dispatch, getTreasures);
-    }
+    type === 'treasure'
+      ? await fetchMyTreasures(userInfo.id, dispatch, getTreasures)
+      : await fetchMyHungings(userInfo.id, dispatch, getTreasures);
     setIsLoading(false);
   };
   const onTreasure = async(id) => await fetchSelectedTreasure(id, dispatch, getSelectedTreasure);

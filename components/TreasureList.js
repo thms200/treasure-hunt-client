@@ -62,18 +62,18 @@ export default function TreasureList({ name, country, expiration, id, is_hunting
 const styles = StyleSheet.create({
   topWrapper: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     margin,
+    backgroundColor: '#fff',
   },
   rowWrapper: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomColor: COLOR.BLUE,
-    borderBottomWidth: 0.8,
     padding,
+    borderBottomWidth: 0.8,
+    borderBottomColor: COLOR.BLUE,
   },
   flagWrapper: {
     flex: 0.6,

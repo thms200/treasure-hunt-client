@@ -5,11 +5,11 @@ import { Foundation } from '@expo/vector-icons';
 import Pictures from '../components/Pictures';
 import MarkedMap from '../components/MarkedMap';
 import { makeExpirationToString } from '../utils';
-import { FONT, COLOR } from '../constants';
+import { COLOR, FONT } from '../constants';
 
 const screen = Dimensions.get('window');
 const margin = screen.width * 0.02;
-const imageWidth = screen.width * 0.98;
+const imageWidth = screen.width;
 
 export default function TreasureDetail({ selectedTreasure, navigation }) {
   const { name, registered_by, expiration, location_pictures_url, location, description }
@@ -65,17 +65,17 @@ const styles = StyleSheet.create({
   nameWrapper: {
     flex: 0.8,
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     marginRight: margin,
     marginLeft: margin,
   },
   nameText: {
-    fontFamily: FONT.GAMJA,
-    fontSize: 45,
-    color: COLOR.BLUE,
     borderBottomWidth: 1,
     borderBottomColor: COLOR.BLUE,
+    fontSize: 45,
+    color: COLOR.BLUE,
+    fontFamily: FONT.GAMJA,
   },
   registredWrapper: {
     flex: 0.5,
@@ -86,15 +86,15 @@ const styles = StyleSheet.create({
     marginLeft: margin,
   },
   registedText: {
-    fontFamily: FONT.GAMJA,
     fontSize: 20,
     color: COLOR.GREY,
+    fontFamily: FONT.GAMJA,
   },
   pictureWrapper: {
     flex: 4.2,
+    borderWidth: 0.2,
     borderBottomColor: COLOR.GREY,
     borderTopColor: COLOR.GREY,
-    borderWidth: 0.2,
   },
   picture: {
     width: imageWidth,
@@ -106,13 +106,13 @@ const styles = StyleSheet.create({
     flex: 1.5,
     margin: margin,
     padding: margin,
-    borderColor: COLOR.BLUE,
-    borderWidth: 0.2,
     borderRadius: 10,
+    borderWidth: 0.2,
+    borderColor: COLOR.BLUE,
   },
   descriptionText: {
-    fontFamily: FONT.GAMJA,
     fontSize: 25,
+    fontFamily: FONT.GAMJA,
   },
 });
 

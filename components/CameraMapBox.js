@@ -16,10 +16,10 @@ export default function CameraMapBox({ type, onPress }) {
 
 const styles = StyleSheet.create({
   categoryText: {
-    fontFamily: FONT.PT_BOLD,
+    textAlign: 'center',
     fontSize: 28,
     color: COLOR.WHITE,
-    textAlign: 'center',
+    fontFamily: FONT.PT_BOLD,
   },
   cameraAndMapWrapper: {
     flex: 1,

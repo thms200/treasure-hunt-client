@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { StyleSheet, View, Text, TouchableOpacity, } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import TreasureDetail from '../components/TreasureDetail';
 import { updateSelectedTreasure } from '../utils/api';
 import { FONT, COLOR } from '../constants';
@@ -31,14 +31,14 @@ const styles = StyleSheet.create({
   },
   completeWrapper: {
     flex: 1,
-    backgroundColor: COLOR.BLUE,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: COLOR.BLUE,
   },
   completeText: {
-    fontFamily: FONT.PT_BOLD,
     fontSize: 45,
     color: COLOR.WHITE,
+    fontFamily: FONT.PT_BOLD,
   }
 });

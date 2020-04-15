@@ -18,7 +18,7 @@ export default function Drawer(props) {
       <DrawerContentScrollView {...props}>
         <DrawerItem
           label="Welcome :)"
-          icon={() => <Entypo size={30} name={'flower'} color={COLOR.BLUE}/>}
+          icon={() => <Entypo size={30} name={'flower'} color={COLOR.BLUE} />}
           onPress={() => alert('Please Login :) ')}
           labelStyle={styles.logout}
         />
@@ -29,7 +29,7 @@ export default function Drawer(props) {
       <View style={styles.wrapper}>
         <View style={styles.userWrpper}>
           <Text style={styles.userText}>{userInfo.name}</Text>
-          <Image source={{ uri: userInfo.picture }} style={styles.userPicture}/>
+          <Image source={{ uri: userInfo.picture }} style={styles.userPicture} />
         </View>
         <View style={styles.drawerWrapper}>
           <DrawerItem
@@ -68,9 +68,9 @@ export default function Drawer(props) {
 
 const styles = StyleSheet.create({
   logout: {
-    fontFamily: FONT.GAMJA,
     fontSize: 25,
     color: COLOR.BLUE,
+    fontFamily: FONT.GAMJA,
   },
   wrapper: {
     flex: 1
@@ -88,15 +88,15 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   userText: {
-    color: COLOR.WHITE,
     fontSize: 30,
+    color: COLOR.WHITE,
     fontFamily: FONT.GAMJA,
   },
   drawerWrapper: {
     flex: 8,
   },
   drawerText: {
+    fontSize: 25,
     fontFamily: FONT.GAMJA,
-    fontSize: 25
   },
 });

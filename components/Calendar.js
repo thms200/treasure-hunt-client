@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Button, Dimensions, Platform } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import PropTypes from 'prop-types';
 import message from '../constants/message';
 
-const isIOS = Platform.OS === 'ios';
 
 export default function Calendar({ setShowDate, setExpiration }) {
   const [date, setDate] = useState(new Date());
-  const onPressClose = () => setShowDate(false);
   const onChange = (ev, selectedDate) => {
     const newExpiration = ev.nativeEvent.timestamp || new Date().getTime();
-    setShowDate(isIOS);
+    setShowDate(false);
     setDate(selectedDate);
     if (new Date() > new Date(newExpiration)) return alert(message.invalidExpiration);
     return setExpiration(newExpiration);
@@ -25,7 +23,6 @@ export default function Calendar({ setShowDate, setExpiration }) {
         value={date}
         onChange={onChange}
       />
-      {isIOS && <Button title="close" onPress={onPressClose}/>}
     </View>
   );
 }

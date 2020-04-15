@@ -18,7 +18,7 @@ export default function MyPageDetailContainer({ navigation, type }) {
 
   return (
     <View style={styles.wrapper}>
-      <TreasureDetail selectedTreasure={selectedTreasure} navigation={navigation}/>
+      <TreasureDetail selectedTreasure={selectedTreasure} navigation={navigation} />
       <View style={styles.footWrapper}>
         {isMyTreasures && <View style={styles.deleteWrapper}>
           <TouchableOpacity
@@ -62,14 +62,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   deleteText: {
-    fontFamily: FONT.PT_BOLD,
     fontSize: 40,
     color: COLOR.WHITE,
+    fontFamily: FONT.PT_BOLD,
   },
   takenText: {
-    fontFamily: FONT.PT_BOLD,
     fontSize: 40,
     color: COLOR.BLUE,
+    fontFamily: FONT.PT_BOLD,
   }
 });
 

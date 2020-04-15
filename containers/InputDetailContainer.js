@@ -53,9 +53,9 @@ export default function InputDetailScreen({ navigation, route }) {
     }
   };
   const onPressCountry = () => setShowModal(true);
-  const onSelectCountry = (country) => setCountry(country.name);
+  const onSelectCountry = country => setCountry(country.name);
   const onCloseModal = () =>  setShowModal(false);
-  const onChangeName = text => setName(text);
+  const onChangeName = name => setName(name);
   const onPressDate = () => setShowDate(true);
   const onChagneDescription = description => setDescription(description);
   const onPressSave = () => onSaveTreasure(category, country, name, description, uriList, markedLocation, expiration, navigation);
@@ -69,7 +69,7 @@ export default function InputDetailScreen({ navigation, route }) {
   return (
     <ScrollView>
       <View style={styles.wrapper}>
-        {!showDate && <View style={styles.categoryWrapper}>
+        <View style={styles.categoryWrapper}>
           <View style={styles.category}>
             <Text onPress={onPressCountry} style={styles.categoryText}>Country</Text>
             <CountryPicker
@@ -86,8 +86,8 @@ export default function InputDetailScreen({ navigation, route }) {
           <View style={styles.inputWrapper}>
             <Text style={styles.inputText}>{country}</Text>
           </View>
-        </View>}
-        {!showDate && <View style={styles.categoryWrapper}>
+        </View>
+        <View style={styles.categoryWrapper}>
           <View style={styles.category}>
             <Text style={styles.categoryText}>Name</Text>
           </View>
@@ -99,25 +99,25 @@ export default function InputDetailScreen({ navigation, route }) {
               placeholder={PLACEHOLDER.NAME}
             />
           </View>
-        </View>}
+        </View>
         <View style={styles.categoryWrapper}>
-          {!showDate && <View style={styles.category}>
+          <View style={styles.category}>
             <Text style={styles.categoryText}>Expiration</Text>
-          </View>}
+          </View>
           {showDate && <Calendar
             setShowDate={setShowDate}
             setExpiration={setExpiration}
           />}
-          {!showDate && <View style={styles.expirationInput}>
+          <View style={styles.expirationInput}>
             <Text style={styles.inputText}>{makeExpirationToString(expiration)}</Text>
             <AntDesign
               name="calendar"
               style={{ fontSize: 30, color: COLOR.BLUE }}
               onPress={onPressDate}
             />
-          </View>}
+          </View>
         </View>
-        {!showDate && <View style={styles.categoryWrapper}>
+        <View style={styles.categoryWrapper}>
           <View style={styles.category}>
             <Text style={styles.categoryText}>Description</Text>
           </View>
@@ -131,8 +131,8 @@ export default function InputDetailScreen({ navigation, route }) {
               numberOfLines={4}
             />
           </View>
-        </View>}
-        {!showDate && <View style={styles.cameraMapWrapper}>
+        </View>
+        <View style={styles.cameraMapWrapper}>
           <CameraMapRow
             uriList={uriList}
             dispatch={dispatch}
@@ -142,18 +142,18 @@ export default function InputDetailScreen({ navigation, route }) {
             hasPermissionLocation={hasPermissionLocation}
             navigation={navigation}
           />
-        </View>}
-        {!showDate && <View style={styles.pictureWrapper}>
+        </View>
+        <View style={styles.pictureWrapper}>
           <Pictures uriList={uriList} style={styles.pictures} isInput={true} />
-        </View>}
-        {!showDate && <View style={styles.mapWrapper}>
+        </View>
+        <View style={styles.mapWrapper}>
           <MarkedMap markedLocation={markedLocation} />
-        </View>}
-        {!showDate && <View style={styles.completeWrapper}>
+        </View>
+        <View style={styles.completeWrapper}>
           <TouchableOpacity onPress={onPressSave}>
             <Text style={styles.completeText}>Complete</Text>
           </TouchableOpacity>
-        </View>}
+        </View>
       </View>
     </ScrollView>
   );
@@ -196,8 +196,8 @@ const styles = StyleSheet.create({
   },
   category: {
     flex: 1.2,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     margin: categoryMargin,
     borderRadius: 5,
     backgroundColor: COLOR.BLUE,
@@ -228,19 +228,19 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   categoryText: {
-    fontFamily: FONT.PT_BOLD,
+    textAlign: 'center',
     fontSize: 26,
     color: COLOR.WHITE,
-    textAlign: 'center',
+    fontFamily: FONT.PT_BOLD,
   },
   inputText: {
     fontFamily: FONT.GAMJA,
     fontSize: 22,
   },
   completeText: {
-    fontFamily: FONT.PT_BOLD,
+    textAlign: 'center',
     fontSize: 40,
     color: COLOR.BLUE,
-    textAlign: 'center',
+    fontFamily: FONT.PT_BOLD,
   },
 });
