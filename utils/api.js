@@ -124,7 +124,7 @@ export const onSaveTreasure = async(category, country, name, description, uriLis
     if (!checkValidation(category, country, name, description, uriList, markedLocation)) return;
     const formdata = new FormData();
     uriList.forEach(uri => {
-      const name = uri.split('Camera/')[1] || uri.split('ImagePicker/')[1];
+      const name = uri.split('Camera/')[1] || uri.split('ImagePicker/')[1] || uri.split('ImageManipulator/')[1];
       const locationPicture = { uri, name, type: 'multipart/form-data', };
       formdata.append('img', locationPicture);
     });
@@ -214,7 +214,7 @@ export const deleteSelectedTreasure = async(id, navigation) => {
       .then((json) => {
         if (json.result === 'ng') return alert(json.errMessage);
         alert(message.success);
-        navigation.navigate('Hunt', { screen: 'Treasures' });
+        navigation.goBack();
       });
   } catch (err) {
     alert(message.generalError);

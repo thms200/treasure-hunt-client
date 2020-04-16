@@ -1,12 +1,15 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
 import { Camera } from 'expo-camera';
+import * as ImageManipulator from 'expo-image-manipulator';
 import * as MediaLibrary from 'expo-media-library';
 import { FontAwesome } from '@expo/vector-icons';
 import { takePictures } from '../actions';
 import message from '../constants/message';
 import { COLOR } from '../constants';
+
+const { width } = Dimensions.get('window');
 
 export default function TakePictureScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -18,11 +21,16 @@ export default function TakePictureScreen({ navigation }) {
       if(!isActive) {
         setIsActive(true);
         const { uri } = await cameraEl.current.takePictureAsync();
+        const resizedPhoto = await ImageManipulator.manipulateAsync(
+          uri,
+          [{ resize: { width } }],
+          { compress: 0, format: ImageManipulator.SaveFormat.PNG }
+        );
         const asset = await MediaLibrary.createAssetAsync(uri);
         const album = await MediaLibrary.createAlbumAsync('my_treasure', asset, false);
         if (album) {
           alert(message.createPicture);
-          dispatch(takePictures(uri));
+          dispatch(takePictures(resizedPhoto.uri));
           setIsActive(false);
           return navigation.navigate('Hide', { screen: 'InputDetail' });
         }

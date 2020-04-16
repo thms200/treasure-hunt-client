@@ -1,8 +1,12 @@
 import React, { Fragment } from 'react';
+import { Dimensions } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import * as ImageManipulator from 'expo-image-manipulator';
 import PropTypes from 'prop-types';
 import CameraMapBox from './CameraMapBox';
 import message from '../constants/message';
+
+const { width } = Dimensions.get('window');
 
 export default function CameraMapRow({
   uriList,
@@ -26,7 +30,12 @@ export default function CameraMapRow({
     if (pickerResult.cancelled) return;
 
     const { uri } = pickerResult;
-    dispatch(action(uri));
+    const resizedPhoto = await ImageManipulator.manipulateAsync(
+      uri,
+      [{ resize: { width } }],
+      { compress: 0, format: ImageManipulator.SaveFormat.PNG }
+    );
+    dispatch(action(resizedPhoto.uri));
   };
 
   const onMap = () => {
