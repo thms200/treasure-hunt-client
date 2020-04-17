@@ -1,4 +1,5 @@
 const message = {
+  needLogin: 'Please, Login :)',
   invalidLogin: 'Sorry, We can\'t login for unkown reasons. Try again.',
   deniedPermission: 'You have not enabled selected permissions.',
   errorPermission: 'There was a error for unknown reasons',

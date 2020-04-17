@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import PropTypes from 'prop-types';
 import message from '../constants/message';
 
 export default function Calendar({ setShowDate, setExpiration }) {
-  const [date, setDate] = useState(new Date());
-  const onChange = (ev, selectedDate) => {
+  const onChange = (ev) => {
     const newExpiration = ev.nativeEvent.timestamp || new Date().getTime();
     setShowDate(false);
-    setDate(selectedDate);
     if (new Date() > new Date(newExpiration)) return alert(message.invalidExpiration);
     return setExpiration(newExpiration);
   };
@@ -17,7 +15,7 @@ export default function Calendar({ setShowDate, setExpiration }) {
     <RNDateTimePicker
       display="default"
       mode="date"
-      value={date}
+      value={new Date()}
       onChange={onChange}
     />
   );

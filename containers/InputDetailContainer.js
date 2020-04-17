@@ -28,7 +28,7 @@ export default function InputDetailScreen({ navigation, route }) {
   const [hasPermissionLocation, setHasPermissionLocation] = useState(false);
   const [location, setLocation] = useState({ latitude: null, longitude: null, latitudeDelta: null, longitudeDelta: null });
   const [category, setCategory] = useState('');
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState('← Select Contry.');
   const [name, setName] = useState('');
   const [showDate, setShowDate] = useState(false);
   const [expiration, setExpiration] = useState(new Date().getTime());
