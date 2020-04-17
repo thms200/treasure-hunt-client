@@ -1,8 +1,14 @@
-import { GET_TREASURES, GET_SELECTEDTREASURE } from '../constants/actionTypes';
+import {
+  GET_TREASURES,
+  GET_SELECTEDTREASURE,
+  TAKE_PICTURES,
+  INITIAL_PICTURES,
+} from '../constants/actionTypes';
 
 const initialState = {
   treasures: [],
   selectedTreasure: {},
+  uriList: [],
 };
 
 export default function treasures(state = initialState, action) {
@@ -11,6 +17,12 @@ export default function treasures(state = initialState, action) {
       return { ...state, treasures: action.treasures };
     case GET_SELECTEDTREASURE:
       return { ...state, selectedTreasure: action.selectedTreasure };
+    case TAKE_PICTURES:
+      let newUriList = [...state.uriList];
+      newUriList = newUriList.concat(action.uri);
+      return { ...state, uriList: newUriList };
+    case INITIAL_PICTURES:
+      return { ...state, uriList: [] };
     default:
       return state;
   }

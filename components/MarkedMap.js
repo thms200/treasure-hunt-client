@@ -10,7 +10,7 @@ export default function MarkedMap({ markedLocation }) {
   if (!markedLocation) {
     return (
       <View style={styles.dummyWrapper}>
-        <MaterialCommunityIcons name="map-search-outline" style={styles.dummy} s/>
+        <MaterialCommunityIcons name="map-search-outline" style={styles.dummy} />
       </View>
     );
   } else {
@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
   },
   dummy: {
     flex: 1,
-    textAlign: 'center',
     margin: '16%',
+    textAlign: 'center',
     fontSize: 60,
     color: COLOR.BLUE,
   },

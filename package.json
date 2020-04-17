@@ -5,7 +5,14 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "setupFiles": [
+      "./setupTests.js"
+    ]
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "2.2.2",
@@ -14,11 +21,13 @@
     "@react-navigation/native": "^5.1.4",
     "@react-navigation/stack": "^5.2.9",
     "@use-expo/font": "^1.0.1",
+    "axios": "^0.19.2",
     "expo": "^37.0.4",
     "expo-camera": "~8.2.0",
     "expo-constants": "~9.0.0",
     "expo-facebook": "~8.1.0",
     "expo-font": "~8.1.0",
+    "expo-image-manipulator": "~8.1.0",
     "expo-image-picker": "~8.1.0",
     "expo-location": "~8.1.0",
     "expo-media-library": "~8.1.0",
@@ -43,11 +52,14 @@
     "babel-eslint": "^10.1.0",
     "babel-preset-expo": "~8.1.0",
     "babel-preset-react-native": "^4.0.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-native": "^3.8.1"
+    "eslint-plugin-react-native": "^3.8.1",
+    "jest-expo": "^37.0.0"
   },
   "private": true
 }

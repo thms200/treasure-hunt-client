@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Ionicons } from '@expo/vector-icons';
 import { COLOR } from '../constants';
 
-export default function Pictures({ uriList }) {
+export default function Pictures({ uriList, style, isInput }) {
   const count = 3 - uriList.length;
   const dummy = [1, 2, 3].slice(0, count);
 
@@ -14,12 +14,12 @@ export default function Pictures({ uriList }) {
         return (
           <Image
             key={index}
-            style={styles.pictures}
+            style={style}
             source={{ uri }}
           />
         );
       })}
-      {dummy.map((number) => {
+      {isInput && dummy.map((number) => {
         return (
           <View key={number} style={styles.dummyWrapper}>
             <Ionicons
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   dummyWrapper: {
     flex: 1,
     justifyContent: 'center',
-    margin: 4,
+    margin: 3,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: COLOR.BLUE,
@@ -47,14 +47,10 @@ const styles = StyleSheet.create({
     fontSize: 60,
     color: COLOR.BLUE
   },
-  pictures: {
-    flex: 1,
-    margin: 4,
-    borderRadius: 5,
-    width: 100
-  },
 });
 
 Pictures.propTypes = {
   uriList: PropTypes.array.isRequired,
+  style: PropTypes.object.isRequired,
+  isInput: PropTypes.bool.isRequired,
 };

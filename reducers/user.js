@@ -5,7 +5,7 @@ const initialState = {
   userInfo: {},
 };
 
-export default function treasures(state = initialState, action) {
+export default function users(state = initialState, action) {
   switch (action.type) {
     case GET_LOGINUSER:
       return { isLogin: true, userInfo: action.userInfo };

@@ -1,7 +1,8 @@
 module.exports = {
     "env": {
 			"browser": true,
-			"es6": true
+			"es6": true,
+			"jest": true,
     },
     "extends": [
 			"eslint:recommended",
@@ -87,6 +88,7 @@ module.exports = {
 					"variables": false
 				}
 			],
-			"react/display-name": "off"
+			"react/display-name": "off",
+			"no-case-declarations": "off",
     }
 };

@@ -1,77 +1,68 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { Entypo, Ionicons, MaterialCommunityIcons, Foundation, FontAwesome5 } from '@expo/vector-icons';
 import { COLOR, FONT } from '../constants';
 
+const screen = Dimensions.get('window');
+const imageWidth = (screen.width / 2) * 0.85;
+const imageHight = (screen.height / 3) * 0.7;
+const margin = imageWidth * 0.01;
+
 export default function SelectCategoryScreen({ navigation }) {
+  const onSelectCategory = (category) => {
+    navigation.navigate('InputDetail', { category });
+  };
+
   return (
     <View style={styles.wrapper}>
-      <TouchableOpacity
-        style={styles.buttonWrapper}
-        onPress={() => navigation.navigate('InputDetail', {
-          category: 'usim',
-        })}
-      >
-        <View style={styles.iconWrapper}>
-          <Entypo name="creative-commons-share" style={styles.icons} />
-          <Text style={styles.text}>유심</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonWrapper}
-        onPress={() => navigation.navigate('InputDetail', {
-          category: 'transportation',
-        })}
-      >
-        <View style={styles.iconWrapper}>
-          <Ionicons name="md-train" style={styles.icons} />
-          <Text style={styles.text}>교통</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonWrapper}
-        onPress={() => navigation.navigate('InputDetail', {
-          category: 'show',
-        })}
-      >
-        <View style={styles.iconWrapper}>
-          <MaterialCommunityIcons name="music-circle-outline" style={styles.icons} />
-          <Text style={styles.text}>영화/공연</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonWrapper}
-        onPress={() => navigation.navigate('InputDetail', {
-          category: 'ticket',
-        })}
-      >
-        <View style={styles.iconWrapper}>
-          <Foundation name="ticket" style={styles.icons} />
-          <Text style={styles.text}>입장권</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonWrapper}
-        onPress={() => navigation.navigate('InputDetail', {
-          category: 'coupon',
-        })}
-      >
-        <View style={styles.iconWrapper}>
-          <FontAwesome5 name="money-check-alt" style={styles.icons} />
-          <Text style={styles.text}>쿠폰</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonWrapper}
-        onPress={() => navigation.navigate('InputDetail', {
-          category: 'etc',
-        })}
-      >
-        <View style={styles.iconWrapper}>
-          <MaterialCommunityIcons name="dots-horizontal-circle" style={styles.icons} />
-          <Text style={styles.text}>기타</Text>
-        </View>
-      </TouchableOpacity>
+      <View style={styles.buttonWrapper}>
+        <TouchableOpacity onPress={() => onSelectCategory('usim')}>
+          <View style={styles.iconWrapper}>
+            <Entypo name="creative-commons-share" style={styles.icons} />
+            <Text style={styles.text}>유심</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonWrapper}>
+        <TouchableOpacity onPress={() => onSelectCategory('transportation')}>
+          <View style={styles.iconWrapper}>
+            <Ionicons name="md-train" style={styles.icons} />
+            <Text style={styles.text}>교통</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonWrapper}>
+        <TouchableOpacity onPress={() => onSelectCategory('show')}>
+          <View style={styles.iconWrapper}>
+            <MaterialCommunityIcons name="music-circle-outline" style={styles.icons} />
+            <Text style={styles.text}>영화/공연</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonWrapper}>
+        <TouchableOpacity onPress={() => onSelectCategory('ticket')}>
+          <View style={styles.iconWrapper}>
+            <Foundation name="ticket" style={styles.icons} />
+            <Text style={styles.text}>입장권</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonWrapper}>
+        <TouchableOpacity onPress={() => onSelectCategory('coupon')}>
+          <View style={styles.iconWrapper}>
+            <FontAwesome5 name="money-check-alt" style={styles.icons} />
+            <Text style={styles.text}>쿠폰</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonWrapper}>
+        <TouchableOpacity onPress={() => onSelectCategory('etc')}>
+          <View style={styles.iconWrapper}>
+            <MaterialCommunityIcons name="dots-horizontal-circle" style={styles.icons} />
+            <Text style={styles.text}>기타</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -81,15 +72,15 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    margin: 50,
+    alignContent: 'center',
     justifyContent: 'center',
-    alignItems: 'center',
   },
   buttonWrapper: {
-    marginTop: 40,
-    marginBottom: 40,
-    marginLeft: 10,
-    marginRight: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: imageWidth,
+    height: imageHight,
+    margin,
   },
   iconWrapper: {
     alignItems: 'center',
@@ -99,11 +90,11 @@ const styles = StyleSheet.create({
     fontSize: 50,
   },
   text: {
-    padding: 10,
     width: 120,
+    padding: 10,
     borderRadius: 15,
-    fontSize: 27,
     textAlign: 'center',
+    fontSize: 27,
     color: COLOR.WHITE,
     fontFamily: FONT.GAMJA,
     backgroundColor: COLOR.BLUE

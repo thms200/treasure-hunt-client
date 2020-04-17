@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.BLUE
   },
   icons: {
-    fontSize: 40,
     textAlign: 'center',
+    fontSize: 40,
     color: COLOR.WHITE,
   },
   text: {
-    fontSize: 16,
     textAlign: 'center',
+    fontSize: 16,
     color: COLOR.WHITE,
     fontFamily: FONT.GAMJA,
   }

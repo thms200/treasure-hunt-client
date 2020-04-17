@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MapView from 'react-native-maps';
-import { StyleSheet, View, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Dimensions, StatusBar } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { COLOR } from '../constants';
 
@@ -12,8 +12,8 @@ export default function ShowMapScreen({ navigation, route }) {
     navigation.navigate('InputDetail', { markedLocation });
   };
 
-  const onDragEnd = async(location) => {
-    setMarkedLocation(location);
+  const onDragEnd = async(ev) => {
+    setMarkedLocation(ev.nativeEvent.coordinate);
   };
 
   return (
@@ -29,11 +29,11 @@ export default function ShowMapScreen({ navigation, route }) {
           title={'Your treasure Here!'}
           pinColor={COLOR.BLUE}
           coordinate={{ latitude, longitude }}
-          onDragEnd={(e) => onDragEnd(e.nativeEvent.coordinate)}
+          onDragEnd={onDragEnd}
         />
       </MapView>
       <TouchableOpacity
-        onPress={() => onGetMarkedLocation()}
+        onPress={onGetMarkedLocation}
         style={styles.buttonContainer}>
         <FontAwesome5
           name="stamp"
@@ -47,6 +47,7 @@ export default function ShowMapScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: StatusBar.currentHeight,
     backgroundColor: '#fff',
   },
   mapStyle: {

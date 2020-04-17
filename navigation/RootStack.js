@@ -11,7 +11,7 @@ export default function Root() {
   const isLogin = useSelector(state => state.user.isLogin);
 
   if(!isLogin) {
-    return <LoginContainer options={{ headerShown: false }}/>;
+    return <LoginContainer options={{ headerShown: false }} />;
   } else {
     return (
       <RootStack.Navigator>
