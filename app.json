@@ -1,11 +1,11 @@
 {
   "expo": {
     "name": "treasure-hunt",
-    "slug": "frontend",
+    "slug": "treasure-hunt",
+    "privacy": "public",
+    "sdkVersion": "37.0.0",
     "platforms": [
-      "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,8 +19,14 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
+    "android": {
+      "package": "com.minsun.treasure_hunt",
+      "versionCode": 1,
+      "config": {
+        "googleMaps": {
+          "apiKey": "<YOUR_GOOGLE_MAP_KEY>"
+        }
+      }
     }
   }
 }
