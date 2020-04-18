@@ -29,7 +29,7 @@ export const logInFacebook = async(dispatch, action) => {
     })
       .then(async(res) => {
         const { data } = res;
-        if (data.result === 'ng') return alert(data.errMessage);
+        if (data.result === 'ng') return alert(message.invalidLogin);
         await SecureStore.setItemAsync('userToken', data.token);
         dispatch(action(data.userInfo));
       });
@@ -53,7 +53,10 @@ export const checkLogin = async(dispatch, action) => {
     })
       .then(async(res) => {
         const { data } = res;
-        if (data.result === 'ng') return await SecureStore.deleteItemAsync('userToken');
+        if (data.result === 'ng') {
+          await SecureStore.deleteItemAsync('userToken');
+          return alert(message.invalidLogin);
+        }
         await SecureStore.setItemAsync('userToken', data.token);
         dispatch(action(data.userInfo));
       });
@@ -76,7 +79,7 @@ export const fetchTreasures = async(country, category, dispatch, action) => {
     })
       .then((res) => {
         const { data } = res;
-        if (data.result === 'ng') return alert(data.errMessage);
+        if (data.result === 'ng') return alert(message.generalError);
         dispatch(action(data));
       });
   } catch (err) {
@@ -98,7 +101,7 @@ export const fetchSelectedTreasure = async(id, dispatch, action) => {
     })
       .then((res) => {
         const { data } = res;
-        if (data.result === 'ng') return alert(data.errMessage);
+        if (data.result === 'ng') return alert(message.generalError);
         dispatch(action(data));
       });
   } catch (err) {
@@ -120,7 +123,7 @@ export const updateSelectedTreasure = async(id, navigation) => {
     })
       .then((res) => {
         const { data } = res;
-        if (data.result === 'ng') return alert(data.errMessage);
+        if (data.result === 'ng') return alert(message.generalError);
         alert(message.success);
         navigation.navigate('Hunt', { screen: 'Treasures' });
       });
@@ -160,7 +163,7 @@ export const onSaveTreasure = async(category, country, name, description, uriLis
     })
       .then((res) => {
         const { data } = res;
-        if (data.result === 'ng') return alert(data.failSave);
+        if (data.result === 'ng') return alert(message.failSave);
         alert(message.successSave);
         navigation.navigate('Hunt', { screen: 'Treasures' });
       });
@@ -183,7 +186,7 @@ export const fetchMyTreasures = async(userId, dispatch, action) => {
     })
       .then((res) => {
         const { data } = res;
-        if (data.result === 'ng') return alert(data.errMessage);
+        if (data.result === 'ng') return alert(message.generalError);
         dispatch(action(data));
       });
   } catch (err) {
@@ -205,7 +208,7 @@ export const fetchMyHungings = async(userId, dispatch, action) => {
     })
       .then((res) => {
         const { data } = res;
-        if (data.result === 'ng') return alert(data.errMessage);
+        if (data.result === 'ng') return alert(message.generalError);
         dispatch(action(data));
       });
   } catch (err) {
@@ -227,7 +230,7 @@ export const deleteSelectedTreasure = async(id, navigation) => {
     })
       .then((res) => {
         const { data } = res;
-        if (data.result === 'ng') return alert(data.errMessage);
+        if (data.result === 'ng') return alert(message.generalError);
         alert(message.success);
         navigation.goBack();
       });
