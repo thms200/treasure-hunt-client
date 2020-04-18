@@ -6,6 +6,7 @@ import { AntDesign, Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as SecureStore from 'expo-secure-store';
 import { getLogoutUser } from '../actions';
 import { COLOR, FONT } from '../constants';
+import message from '../constants/message';
 
 export default function Drawer(props) {
   const { navigation } = props;
@@ -19,7 +20,7 @@ export default function Drawer(props) {
         <DrawerItem
           label="Welcome :)"
           icon={() => <Entypo size={30} name={'flower'} color={COLOR.BLUE} />}
-          onPress={() => alert('Please Login :) ')}
+          onPress={() => alert(message.needLogin)}
           labelStyle={styles.logout}
         />
       </DrawerContentScrollView>

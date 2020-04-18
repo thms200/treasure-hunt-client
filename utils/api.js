@@ -42,6 +42,7 @@ export const logInFacebook = async(dispatch, action) => {
 export const checkLogin = async(dispatch, action) => {
   try {
     const currentToken = await SecureStore.getItemAsync('userToken');
+    if (!currentToken) return;
     return await axios({
       method: 'post',
       url: `${API_URL}/api/users/auth`,
