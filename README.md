@@ -4,19 +4,10 @@
 
 여행을 다녀온 후 더이상 사용하지 않는 유심, 교통카드, 입장권 등을 '보물찾기' 형식으로 나눔할 수 있는 Android 어플리케이션입니다.
 
-<div style="display: flex">
-  <div>
-    <span style="display: block; font-weight: bold;">Start<span>
-    <img style="display : block;" src="https://user-images.githubusercontent.com/48754671/79684777-f49a7c80-826e-11ea-80ca-fdc122dd5cbe.gif" />
-  </div>
-  <div>
-    <span style="display: block; font-weight: bold;">Register<span>
-    <img style="display : block;" src="https://user-images.githubusercontent.com/48754671/79684811-37f4eb00-826f-11ea-8ae1-b3eb688a7f20.gif" />
-  </div>
-    <div>
-    <span style="display: block; font-weight: bold;">Delete, End<span>
-    <img style="display : block;" src="https://user-images.githubusercontent.com/48754671/79685026-98385c80-8270-11ea-83d5-791fae248129.gif"" />
-  </div>
+<div>
+<img style="display : block;" src="https://user-images.githubusercontent.com/48754671/79684777-f49a7c80-826e-11ea-80ca-fdc122dd5cbe.gif" />
+<img style="display : block;" src="https://user-images.githubusercontent.com/48754671/79684811-37f4eb00-826f-11ea-8ae1-b3eb688a7f20.gif" />
+<img style="display : block;" src="https://user-images.githubusercontent.com/48754671/79685026-98385c80-8270-11ea-83d5-791fae248129.gif"" />
 </div>
 
 ## Contents
