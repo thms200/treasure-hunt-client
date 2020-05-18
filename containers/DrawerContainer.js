@@ -13,14 +13,28 @@ export default function Drawer(props) {
   const dispatch = useDispatch();
   const isLogin = useSelector(state => state.user.isLogin);
   const userInfo = useSelector(state => state.user.userInfo);
+  const makeLoginAlert = () => alert(message.needLogin);
+  const makeHomeNavigation = () => navigation.navigate('Hunt', { screen: 'Treasures' });
+  const makeMyTreasuresNavigation = () => navigation.navigate('MyTreasures', { screen: 'MyTreasures' });
+  const makeMyHuntingsNavigation = () => navigation.navigate('MyHuntings', { screen: 'MyHuntings' });
+  const makeLogout = async() => {
+    alert('Bye 👋');
+    dispatch(getLogoutUser());
+    await SecureStore.deleteItemAsync('userToken');
+  };
+  const makeLoginIcon = () => <Entypo size={30} name={'flower'} color={COLOR.BLUE} />;
+  const makeHomeIcon = () => <AntDesign size={30} name={'home'} />;
+  const makeMyTreasuresIcon = () => <MaterialCommunityIcons size={30} name={'treasure-chest'} />;
+  const makeMyHuntingsIcon = () => <AntDesign size={30} name={'shoppingcart'} />;
+  const makeLogoutIcon = () => <AntDesign size={30} name={'logout'} />;
 
   if(!isLogin) {
     return (
       <DrawerContentScrollView {...props}>
         <DrawerItem
           label="Welcome :)"
-          icon={() => <Entypo size={30} name={'flower'} color={COLOR.BLUE} />}
-          onPress={() => alert(message.needLogin)}
+          icon={makeLoginIcon}
+          onPress={makeLoginAlert}
           labelStyle={styles.logout}
         />
       </DrawerContentScrollView>
@@ -35,30 +49,26 @@ export default function Drawer(props) {
         <View style={styles.drawerWrapper}>
           <DrawerItem
             label="Home"
-            icon={() => <AntDesign size={30} name={'home'} />}
-            onPress={() => navigation.navigate('Hunt', { screen: 'Treasures' })}
+            icon={makeHomeIcon}
+            onPress={makeHomeNavigation}
             labelStyle={styles.drawerText}
           />
           <DrawerItem
             label="My Treasures"
-            icon={() => <MaterialCommunityIcons size={30} name={'treasure-chest'} />}
-            onPress={() => navigation.navigate('MyTreasures', { screen: 'MyTreasures' })}
+            icon={makeMyTreasuresIcon}
+            onPress={makeMyTreasuresNavigation}
             labelStyle={styles.drawerText}
           />
           <DrawerItem
             label="My Huntings"
-            icon={() => <AntDesign size={30} name={'shoppingcart'} />}
-            onPress={() => navigation.navigate('MyHuntings', { screen: 'MyHuntings' })}
+            icon={makeMyHuntingsIcon}
+            onPress={makeMyHuntingsNavigation}
             labelStyle={styles.drawerText}
           />
           <DrawerItem
             label="Logout"
-            icon={() => <AntDesign size={30} name={'logout'} />}
-            onPress={async() => {
-              alert('Bye 👋');
-              dispatch(getLogoutUser());
-              await SecureStore.deleteItemAsync('userToken');
-            }}
+            icon={makeLogoutIcon}
+            onPress={makeLogout}
             labelStyle={styles.drawerText}
           />
         </View>

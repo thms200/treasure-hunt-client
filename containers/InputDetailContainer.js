@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
+import * as SecureStore from 'expo-secure-store';
 import CountryPicker, { DARK_THEME } from 'react-native-country-picker-modal';
 import { AntDesign } from '@expo/vector-icons';
 import CameraMapRow from '../components/CameraMapRow';
@@ -58,7 +59,16 @@ export default function InputDetailScreen({ navigation, route }) {
   const onChangeName = name => setName(name);
   const onPressDate = () => setShowDate(true);
   const onChagneDescription = description => setDescription(description);
-  const onPressSave = () => onSaveTreasure(category, country, name, description, uriList, markedLocation, expiration, navigation);
+  const onPressSave = async() => {
+    try {
+      const currentToken = await SecureStore.getItemAsync('userToken');
+      await onSaveTreasure(category, country, name, description, uriList, markedLocation, expiration, currentToken);
+      alert(message.successSave);
+      navigation.navigate('Hunt', { screen: 'Treasures' });
+    } catch(err) {
+      if (err.response) alert(err.response.data.errMessage);
+    }
+  };
 
   useEffect(() => {
     dispatch(initialPictures());
