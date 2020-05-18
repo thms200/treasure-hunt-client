@@ -7,8 +7,9 @@
 <div>
 <img style="display : block;" src="https://user-images.githubusercontent.com/48754671/79684777-f49a7c80-826e-11ea-80ca-fdc122dd5cbe.gif" />
 <img style="display : block;" src="https://user-images.githubusercontent.com/48754671/79684811-37f4eb00-826f-11ea-8ae1-b3eb688a7f20.gif" />
-<img style="display : block;" src="https://user-images.githubusercontent.com/48754671/79685026-98385c80-8270-11ea-83d5-791fae248129.gif"" />
+<img style="display : block;" src="https://user-images.githubusercontent.com/48754671/79685026-98385c80-8270-11ea-83d5-791fae248129.gif" />
 </div>
+
 
 ## Contents
 
@@ -17,7 +18,7 @@
 * [Installation](https://github.com/thms200/treasure-hunt-client#installation)
 * [Skills](https://github.com/thms200/treasure-hunt-client#skills)
 * [Deployment](https://github.com/thms200/treasure-hunt-client#deployment)
-* [Control](https://github.com/thms200/treasure-hunt-client#control)
+* [Project Process](https://github.com/thms200/treasure-hunt-client#Project-Process)
 * [Challenges](https://github.com/thms200/treasure-hunt-client#challenges)
 * [Things to Do](https://github.com/thms200/treasure-hunt-client#things-to-do)
 
@@ -54,6 +55,7 @@ cd treasure-hunt-client
 npm install
 npm start
 ```
+
 ### [Server](https://github.com/thms200/treasure-hunt-server)
 ```
 git clone https://github.com/thms200/treasure-hunt-server.git
@@ -61,6 +63,7 @@ cd treasure-hunt-server
 npm install
 npm start
 ```
+
 ### Environment Variable
 * [Google Map API](https://cloud.google.com/maps-platform?hl=ko)
 * [Facebook Development Tool](https://developers.facebook.com/?no_redirect=1)
@@ -111,20 +114,18 @@ AWS_SECRET_ACCESS_KEY = <YOUR AWS SECRET ACCSS KEY>
 
 ### Client
 * [Download apk](https://drive.google.com/open?id=1q8cBekyx3GrfTzwyRdbkS1QdjfFSg_iq)
-  * test user : ken_ksjczjt_test@tfbnw.net, password : ken1234!  
 
 ### Server
 * Circle CI (continuous integration)
 * AWS Elastic Beanstalk (EB)
 
 
-## Control
+## Project Process
 
-### Project
+* 기술 Stack 검토
 * [moqups을 이용한 Wireframe 작업](https://app.moqups.com/XVR8rDTtv7/view/page/ae8fe8eb0?ui=0&fit_width=1)
+* [Database schema 설계](https://www.notion.so/Backend-new-treasure-DB-c8698048abec45e992ee8a47c40931d0#44a86d559e614d0ba397c6237fb0aea6)
 * [Notion Todo를 이용한 Task Management](https://www.notion.so/23d7f29e6672407899e75027ed136480?v=c6915c23b4cb4a8799dd0fcd0e42ed76)
-
-### Version
 * Git을 통한 Version 관리 (Client/Server 분리, Branch 분리)
 
 
@@ -136,7 +137,7 @@ AWS_SECRET_ACCESS_KEY = <YOUR AWS SECRET ACCSS KEY>
      React Navigation의 'focus' Event를 활용하여 유저가 다른 페이지에서 되돌아오면 다시 Fetch 요청을 해서 \
      Mount되는 조건과 동일하게 구현하였습니다.
 
- * App Build 및 배포
+ * App Build 및 배포 ([Issue 관리(Notion)](https://www.notion.so/Frontend-039c4690f6b34607af67a2a072d94a67))
    - 배포 과정에서 해야하는 다양한 설정과 관련된 여러 가지 프로그램 or 모듈을 설치하는 과정이 쉽지 않았습니다. 
   
    - 배포를 위해 가장 선행되어야 하는 과정은 앱 Build 입니다. 
