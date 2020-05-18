@@ -2,14 +2,39 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
-import { checkLogin, logInFacebook } from '../utils/api';
+import * as SecureStore from 'expo-secure-store';
+import { getAuth, logInFacebook } from '../utils/api';
 import { getLoginUser } from '../actions';
 import { COLOR, FONT } from '../constants';
 
 export default function LoginContainer() {
   const dispatch = useDispatch();
+  const checkLogin = async() => {
+    try {
+      const currentToken = await SecureStore.getItemAsync('userToken');
+      if (!currentToken) return;
+      const { data } = await getAuth(currentToken);
+      await SecureStore.setItemAsync('userToken', data.token);
+      dispatch(getLoginUser(data.userInfo));
+    } catch(err) {
+      if (err.response) {
+        alert(err.response.data.errMessage);
+        await SecureStore.deleteItemAsync('userToken');
+      }
+    }
+  };
+  const onLoginFacebook = async() => {
+    try {
+      const { data } = await logInFacebook();
+      await SecureStore.setItemAsync('userToken', data.token);
+      dispatch(getLoginUser(data.userInfo));
+    } catch(err) {
+      if (err.response) alert(err.response.data.errMessage);
+    }
+  };
+
   useEffect(() => {
-    checkLogin(dispatch, getLoginUser);
+    checkLogin();
   }, []);
 
   return (
@@ -22,7 +47,7 @@ export default function LoginContainer() {
         <FontAwesome.Button
           name="facebook"
           backgroundColor="#3b5998"
-          onPress={() => logInFacebook(dispatch, getLoginUser)}
+          onPress={onLoginFacebook}
         >
           <Text style={styles.login}>Login with Facebook</Text>
         </FontAwesome.Button>

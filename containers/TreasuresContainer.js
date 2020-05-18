@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { StyleSheet, View, FlatList } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 import TreasureList from '../components/TreasureList';
 import Categorys from '../components/Categorys';
 import { getTreasures, getSelectedTreasure } from '../actions';
@@ -11,13 +12,28 @@ export default function TreasuresContainer({ navigation }) {
   const treasures = useSelector(state => state.treasures.treasures);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const onLoad  = async() => {
-    await fetchTreasures('all', 'all', dispatch, getTreasures);
-    setIsLoading(false);
+  const filterTreasures = async(country, category) => {
+    try {
+      const currentToken = await SecureStore.getItemAsync('userToken');
+      const { data } = await fetchTreasures(country, category, currentToken);
+      dispatch(getTreasures(data));
+      setIsLoading(false);
+    } catch(err) {
+      if (err.response) alert(err.response.data.errMessage);
+    }
   };
-  const onCategory = async(category) => await fetchTreasures('all', category, dispatch, getTreasures);
-  const onCountry = async(country) => await fetchTreasures(country, 'all', dispatch, getTreasures);
-  const onTreasure = async(id) => await fetchSelectedTreasure(id, dispatch, getSelectedTreasure);
+  const onLoad = () => filterTreasures('all', 'all');
+  const onCategory = (category) => filterTreasures('all', category);
+  const onCountry = (country) => filterTreasures(country, 'all');
+  const onTreasure = async(id) => {
+    try {
+      const currentToken = await SecureStore.getItemAsync('userToken');
+      const { data } = await fetchSelectedTreasure(id, currentToken);
+      dispatch(getSelectedTreasure(data));
+    } catch(err) {
+      if (err.response) alert(err.response.data.errMessage);
+    }
+  };
 
   useEffect(() => {
     onLoad();
